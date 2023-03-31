@@ -54,6 +54,16 @@ Work in progress...
 
 <p align="center"><img src="./assets/screenshot_q.jpg"><img src="./assets/screenshot_a.jpg"></p>
 
+## Citation
+You can cite HuggingGPT as follows:
+
+    @article{shen2023hugginggpt,
+        title={HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace},
+        author={Shen, Yongliang and Song, Kaitao and Tan, Xu and Li, Dongsheng and Lu, Weiming and Zhuang, Yueting},
+        journal={arXiv preprint arXiv:2303.17580},
+        year={2023}
+    }
+
 ## Acknowledgement
 
 - [ChatGPT](https://platform.openai.com/)
