@@ -1,3 +1,16 @@
+# for server
+server/models/*
+!server/models/download.sh
+server/*.jsonl
+server/public/
+
+# for web
+web/node_modules
+web/package-lock.json
+web/dist
+web/electron-dist
+web/yarn.lock
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +140,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

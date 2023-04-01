@@ -1,0 +1,46 @@
+[
+    {
+        "role": "user",
+        "content": "Give you some pictures e1.jpg, e2.png, e3.jpg, help me count the number of sheep?"
+    },
+    {
+        "role": "assistant",
+        "content": "[{\"task\": \"image-to-text\", \"id\": 0, \"dep\": [-1], \"args\": {\"image\": \"e1.jpg\" }}, {\"task\": \"object-detection\", \"id\": 1, \"dep\": [-1], \"args\": {\"image\": \"e1.jpg\" }}, {\"task\": \"image-to-text\", \"id\": 2, \"dep\": [1], \"args\": {\"image\": \"e2.png\" }}, {\"task\": \"object-detection\", \"id\": 3, \"dep\": [1], \"args\": {\"image\": \"e2.png\" }}, {\"task\": \"image-to-text\", \"id\": 4, \"dep\": [3], \"args\": {\"image\": \"e3.jpg\" }},  {\"task\": \"object-detection\", \"id\": 5, \"dep\": [3], \"args\": {\"image\": \"e3.jpg\" }}]"
+    },
+
+    {
+        "role":"user",
+        "content":"Look at /e.jpg, can you tell me how many objects in the picture? Give me a picture and video similar to this one."
+    },
+    {
+        "role":"assistant",
+        "content":"[{\"task\": \"image-to-text\", \"id\": 0, \"dep\": [-1], \"args\": {\"image\": \"/e.jpg\" }}, {\"task\": \"object-detection\", \"id\": 1, \"dep\": [-1], \"args\": {\"image\": \"/e.jpg\" }}, {\"task\": \"visual-question-answering\", \"id\": 2, \"dep\": [1], \"args\": {\"image\": \"<GENERATED>-1\", \"text\": \"how many objects in the picture?\" }}, {\"task\": \"text-to-image\", \"id\": 3, \"dep\": [0], \"args\": {\"text\": \"<GENERATED-0>\" }}, {\"task\": \"image-to-image\", \"id\": 4, \"dep\": [-1], \"args\": {\"image\": \"/e.jpg\" }}, {\"task\": \"text-to-video\", \"id\": 5, \"dep\": [0], \"args\": {\"text\": \"<GENERATED-0>\" }}]"
+    },
+
+    {
+        "role":"user",
+        "content":"given a document /images/e.jpeg, answer me what is the student amount? And describe the image with your voice"
+    },
+    {
+        "role":"assistant",
+        "content":"{\"task\": \"document-question-answering\", \"id\": 0, \"dep\": [-1], \"args\": {\"image\": \"/images/e.jpeg\", \"text\": \"what is the student amount?\" }}, {\"task\": \"visual-question-answering\", \"id\": 1, \"dep\": [-1], \"args\": {\"image\": \"/images/e.jpeg\", \"text\": \"what is the student amount?\" }}, {\"task\": \"image-to-text\", \"id\": 2, \"dep\": [-1], \"args\": {\"image\": \"/images/e.jpg\" }}, {\"task\": \"text-to-speech\", \"id\": 3, \"dep\": [2], \"args\": {\"text\": \"<GENERATED>-2\" }}]"
+    },
+
+    {
+        "role": "user",
+        "content": "Given an image /example.jpg, first generate a hed image, then based on the hed image generate a new image where a girl is reading a book"
+    },
+    {
+        "role": "assistant",
+        "content": "[{\"task\": \"image-to-text\", \"id\": 0, \"dep\": [-1], \"args\": {\"image\": \"/example.jpg\" }}, {\"task\": \"openpose-control\", \"id\": 1, \"dep\": [-1], \"args\": {\"image\": \"/example.jpg\" }},  {\"task\": \"openpose-text-to-image\", \"id\": 2, \"dep\": [1], \"args\": {\"text\": \"a girl is reading a book\", \"image\": \"<GENERATED>-1\" }}]"
+    },
+
+    {
+        "role": "user",
+        "content": "please generate a video based on the text (prompt) 'a boy is running' and dub it"
+    },
+    {
+        "role": "assistant",
+        "content": "[{\"task\": \"text-to-video\", \"id\": 0, \"dep\": [-1], \"args\": {\"text\": \"a boy is running\" }}, {\"task\": \"text-to-speech\", \"id\": 0, \"dep\": [-1], \"args\": {\"text\": \"a boy is running\" }}]"
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "{{input}}"
+    },
+    {
+        "role": "assistant",
+        "content": "{{task}}"
+    }
+]
