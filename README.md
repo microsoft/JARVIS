@@ -81,6 +81,6 @@ If you find this work useful in your method, you can cite the paper as below:
 ## Acknowledgement
 
 - [ChatGPT](https://platform.openai.com/)
-- [HuggingFace](https://huggingface.co/)
+- [Hugging Face](https://huggingface.co/)
 - [ControlNet](https://github.com/lllyasviel/ControlNet)
 - [ChatGPT-vue](https://github.com/lianginx/chatgpt-vue)
