@@ -4,8 +4,8 @@
 
 ## Updates
 
-+  [2023.04.03] We add the CLI mode and provide parameters for configuring the scale of local endpoints.
-+  [2023.04.01] We update a version of code for building.
++  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
++  [2023.04.01] We updated a version of code for building.
 
 ## Overview
 
@@ -16,9 +16,9 @@ See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hug
 <p align="center"><img src="./assets/overview.jpg"></p>
 
 We introduce a collaborative system that consists of **an LLM as the controller** and **numerous expert models as collaborative executors** (from HuggingFace Hub). The workflow of our system consists of four stages:
-+ **Task Planning**: Using ChatGPT to analyze the requests of users to understand their intention, and disassemble them into possible solvable sub-tasks.
-+ **Model Selection**: Based on the sub-tasks, ChatGPT invoke the corresponding models hosted on HuggingFace.
-+ **Task Execution**: Executing each invoked model and returning the results to ChatGPT.
++ **Task Planning**: Using ChatGPT to analyze the requests of users to understand their intention, and disassemble them into possible solvable tasks.
++ **Model Selection**: To solve the planned tasks, ChatGPT selects expert models hosted on Hugging Face based on their descriptions.
++ **Task Execution**: Invoke and execute each selected model, and return the results to ChatGPT.
 + **Response Generation**: Finally, using ChatGPT to integrate the prediction of all models, and generate response.
 
 ## System Requirements
@@ -51,7 +51,24 @@ python models_server.py
 python bot_server.py --config config.yaml # for text-davinci-003
 ```
 
+Now you can access Jarvis' services by the Web API. For example:
+
+```bash
+curl --location 'http://localhost:8004/hugginggpt' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [
+        {
+            "role": "user".
+            "content": "please generate a video based on 'Spiderman is surfing'"
+        }
+    ]
+}'
+```
+
 ### For web:
+
+We provide a user-friendly web page. You can run the commands to communicate with Jarvis in your browser:
 
 ```bash
 cd web
@@ -67,15 +84,17 @@ LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx26
 
 ### For CLI:
 
+You can also run Jarvis more easily in chatbot console mode:
+
 ```bash
 cd server
 python awesome_chat.py
 ```
 
-Example of CLI mode running:
+Examples of CLI mode:
 
 ```bash
-System: Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Please enter your request (`exit` to exit).
+System: System: Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).
 Input: Given a collection of image A: /examples/cat.jpg, B: /examples/z3.jpg, C: /examples/z1.jpg, please tell me how many zebras in these picture?
 Output: Based on your request, I have used several models to process the images you provided. For the image A: /examples/cat.jpg, I used the image-to-text model nlpconnect/vit-gpt2-image-captioning to generate the text "a cat sitting on a window sill looking out". Then I used the object-detection model facebook/detr-resnet-50 to generate the image with predicted box '/images/a3dc.jpg', which contains two objects with labels 'potted plant' and 'cat'. For the image B: /examples/z3.jpg, I used the image-to-text model nlpconnect/vit-gpt2-image-captioning to generate the text "two zebras standing in a field of dry grass". Then I used the object-detection model facebook/detr-resnet-50 to generate the image with predicted box '/images/f5df.jpg', which contains three objects with labels 'zebra'. For the image C: /examples/z1.jpg, I used the image-to-text model nlpconnect/vit-gpt2-image-captioning to generate the text "a zebra standing in a field of tall grass". Then I used the object-detection model facebook/detr-resnet-50 to generate the image with predicted box '/images/69c7.jpg', which contains one object with label 'zebra'. Finally, I used the canny-control model canny-control to generate the image '/images/7e18.png' based on the image /examples/savanna.jpg. Therefore, there are four zebras in these pictures. Is there anything else I can help you with?
 Input: Please answer all the named entities in the sentence: Iron Man is a superhero appearing in American comic books published by Marvel Comics. The character was co-created by writer and editor Stan Lee, developed by scripter Larry Lieber, and designed by artists Don Heck and Jack Kirby.
@@ -98,7 +117,7 @@ The server-side configuration file is `server/config.yaml`, and some parameters 
   +  `standard` (RAM>40GB, ControlNet + Standard Pipelines)
   +  `full` (RAM>80GB, All registered models)
 
-On the personal laptop, we recommend the configuration of `inference_mode: huggingface `and `local_models: minimal`. However, due to the instability of remote Hugging Face Inference Endpoints, the services provided by expert models may be limited.
+On a personal laptop, we recommend the configuration of `inference_mode: huggingface `and `local_models: minimal`. However, due to the instability of remote Hugging Face Inference Endpoints, the services provided by expert models may be limited.
 
 ## Screenshots
 

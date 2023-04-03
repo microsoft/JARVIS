@@ -770,7 +770,7 @@ def run_task(input, command, results):
 
 def chat_huggingface(messages):
     start = time.time()
-    context = messages[0:-1]
+    context = messages[:-1]
     input = messages[-1]["content"]
     logger.info("*"*80)
     logger.info(f"input: {input}")
@@ -853,9 +853,10 @@ def test():
     ]
     chat_huggingface(messages)
 
-def cil_chat():
+def cli_chat():
     handler.setLevel(logging.WARNING)
     messages = []
+    print("System: Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).")
     while True:
         message = input("Input: ")
         if message == "exit":
@@ -866,4 +867,4 @@ def cil_chat():
         messages.append({"role": "assistant", "content": answer["message"]})
 
 if __name__ == "__main__":
-    cil_chat()
+    cli_chat()

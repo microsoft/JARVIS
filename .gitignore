@@ -4,6 +4,9 @@ server/models/*
 server/*.jsonl
 server/public/
 
+# for gradio
+gradio
+
 # for web
 web/node_modules
 web/package-lock.json
