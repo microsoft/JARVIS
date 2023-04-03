@@ -725,25 +725,20 @@ def run_task(input, command, results):
             choose = {"id": best_model_id, "reason": reason}
             logger.debug(f"chosen model: {choose}")
         else:
-            cand_models_info = []
-            for model in candidates:
-                model_info = {}
-                model_info["id"] = model["id"]
-                if model["id"] not in all_avaliable_model_ids:
-                    continue
-                if model["id"] in all_avaliable_models["local"]:
-                    model_info["inference endpoint"] = "local"
-                elif model["id"] in all_avaliable_models["huggingface"]:
-                    model_info["inference endpoint"] = "huggingface"
-                if "likes" in model:
-                    model_info["likes"] = model["likes"]
-                if "description" in model:
-                    model_info["description"] = model["description"][:100]
-                if "language" in model:
-                    model_info["language"] = model["language"]
-                if "tags" in model:
-                    model_info["tags"] = model["tags"]
-                cand_models_info.append(model_info)
+            cand_models_info = [
+                {
+                    "id": model["id"],
+                    "inference endpoint": all_avaliable_models.get(
+                        "local" if model["id"] in all_avaliable_models["local"] else "huggingface"
+                    ),
+                    "likes": model.get("likes"),
+                    "description": model.get("description", "")[:100],
+                    "language": model.get("language"),
+                    "tags": model.get("tags"),
+                }
+                for model in candidates
+                if model["id"] in all_avaliable_model_ids
+            ]
 
             choose_str = choose_model(input, command, cand_models_info)
             logger.debug(f"chosen model: {choose_str}")
