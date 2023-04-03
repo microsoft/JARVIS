@@ -1,7 +1,7 @@
 openai:
   key: your_personal_key
 huggingface:
-  cookie: 
+  cookie: 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
 local: # ignore: just for development
   endpoint: http://localhost:8003
 dev: false
