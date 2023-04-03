@@ -59,6 +59,8 @@ config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
 host = config["modelserver"]["host"]
 port = config["modelserver"]["port"]
 
+local_models = config["local_models"]
+
 PROXY = None
 if config["proxy"]:
     PROXY = {
@@ -71,267 +73,278 @@ CORS(app)
 start = time.time()
 local_fold = "models"
 
-other_pipes = {
-    "nlpconnect/vit-gpt2-image-captioning":{
-        "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
-        "feature_extractor": ViTImageProcessor.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
-        "tokenizer": AutoTokenizer.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
-        "device": "cuda:0"
-    },
-    "Salesforce/blip-image-captioning-large": {
-        "model": BlipForConditionalGeneration.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
-        "processor": BlipProcessor.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
-        "device": "cuda:0"
-    },
-    "damo-vilab/text-to-video-ms-1.7b": {
-        "model": DiffusionPipeline.from_pretrained(f"{local_fold}/damo-vilab/text-to-video-ms-1.7b", torch_dtype=torch.float16, variant="fp16"),
-        "device": "cuda:0"
-    },
-    "facebook/maskformer-swin-large-ade": {
-        "model": MaskFormerForInstanceSegmentation.from_pretrained(f"{local_fold}/facebook/maskformer-swin-large-ade"),
-        "feature_extractor" : AutoFeatureExtractor.from_pretrained("facebook/maskformer-swin-large-ade"),
-        "device": "cuda:0"
-    },
-    "microsoft/trocr-base-printed": {
-        "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
-        "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
-        "device": "cuda:0"
-    },
-    "microsoft/trocr-base-handwritten": {
-        "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
-        "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
-        "device": "cuda:0"
-    },
-    "JorisCos/DCCRNet_Libri1Mix_enhsingle_16k": {
-        "model": BaseModel.from_pretrained("JorisCos/DCCRNet_Libri1Mix_enhsingle_16k"),
-        "device": "cuda:0"
-    },
-    "espnet/kan-bayashi_ljspeech_vits": {
-        "model": Text2Speech.from_pretrained(f"espnet/kan-bayashi_ljspeech_vits"),
-        "device": "cuda:0"
-    },
-    "lambdalabs/sd-image-variations-diffusers": {
-        "model": DiffusionPipeline.from_pretrained(f"{local_fold}/lambdalabs/sd-image-variations-diffusers"), #torch_dtype=torch.float16
-        "device": "cuda:0"
-    },
-    "CompVis/stable-diffusion-v1-4": {
-        "model": DiffusionPipeline.from_pretrained(f"{local_fold}/CompVis/stable-diffusion-v1-4"),
-        "device": "cuda:0"
-    },
-    "stabilityai/stable-diffusion-2-1": {
-        "model": DiffusionPipeline.from_pretrained(f"{local_fold}/stabilityai/stable-diffusion-2-1"),
-        "device": "cuda:0"
-    },
-    "runwayml/stable-diffusion-v1-5": {
-        "model": DiffusionPipeline.from_pretrained(f"{local_fold}/runwayml/stable-diffusion-v1-5"),
-        "device": "cuda:0"
-    },
-    "microsoft/speecht5_tts":{
-        "processor": SpeechT5Processor.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
-        "model": SpeechT5ForTextToSpeech.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
-        "vocoder":  SpeechT5HifiGan.from_pretrained(f"{local_fold}/microsoft/speecht5_hifigan"),
-        "embeddings_dataset": load_dataset("Matthijs/cmu-arctic-xvectors", split="validation"),
-        "device": "cuda:0"
-    },
-    "speechbrain/mtl-mimic-voicebank": {
-        "model": WaveformEnhancement.from_hparams(source="speechbrain/mtl-mimic-voicebank", savedir="models/mtl-mimic-voicebank"),
-        "device": "cuda:0"
-    },
-    "microsoft/speecht5_vc":{
-        "processor": SpeechT5Processor.from_pretrained(f"{local_fold}/microsoft/speecht5_vc"),
-        "model": SpeechT5ForSpeechToSpeech.from_pretrained(f"{local_fold}/microsoft/speecht5_vc"),
-        "vocoder": SpeechT5HifiGan.from_pretrained(f"{local_fold}/microsoft/speecht5_hifigan"),
-        "embeddings_dataset": load_dataset("Matthijs/cmu-arctic-xvectors", split="validation"),
-        "device": "cuda:0"
-    },
-    "julien-c/wine-quality": {
-        "model": joblib.load(cached_download(hf_hub_url("julien-c/wine-quality", "sklearn_model.joblib")))
-    },
-    "facebook/timesformer-base-finetuned-k400": {
-        "processor": AutoImageProcessor.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
-        "model": TimesformerForVideoClassification.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
-        "device": "cuda:0"
-    },
-    "facebook/maskformer-swin-base-coco": {
-        "feature_extractor": MaskFormerFeatureExtractor.from_pretrained(f"{local_fold}/facebook/maskformer-swin-base-coco"),
-        "model": MaskFormerForInstanceSegmentation.from_pretrained(f"{local_fold}/facebook/maskformer-swin-base-coco"),
-        "device": "cuda:0"
-    },
-    "Intel/dpt-hybrid-midas": {
-        "model": DPTForDepthEstimation.from_pretrained(f"{local_fold}/Intel/dpt-hybrid-midas", low_cpu_mem_usage=True),
-        "feature_extractor": DPTFeatureExtractor.from_pretrained(f"{local_fold}/Intel/dpt-hybrid-midas"),
-        "device": "cuda:0"
-    }
-}
+def load_pipes(local_models):
+    other_pipes = {}
+    standard_pipes = {}
+    controlnet_sd_pipes = {}
+    if local_models in ["full"]:
+        other_pipes = {
+            "nlpconnect/vit-gpt2-image-captioning":{
+                "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
+                "feature_extractor": ViTImageProcessor.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
+                "tokenizer": AutoTokenizer.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
+                "device": "cuda:0"
+            },
+            "Salesforce/blip-image-captioning-large": {
+                "model": BlipForConditionalGeneration.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
+                "processor": BlipProcessor.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
+                "device": "cuda:0"
+            },
+            "damo-vilab/text-to-video-ms-1.7b": {
+                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/damo-vilab/text-to-video-ms-1.7b", torch_dtype=torch.float16, variant="fp16"),
+                "device": "cuda:0"
+            },
+            "facebook/maskformer-swin-large-ade": {
+                "model": MaskFormerForInstanceSegmentation.from_pretrained(f"{local_fold}/facebook/maskformer-swin-large-ade"),
+                "feature_extractor" : AutoFeatureExtractor.from_pretrained("facebook/maskformer-swin-large-ade"),
+                "device": "cuda:0"
+            },
+            "microsoft/trocr-base-printed": {
+                "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
+                "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
+                "device": "cuda:0"
+            },
+            "microsoft/trocr-base-handwritten": {
+                "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
+                "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
+                "device": "cuda:0"
+            },
+            "JorisCos/DCCRNet_Libri1Mix_enhsingle_16k": {
+                "model": BaseModel.from_pretrained("JorisCos/DCCRNet_Libri1Mix_enhsingle_16k"),
+                "device": "cuda:0"
+            },
+            "espnet/kan-bayashi_ljspeech_vits": {
+                "model": Text2Speech.from_pretrained(f"espnet/kan-bayashi_ljspeech_vits"),
+                "device": "cuda:0"
+            },
+            "lambdalabs/sd-image-variations-diffusers": {
+                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/lambdalabs/sd-image-variations-diffusers"), #torch_dtype=torch.float16
+                "device": "cuda:0"
+            },
+            "CompVis/stable-diffusion-v1-4": {
+                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/CompVis/stable-diffusion-v1-4"),
+                "device": "cuda:0"
+            },
+            "stabilityai/stable-diffusion-2-1": {
+                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/stabilityai/stable-diffusion-2-1"),
+                "device": "cuda:0"
+            },
+            "runwayml/stable-diffusion-v1-5": {
+                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/runwayml/stable-diffusion-v1-5"),
+                "device": "cuda:0"
+            },
+            "microsoft/speecht5_tts":{
+                "processor": SpeechT5Processor.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
+                "model": SpeechT5ForTextToSpeech.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
+                "vocoder":  SpeechT5HifiGan.from_pretrained(f"{local_fold}/microsoft/speecht5_hifigan"),
+                "embeddings_dataset": load_dataset(f"{local_fold}/Matthijs/cmu-arctic-xvectors", split="validation"),
+                "device": "cuda:0"
+            },
+            "speechbrain/mtl-mimic-voicebank": {
+                "model": WaveformEnhancement.from_hparams(source="speechbrain/mtl-mimic-voicebank", savedir="models/mtl-mimic-voicebank"),
+                "device": "cuda:0"
+            },
+            "microsoft/speecht5_vc":{
+                "processor": SpeechT5Processor.from_pretrained(f"{local_fold}/microsoft/speecht5_vc"),
+                "model": SpeechT5ForSpeechToSpeech.from_pretrained(f"{local_fold}/microsoft/speecht5_vc"),
+                "vocoder": SpeechT5HifiGan.from_pretrained(f"{local_fold}/microsoft/speecht5_hifigan"),
+                "embeddings_dataset": load_dataset(f"{local_fold}/Matthijs/cmu-arctic-xvectors", split="validation"),
+                "device": "cuda:0"
+            },
+            "julien-c/wine-quality": {
+                "model": joblib.load(cached_download(hf_hub_url("julien-c/wine-quality", "sklearn_model.joblib")))
+            },
+            "facebook/timesformer-base-finetuned-k400": {
+                "processor": AutoImageProcessor.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
+                "model": TimesformerForVideoClassification.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
+                "device": "cuda:0"
+            },
+            "facebook/maskformer-swin-base-coco": {
+                "feature_extractor": MaskFormerFeatureExtractor.from_pretrained(f"{local_fold}/facebook/maskformer-swin-base-coco"),
+                "model": MaskFormerForInstanceSegmentation.from_pretrained(f"{local_fold}/facebook/maskformer-swin-base-coco"),
+                "device": "cuda:0"
+            },
+            "Intel/dpt-hybrid-midas": {
+                "model": DPTForDepthEstimation.from_pretrained(f"{local_fold}/Intel/dpt-hybrid-midas", low_cpu_mem_usage=True),
+                "feature_extractor": DPTFeatureExtractor.from_pretrained(f"{local_fold}/Intel/dpt-hybrid-midas"),
+                "device": "cuda:0"
+            }
+        }
 
-standard_pipes = {
-    "superb/wav2vec2-base-superb-ks": {
-		"model": pipeline(task="audio-classification", model=f"{local_fold}/superb/wav2vec2-base-superb-ks"), 
-		"device": "cuda:0"
-	},
-    "openai/whisper-base": {
-		"model": pipeline(task="automatic-speech-recognition", model=f"{local_fold}/openai/whisper-base"), 
-		"device": "cuda:0"
-	},
-    "microsoft/speecht5_asr": {
-		"model": pipeline(task="automatic-speech-recognition", model=f"{local_fold}/microsoft/speecht5_asr"), 
-		"device": "cuda:0"
-	},
-    "Intel/dpt-large": {
-		"model": pipeline(task="depth-estimation", model=f"{local_fold}/Intel/dpt-large"), 
-		"device": "cuda:0"
-	},
-    "microsoft/beit-base-patch16-224-pt22k-ft22k": {
-		"model": pipeline(task="image-classification", model=f"{local_fold}/microsoft/beit-base-patch16-224-pt22k-ft22k"), 
-		"device": "cuda:0"
-	},
-    "facebook/detr-resnet-50-panoptic": {
-		"model": pipeline(task="image-segmentation", model=f"{local_fold}/facebook/detr-resnet-50-panoptic"), 
-		"device": "cuda:0"
-	},
-    "facebook/detr-resnet-101": {
-		"model": pipeline(task="object-detection", model=f"{local_fold}/facebook/detr-resnet-101"), 
-		"device": "cuda:0"
-	},
-    "openai/clip-vit-large-patch14": {
-		"model": pipeline(task="zero-shot-image-classification", model=f"{local_fold}/openai/clip-vit-large-patch14"), 
-		"device": "cuda:0"
-	},
-    "google/owlvit-base-patch32": {
-		"model": pipeline(task="zero-shot-object-detection", model=f"{local_fold}/google/owlvit-base-patch32"), 
-		"device": "cuda:0"
-	},
-    "microsoft/DialoGPT-medium": {
-		"model": pipeline(task="conversational", model=f"{local_fold}/microsoft/DialoGPT-medium"), 
-		"device": "cuda:0"
-	},
-    "bert-base-uncased": {
-		"model": pipeline(task="fill-mask", model=f"{local_fold}/bert-base-uncased"), 
-		"device": "cuda:0"
-	},
-    "deepset/roberta-base-squad2": {
-		"model": pipeline(task = "question-answering", model=f"{local_fold}/deepset/roberta-base-squad2"), 
-		"device": "cuda:0"
-	},
-    "facebook/bart-large-cnn": {
-		"model": pipeline(task="summarization", model=f"{local_fold}/facebook/bart-large-cnn"), 
-		"device": "cuda:0"
-	},
-    "google/tapas-base-finetuned-wtq": {
-		"model": pipeline(task="table-question-answering", model=f"{local_fold}/google/tapas-base-finetuned-wtq"), 
-		"device": "cuda:0"
-	},
-    "distilbert-base-uncased-finetuned-sst-2-english": {
-		"model": pipeline(task="text-classification", model=f"{local_fold}/distilbert-base-uncased-finetuned-sst-2-english"), 
-		"device": "cuda:0"
-	},
-    "gpt2": {
-		"model": pipeline(task="text-generation", model="gpt2"), 
-		"device": "cuda:0"
-	},
-    "mrm8488/t5-base-finetuned-question-generation-ap": {
-		"model": pipeline(task="text2text-generation", model=f"{local_fold}/mrm8488/t5-base-finetuned-question-generation-ap"), 
-		"device": "cuda:0"
-	},
-    "Jean-Baptiste/camembert-ner": {
-		"model": pipeline(task="token-classification", model=f"{local_fold}/Jean-Baptiste/camembert-ner", aggregation_strategy="simple"), 
-		"device": "cuda:0"
-	},
-    "t5-base": {
-		"model": pipeline(task="translation", model=f"{local_fold}/t5-base"), 
-		"device": "cuda:0"
-	},
-    "impira/layoutlm-document-qa": {
-		"model": pipeline(task="document-question-answering", model=f"{local_fold}/impira/layoutlm-document-qa"), 
-		"device": "cuda:0"
-	},
-    "ydshieh/vit-gpt2-coco-en": {
-		"model": pipeline(task="image-to-text", model=f"{local_fold}/ydshieh/vit-gpt2-coco-en"), 
-		"device": "cuda:0"
-	},
-    "dandelin/vilt-b32-finetuned-vqa": {
-		"model": pipeline(task="visual-question-answering", model=f"{local_fold}/dandelin/vilt-b32-finetuned-vqa"), 
-		"device": "cuda:0"
-	}
-}
+    if local_models in ["full", "standard"]:
+        standard_pipes = {
+            "superb/wav2vec2-base-superb-ks": {
+                "model": pipeline(task="audio-classification", model=f"{local_fold}/superb/wav2vec2-base-superb-ks"), 
+                "device": "cuda:0"
+            },
+            "openai/whisper-base": {
+                "model": pipeline(task="automatic-speech-recognition", model=f"{local_fold}/openai/whisper-base"), 
+                "device": "cuda:0"
+            },
+            "microsoft/speecht5_asr": {
+                "model": pipeline(task="automatic-speech-recognition", model=f"{local_fold}/microsoft/speecht5_asr"), 
+                "device": "cuda:0"
+            },
+            "Intel/dpt-large": {
+                "model": pipeline(task="depth-estimation", model=f"{local_fold}/Intel/dpt-large"), 
+                "device": "cuda:0"
+            },
+            "microsoft/beit-base-patch16-224-pt22k-ft22k": {
+                "model": pipeline(task="image-classification", model=f"{local_fold}/microsoft/beit-base-patch16-224-pt22k-ft22k"), 
+                "device": "cuda:0"
+            },
+            "facebook/detr-resnet-50-panoptic": {
+                "model": pipeline(task="image-segmentation", model=f"{local_fold}/facebook/detr-resnet-50-panoptic"), 
+                "device": "cuda:0"
+            },
+            "facebook/detr-resnet-101": {
+                "model": pipeline(task="object-detection", model=f"{local_fold}/facebook/detr-resnet-101"), 
+                "device": "cuda:0"
+            },
+            "openai/clip-vit-large-patch14": {
+                "model": pipeline(task="zero-shot-image-classification", model=f"{local_fold}/openai/clip-vit-large-patch14"), 
+                "device": "cuda:0"
+            },
+            "google/owlvit-base-patch32": {
+                "model": pipeline(task="zero-shot-object-detection", model=f"{local_fold}/google/owlvit-base-patch32"), 
+                "device": "cuda:0"
+            },
+            "microsoft/DialoGPT-medium": {
+                "model": pipeline(task="conversational", model=f"{local_fold}/microsoft/DialoGPT-medium"), 
+                "device": "cuda:0"
+            },
+            "bert-base-uncased": {
+                "model": pipeline(task="fill-mask", model=f"{local_fold}/bert-base-uncased"), 
+                "device": "cuda:0"
+            },
+            "deepset/roberta-base-squad2": {
+                "model": pipeline(task = "question-answering", model=f"{local_fold}/deepset/roberta-base-squad2"), 
+                "device": "cuda:0"
+            },
+            "facebook/bart-large-cnn": {
+                "model": pipeline(task="summarization", model=f"{local_fold}/facebook/bart-large-cnn"), 
+                "device": "cuda:0"
+            },
+            "google/tapas-base-finetuned-wtq": {
+                "model": pipeline(task="table-question-answering", model=f"{local_fold}/google/tapas-base-finetuned-wtq"), 
+                "device": "cuda:0"
+            },
+            "distilbert-base-uncased-finetuned-sst-2-english": {
+                "model": pipeline(task="text-classification", model=f"{local_fold}/distilbert-base-uncased-finetuned-sst-2-english"), 
+                "device": "cuda:0"
+            },
+            "gpt2": {
+                "model": pipeline(task="text-generation", model="gpt2"), 
+                "device": "cuda:0"
+            },
+            "mrm8488/t5-base-finetuned-question-generation-ap": {
+                "model": pipeline(task="text2text-generation", model=f"{local_fold}/mrm8488/t5-base-finetuned-question-generation-ap"), 
+                "device": "cuda:0"
+            },
+            "Jean-Baptiste/camembert-ner": {
+                "model": pipeline(task="token-classification", model=f"{local_fold}/Jean-Baptiste/camembert-ner", aggregation_strategy="simple"), 
+                "device": "cuda:0"
+            },
+            "t5-base": {
+                "model": pipeline(task="translation", model=f"{local_fold}/t5-base"), 
+                "device": "cuda:0"
+            },
+            "impira/layoutlm-document-qa": {
+                "model": pipeline(task="document-question-answering", model=f"{local_fold}/impira/layoutlm-document-qa"), 
+                "device": "cuda:0"
+            },
+            "ydshieh/vit-gpt2-coco-en": {
+                "model": pipeline(task="image-to-text", model=f"{local_fold}/ydshieh/vit-gpt2-coco-en"), 
+                "device": "cuda:0"
+            },
+            "dandelin/vilt-b32-finetuned-vqa": {
+                "model": pipeline(task="visual-question-answering", model=f"{local_fold}/dandelin/vilt-b32-finetuned-vqa"), 
+                "device": "cuda:0"
+            }
+        }
+
+    if local_models in ["full", "standard", "minimal"]:
+        controlnet = ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-canny", torch_dtype=torch.float16)
+        controlnetpipe = StableDiffusionControlNetPipeline.from_pretrained(
+            f"{local_fold}/runwayml/stable-diffusion-v1-5", controlnet=controlnet, torch_dtype=torch.float16
+        )
+
+        def mlsd_control_network():
+            model = MobileV2_MLSD_Large()
+            model.load_state_dict(torch.load(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/mlsd_large_512_fp32.pth"), strict=True)
+            return MLSDdetector(model)
 
 
-controlnet = ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-canny", torch_dtype=torch.float16)
-controlnetpipe = StableDiffusionControlNetPipeline.from_pretrained(
-    f"{local_fold}/runwayml/stable-diffusion-v1-5", controlnet=controlnet, torch_dtype=torch.float16
-)
+        hed_network = Network(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/network-bsds500.pth")
 
-def mlsd_control_network():
-    model = MobileV2_MLSD_Large()
-    model.load_state_dict(torch.load(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/mlsd_large_512_fp32.pth"), strict=True)
-    return MLSDdetector(model)
+        controlnet_sd_pipes = {
+            "openpose-control": {
+                "model": OpenposeDetector(Body(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/body_pose_model.pth"))
+            },
+            "mlsd-control": {
+                "model": mlsd_control_network()
+            },
+            "hed-control": {
+                "model": HEDdetector(hed_network)
+            },
+            "scribble-control": {
+                "model": HEDdetector(hed_network)
+            },
+            "midas-control": {
+                "model": MidasDetector(model_path=f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/dpt_hybrid-midas-501f0c75.pt")
+            },
+            "canny-control": {
+                "model": CannyDetector()
+            },
+            "lllyasviel/sd-controlnet-canny":{
+                "control": controlnet, 
+                "model": controlnetpipe,
+                "device": "cuda:0"
+            },
+            "lllyasviel/sd-controlnet-depth":{
+                "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-depth", torch_dtype=torch.float16),
+                "model": controlnetpipe,
+                "device": "cuda:0"
+            },
+            "lllyasviel/sd-controlnet-hed":{
+                "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-hed", torch_dtype=torch.float16), 
+                "model": controlnetpipe,
+                "device": "cuda:0"
+            },
+            "lllyasviel/sd-controlnet-mlsd":{
+                "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-mlsd", torch_dtype=torch.float16), 
+                "model": controlnetpipe,
+                "device": "cuda:0"
+            },
+            "lllyasviel/sd-controlnet-openpose":{
+                "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-openpose", torch_dtype=torch.float16), 
+                "model": controlnetpipe,
+                "device": "cuda:0"
+            },
+            "lllyasviel/sd-controlnet-scribble":{
+                "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-scribble", torch_dtype=torch.float16), 
+                "model": controlnetpipe,
+                "device": "cuda:0"
+            },
+            "lllyasviel/sd-controlnet-seg":{
+                "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-seg", torch_dtype=torch.float16), 
+                "model": controlnetpipe,
+                "device": "cuda:0"
+            }    
+        }
+    pipes = {**standard_pipes, **other_pipes, **controlnet_sd_pipes}
+    return pipes
 
-
-hed_network = Network(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/network-bsds500.pth")
-
-controlnet_sd_pipes = {
-    "openpose-control": {
-        "model": OpenposeDetector(Body(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/body_pose_model.pth"))
-    },
-    "mlsd-control": {
-        "model": mlsd_control_network()
-    },
-    "hed-control": {
-        "model": HEDdetector(hed_network)
-    },
-    "scribble-control": {
-        "model": HEDdetector(hed_network)
-    },
-    "midas-control": {
-        "model": MidasDetector(model_path=f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/dpt_hybrid-midas-501f0c75.pt")
-    },
-    "canny-control": {
-        "model": CannyDetector()
-    },
-    "lllyasviel/sd-controlnet-canny":{
-        "control": controlnet, 
-        "model": controlnetpipe,
-        "device": "cuda:0"
-    },
-    "lllyasviel/sd-controlnet-depth":{
-        "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-depth", torch_dtype=torch.float16),
-        "model": controlnetpipe,
-        "device": "cuda:0"
-    },
-    "lllyasviel/sd-controlnet-hed":{
-        "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-hed", torch_dtype=torch.float16), 
-        "model": controlnetpipe,
-        "device": "cuda:0"
-    },
-    "lllyasviel/sd-controlnet-mlsd":{
-        "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-mlsd", torch_dtype=torch.float16), 
-        "model": controlnetpipe,
-        "device": "cuda:0"
-    },
-    "lllyasviel/sd-controlnet-openpose":{
-        "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-openpose", torch_dtype=torch.float16), 
-        "model": controlnetpipe,
-        "device": "cuda:0"
-    },
-    "lllyasviel/sd-controlnet-scribble":{
-        "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-scribble", torch_dtype=torch.float16), 
-        "model": controlnetpipe,
-        "device": "cuda:0"
-    },
-    "lllyasviel/sd-controlnet-seg":{
-        "control": ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-seg", torch_dtype=torch.float16), 
-        "model": controlnetpipe,
-        "device": "cuda:0"
-    }    
-}
-
+pipes = load_pipes(local_models)
 
 end = time.time()
 during = end - start
 
-pipes = {**standard_pipes, **other_pipes, **controlnet_sd_pipes}
-
 print(f"[ ready ] {during}s")
+
+@app.route('/running', methods=['GET'])
+def running():
+    return jsonify({"running": True})
 
 @app.route('/status/<path:model_id>', methods=['GET'])
 def status(model_id):
@@ -391,6 +404,8 @@ def models(model_id):
             image = load_image(request.get_json()["img_url"])
             if "scribble" in model_id:
                 control = pipe(image, scribble = True)
+            elif "canny" in model_id:
+                control = pipe(image, low_threshold=100, high_threshold=200)
             else:
                 control = pipe(image)
             file_name = str(uuid.uuid4())[:4]
@@ -400,8 +415,6 @@ def models(model_id):
         # image to image
         if model_id == "lambdalabs/sd-image-variations-diffusers":
             im = load_image(request.get_json()["img_url"])
-            # bytes_data = io.BytesIO(request.data)
-            # im = Image.open(bytes_data)
             file_name = str(uuid.uuid4())[:4]
             with open(f"public/images/{file_name}.png", "wb") as f:
                 f.write(request.data)
@@ -532,7 +545,6 @@ def models(model_id):
             wav, sr = torchaudio.load(audio_url)
             with torch.no_grad():
                 result_wav = pipe(wav.to(pipes[model_id]["device"]))
-            # torch.tensor to audio file
             name = str(uuid.uuid4())[:4]
             sf.write(f"public/audios/{name}.wav", result_wav.cpu().squeeze().numpy(), sr)
             result = {"path": f"/audios/{name}.wav"}
@@ -553,7 +565,6 @@ def models(model_id):
         if model_id == "facebook/detr-resnet-50-panoptic":
             result = []
             segments = pipe(request.get_json()["img_url"])
-            # paste segment mask on image
             image = load_image(request.get_json()["img_url"])
 
             colors = []
@@ -617,4 +628,3 @@ if __name__ == '__main__':
         os.makedirs("public/videos")
         
     waitress.serve(app, host=host, port=port)
-    # app.run(host=host, port=port)

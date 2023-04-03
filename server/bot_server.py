@@ -23,11 +23,9 @@ CORS(app)
 @app.route('/hugginggpt', methods=['POST'])
 def chat():
     data = request.get_json()
-    # print(data)
     messages = data["messages"]
     response = chat_huggingface(messages)
     return jsonify(response)
 
 if __name__ == '__main__':
     waitress.serve(app, host=host, port=port)
-    # app.run(host=host, port=port, debug=True)

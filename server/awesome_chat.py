@@ -1,11 +1,10 @@
 import base64
 from io import BytesIO
+import io
 import random
-from time import sleep
 import time
 import traceback
 import uuid
-import numpy as np
 import requests
 import re
 import json
@@ -13,24 +12,33 @@ import logging
 import argparse
 import yaml
 from PIL import Image, ImageDraw
+from diffusers.utils import load_image
 from pydub import AudioSegment
 import multiprocessing
-from get_token_ids import get_token_ids_for_task_parsing, get_token_ids_for_choose_model, count_tokens
-
+from get_token_ids import get_token_ids_for_task_parsing, get_token_ids_for_choose_model, count_tokens, get_max_context_length
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--config", type=str, default="config.yaml")
 args = parser.parse_args()
 
+config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
+
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
+
 handler = logging.StreamHandler()
-handler.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
+if not config["debug"]:
+    handler.setLevel(logging.INFO)
 logger.addHandler(handler)
 
-config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
+log_file = config["log_file"]
+if log_file:
+    filehandler = logging.FileHandler(log_file)
+    filehandler.setLevel(logging.DEBUG)
+    filehandler.setFormatter(formatter)
+    logger.addHandler(filehandler)
 
 LLM = config["model"]
 use_completion = config["use_completion"]
@@ -51,7 +59,9 @@ if use_completion:
 else:
     api_name = "chat/completions"
 
-if not config["dev"] and config["openai"]["key"]:
+if not config["dev"]:
+    if not config["openai"]["key"].startswith("sk-"):
+        raise ValueError("OpenAI key is not a secret key")
     OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
     HEADER = {
@@ -66,16 +76,18 @@ if config["proxy"]:
     PROXY = {
         "https": config["proxy"],
     }
-    
+
+inference_mode = config["inference_mode"]
 
 HTTP_Server = "http://" + config["httpserver"]["host"] + ":" + str(config["httpserver"]["port"])
 Model_Server = "http://" + config["modelserver"]["host"] + ":" + str(config["modelserver"]["port"])
 
+if requests.get(Model_Server + "/running").status_code != 200:
+    raise ValueError("Model Server is not running")
 
 parse_task_demos_or_presteps = open(config["demos_or_presteps"]["parse_task"], "r").read()
 choose_model_demos_or_presteps = open(config["demos_or_presteps"]["choose_model"], "r").read()
 response_results_demos_or_presteps = open(config["demos_or_presteps"]["response_results"], "r").read()
-
 
 parse_task_prompt = config["prompt"]["parse_task"]
 choose_model_prompt = config["prompt"]["choose_model"]
@@ -120,13 +132,14 @@ def convert_chat_to_completion(data):
     final_prompt = final_prompt + "<im_start>assistant"
     data["prompt"] = final_prompt
     data['stop'] = data.get('stop', ["<im_end>"])
-    data['max_tokens'] = data.get('max_tokens', max(4000 - count_tokens(LLM_encoding, final_prompt), 1))
+    data['max_tokens'] = data.get('max_tokens', max(get_max_context_length(LLM) - count_tokens(LLM_encoding, final_prompt), 1))
     return data
 
 def send_request(data):
     if use_completion:
         data = convert_chat_to_completion(data)
     response = requests.post(endpoint, json=data, headers=HEADER, proxies=PROXY)
+    # print(response.json())
     if use_completion:
         return response.json()["choices"][0]["text"].replace("\n", "")
     else:
@@ -139,7 +152,6 @@ def replace_slot(text, entries):
         text = text.replace("{{" + key +"}}", value.replace('"', "'").replace('\n', ""))
     return text
 
-
 def find_json(s):
     s = s.replace("\'", "\"")
     start = s.find("{")
@@ -147,6 +159,7 @@ def find_json(s):
     res = s[start:end+1]
     res = res.replace("\n", "")
     return res
+
 
 def field_extract(s, field):
     try:
@@ -157,6 +170,12 @@ def field_extract(s, field):
         extracted = field_rep.search(s).group(1).replace("\"", "\'")
     return extracted
 
+def get_id_reason(choose_str):
+    reason = field_extract(choose_str, "reason")
+    id = field_extract(choose_str, "id")
+    choose = {"id": id, "reason": reason}
+    return id.strip(), reason.strip(), choose
+
 def record_case(success, **args):
     if success:
         f = open("log_success.jsonl", "a")
@@ -165,6 +184,20 @@ def record_case(success, **args):
     log = args
     f.write(json.dumps(log) + "\n")
     f.close()
+
+def image_to_bytes(img_url):
+    img_byte = io.BytesIO()
+    type = img_url.split(".")[-1]
+    load_image(img_url).save(img_byte, format="png")
+    img_data = img_byte.getvalue()
+    return img_data
+
+def resource_has_dep(command):
+    args = command["args"]
+    for _, v in args.items():
+        if "<GENERATED>" in v:
+            return True
+    return False
 
 def chitchat(messages):
     data = {
@@ -179,6 +212,7 @@ def parse_task(context, input):
     messages = json.loads(demos_or_presteps)
     messages.insert(0, {"role": "system", "content": parse_task_tprompt})
 
+    # cut chat logs
     start = 0
     while start <= len(context):
         history = context[start:]
@@ -189,12 +223,12 @@ def parse_task(context, input):
         messages.append({"role": "user", "content": prompt})
         history_text = "<im_end>\nuser<im_start>".join([m["content"] for m in messages])
         num = count_tokens(LLM_encoding, history_text)
-        if 4000 - num > 800:
+        if get_max_context_length(LLM) - num > 800:
             break
         messages.pop()
         start += 2
     
-    logger.info(messages)
+    logger.debug(messages)
     data = {
         "model": LLM,
         "messages": messages,
@@ -217,7 +251,7 @@ def choose_model(input, task, metas, preference=["High efficiency", "Good perfor
     messages = json.loads(demos_or_presteps)
     messages.insert(0, {"role": "system", "content": choose_model_tprompt})
     messages.append({"role": "user", "content": prompt})
-    logger.info(messages)
+    logger.debug(messages)
     data = {
         "model": LLM,
         "messages": messages,
@@ -239,7 +273,7 @@ def response_results(input, results):
     messages = json.loads(demos_or_presteps)
     messages.insert(0, {"role": "system", "content": response_results_tprompt})
     messages.append({"role": "user", "content": prompt})
-    logger.info(messages)
+    logger.debug(messages)
     data = {
         "model": LLM,
         "messages": messages,
@@ -247,7 +281,7 @@ def response_results(input, results):
     }
     return send_request(data)
 
-def hugginhface_model_inference(model_id, data, task):
+def huggingface_model_inference(model_id, data, task):
     task_url = f"https://api-inference.huggingface.co/models/{model_id}"
     
     # NLP tasks
@@ -265,7 +299,7 @@ def hugginhface_model_inference(model_id, data, task):
     if task == "visual-question-answering" or task == "document-question-answering":
         img_url = data["image"]
         text = data["text"]
-        img_data = requests.get(img_url, timeout=10).content
+        img_data = image_to_bytes(img_url)
         img_base64 = base64.b64encode(img_data).decode("utf-8")
         json_data = {}
         json_data["inputs"] = {}
@@ -275,7 +309,7 @@ def hugginhface_model_inference(model_id, data, task):
         return response.json()
     if task == "image-to-image":
         img_url = data["image"]
-        img_data = requests.get(img_url, timeout=10).content
+        img_data = image_to_bytes(img_url)
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
         response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
         results = response.json()
@@ -294,19 +328,17 @@ def hugginhface_model_inference(model_id, data, task):
         return results
     if task == "image-segmentation":
         img_url = data["image"]
-        img_data = requests.get(img_url, proxies=PROXY, timeout=10).content
+        img_data = image_to_bytes(img_url)
         image = Image.open(BytesIO(img_data))
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
         response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data, proxies=PROXY)
         predicted = response.json()
-        # generate different rgba colors for different classes
         colors = []
         for i in range(len(predicted)):
             colors.append((random.randint(100, 255), random.randint(100, 255), random.randint(100, 255), 155))
         for i, pred in enumerate(predicted):
             label = pred["label"]
             mask = pred.pop("mask").encode("utf-8")
-            # decode base64 to image and draw segmentation mask on image
             mask = base64.b64decode(mask)
             mask = Image.open(BytesIO(mask), mode='r')
             mask = mask.convert('L')
@@ -321,7 +353,7 @@ def hugginhface_model_inference(model_id, data, task):
         return results
     if task == "object-detection":
         img_url = data["image"]
-        img_data = requests.get(img_url, proxies=PROXY, timeout=10).content
+        img_data = image_to_bytes(img_url)
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
         r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data, proxies=PROXY)
         predicted = r.json()
@@ -344,7 +376,7 @@ def hugginhface_model_inference(model_id, data, task):
         return response
     if task == "image-to-text":
         img_url = data["image"]
-        img_data = requests.get(img_url, timeout=10).content
+        img_data = image_to_bytes(img_url)
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
         response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
         results = {}
@@ -354,7 +386,7 @@ def hugginhface_model_inference(model_id, data, task):
 
     if task in ["image-classification"]:
         img_url = data["image"]
-        img_data = requests.get(img_url, timeout=10).content
+        img_data = image_to_bytes(img_url)
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
         response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
         return response.json()
@@ -455,12 +487,11 @@ def local_model_inference(model_id, data, task):
         return results
     if task == "object-detection":
         img_url = data["image"]
-        img_data = requests.get(img_url, proxies=PROXY, timeout=10).content
         response = requests.post(task_url, json={"img_url": img_url})
         predicted = response.json()
         if "error" in predicted:
             return predicted
-        image = Image.open(BytesIO(img_data))
+        image = load_image(img_url)
         draw = ImageDraw.Draw(image)
         labels = list(item['label'] for item in predicted)
         color_map = {}
@@ -498,86 +529,81 @@ def local_model_inference(model_id, data, task):
         return response.json()
 
 
-def model_inference(model_id, data, task):
-    use_huggingface_service = False
-    use_local_service = False
-    huggingfaceStatusUrl = f"https://api-inference.huggingface.co/status/{model_id}"
-    r = requests.get(huggingfaceStatusUrl, headers=HUGGINGFACE_HEADERS, proxies=PROXY)
-    logger.info("Huggingface Status: " + str(r.json()))
-    if r.status_code == 200 and "loaded" in r.json() and r.json()["loaded"]:
-        use_huggingface_service = True
-    
-    localStatusUrl = f"{Model_Server}/status/{model_id}"
-    r = requests.get(localStatusUrl)
-    logger.info("Local Server Status: " + str(r.json()))
-    if r.status_code == 200 and "loaded" in r.json() and r.json()["loaded"]:
-        use_local_service = True
+def model_inference(model_id, data, hosted_on, task):
+    if hosted_on == "unknown":
+        localStatusUrl = f"{Model_Server}/status/{model_id}"
+        r = requests.get(localStatusUrl)
+        logger.debug("Local Server Status: " + str(r.json()))
+        if r.status_code == 200 and "loaded" in r.json() and r.json()["loaded"]:
+            hosted_on = "local"
+        else:
+            huggingfaceStatusUrl = f"https://api-inference.huggingface.co/status/{model_id}"
+            r = requests.get(huggingfaceStatusUrl, headers=HUGGINGFACE_HEADERS, proxies=PROXY)
+            logger.debug("Huggingface Status: " + str(r.json()))
+            if r.status_code == 200 and "loaded" in r.json() and r.json()["loaded"]:
+                hosted_on = "huggingface"
     
     try:
-        if use_local_service:
+        if hosted_on == "local":
             inference_result = local_model_inference(model_id, data, task)
-        elif use_huggingface_service:
-            inference_result = hugginhface_model_inference(model_id, data, task)
-        else:
-            inference_result = {"error":{"message": "there are no services available locally or at Huggingface."}}
+        elif hosted_on == "huggingface":
+            inference_result = huggingface_model_inference(model_id, data, task)
     except Exception as e:
         traceback.print_exc()
         inference_result = {"error":{"message": str(e)}}
     return inference_result
 
-def get_id_reason(choose_str):
-    reason = field_extract(choose_str, "reason")
-    id = field_extract(choose_str, "id")
-    choose = {"id": id, "reason": reason}
-    return id.strip(), reason.strip(), choose
 
-
-def get_model_id_status(model_id, url, headers, queue):
+def get_model_status(model_id, url, headers, queue):
+    endpoint_type = "huggingface" if "huggingface" in url else "local"
     if "huggingface" in url:
         r = requests.get(url, headers=headers, proxies=PROXY)
     else:
         r = requests.get(url)
     if r.status_code == 200 and "loaded" in r.json() and r.json()["loaded"]:
-        queue.put((model_id, True))
+        queue.put((model_id, True, endpoint_type))
     else:
-        queue.put((model_id, False))
+        queue.put((model_id, False, None))
 
-def get_avaliable_model_ids(candidates, topk=5):
-    all_available_model_ids = []
+def get_avaliable_models(candidates, topk=5):
+    all_available_models = {"local": [], "huggingface": []}
     processes = []
     result_queue = multiprocessing.Queue()
 
     for candidate in candidates:
         model_id = candidate["id"]
-        huggingfaceStatusUrl = f"https://api-inference.huggingface.co/status/{model_id}"
-        process = multiprocessing.Process(target=get_model_id_status, args=(model_id, huggingfaceStatusUrl, HUGGINGFACE_HEADERS, result_queue))
-        processes.append(process)
-        process.start()
 
-        localStatusUrl = f"{Model_Server}/status/{model_id}"
-        process = multiprocessing.Process(target=get_model_id_status, args=(model_id, localStatusUrl, {}, result_queue))
-        processes.append(process)
-        process.start()
+        if inference_mode != "local":
+            huggingfaceStatusUrl = f"https://api-inference.huggingface.co/status/{model_id}"
+            process = multiprocessing.Process(target=get_model_status, args=(model_id, huggingfaceStatusUrl, HUGGINGFACE_HEADERS, result_queue))
+            processes.append(process)
+            process.start()
+        
+        if inference_mode != "huggingface":
+            localStatusUrl = f"{Model_Server}/status/{model_id}"
+            process = multiprocessing.Process(target=get_model_status, args=(model_id, localStatusUrl, {}, result_queue))
+            processes.append(process)
+            process.start()
         
     result_count = len(processes)
     while result_count:
-        model_id, status = result_queue.get()
-        if status and model_id not in all_available_model_ids:
-            all_available_model_ids.append(model_id)
-        if len(all_available_model_ids) >= topk:
+        model_id, status, endpoint_type = result_queue.get()
+        if status and model_id not in all_available_models:
+            all_available_models[endpoint_type].append(model_id)
+        if len(all_available_models["local"] + all_available_models["huggingface"]) >= topk:
             break
         result_count -= 1
 
     for process in processes:
         process.join()
 
-    return all_available_model_ids
+    return all_available_models
 
 def colloct_result(command, choose, inference_result):
     result = {"task": command}
     result["inference result"] = inference_result
     result["choose model result"] = choose
-    logger.info(f"inference result: {inference_result}")
+    logger.debug(f"inference result: {inference_result}")
     return result
 
 
@@ -591,8 +617,8 @@ def run_task(input, command, results):
     else:
         dep_tasks = []
     
-    logger.info(f"Run task: {id} - {task}")
-    logger.info("Deps: " + json.dumps(dep_tasks))
+    logger.debug(f"Run task: {id} - {task}")
+    logger.debug("Deps: " + json.dumps(dep_tasks))
 
     if deps[0] != -1:
         if "image" in args and "<GENERATED>-" in args["image"]:
@@ -612,23 +638,22 @@ def run_task(input, command, results):
     for dep_task in dep_tasks:
         if "generated text" in dep_task["inference result"]:
             text = dep_task["inference result"]["generated text"]
-            logger.info("Detect the generated text of dependency task (from results):" + text)
+            logger.debug("Detect the generated text of dependency task (from results):" + text)
         elif "text" in dep_task["task"]["args"]:
             text = dep_task["task"]["args"]["text"]
-            logger.info("Detect the text of dependency task (from args): " + text)
+            logger.debug("Detect the text of dependency task (from args): " + text)
         if "generated image" in dep_task["inference result"]:
-            image = HTTP_Server + dep_task["inference result"]["generated image"]
-            logger.info("Detect the generated image of dependency task (from results): " + image)
+            image = dep_task["inference result"]["generated image"]
+            logger.debug("Detect the generated image of dependency task (from results): " + image)
         elif "image" in dep_task["task"]["args"]:
             image = dep_task["task"]["args"]["image"]
-            logger.info("Detect the image of dependency task (from args): " + image)
+            logger.debug("Detect the image of dependency task (from args): " + image)
         if "generated audio" in dep_task["inference result"]:
-            audio = HTTP_Server + dep_task["inference result"]["generated audio"]
-            logger.info("Detect the generated audio of dependency task (from results): " + audio)
+            audio = dep_task["inference result"]["generated audio"]
+            logger.debug("Detect the generated audio of dependency task (from results): " + audio)
         elif "audio" in dep_task["task"]["args"]:
             audio = dep_task["task"]["args"]["audio"]
-            logger.info("Detect the audio of dependency task (from args): " + audio)
-
+            logger.debug("Detect the audio of dependency task (from args): " + audio)
 
     if "image" in args and "<GENERATED>" in args["image"]:
         if image:
@@ -641,11 +666,11 @@ def run_task(input, command, results):
             args["text"] = text
 
     for resource in ["image", "audio"]:
-        if resource in args and not args[resource].startswith("http") and len(args[resource]) > 0:
-            args[resource] = f"{HTTP_Server}{args[resource]}"
+        if resource in args and not args[resource].startswith("public/") and len(args[resource]) > 0 and not args[resource].startswith("http"):
+            args[resource] = f"public/{args[resource]}"
     
     if "-text-to-image" in command['task'] and "text" not in args:
-        logger.info("control-text-to-image task, but text is empty, so we use control-generation instead.")
+        logger.debug("control-text-to-image task, but text is empty, so we use control-generation instead.")
         control = task.split("-")[0]
         
         if control == "seg":
@@ -658,52 +683,60 @@ def run_task(input, command, results):
             task = f"{control}-control"
 
     command["args"] = args
-    logger.info(f"parsed task: {command}")
+    logger.debug(f"parsed task: {command}")
 
     if task.endswith("-text-to-image"):
         control = task.split("-")[0]
         best_model_id = f"lllyasviel/sd-controlnet-{control}"
+        hosted_on = "local"
         reason = "ControlNet is the best model for this task."
         choose = {"id": best_model_id, "reason": reason}
-        logger.info(f"chosen model: {choose}")
+        logger.debug(f"chosen model: {choose}")
     elif task.endswith("-control"):
         best_model_id = task
+        hosted_on = "local"
         reason = "ControlNet tools"
         choose = {"id": best_model_id, "reason": reason}
-        logger.info(f"chosen model: {choose}")
+        logger.debug(f"chosen model: {choose}")
     else:
         if task not in MODELS_MAP:
+            logger.warning(f"no available models on {task} task.")
             record_case(success=False, **{"input": input, "task": command, "reason": f"task not support: {command['task']}", "op":"message"})
             inference_result = {"error": f"{command['task']} not found in available tasks."}
             results[id] = colloct_result(command, choose, inference_result)
             return False
 
-        candidates = MODELS_MAP[task][:40]
-        all_avaliable_model_ids = get_avaliable_model_ids(candidates)
-        logger.info(f"avaliable models on {command['task']}: {all_avaliable_model_ids}")
+        candidates = MODELS_MAP[task][:10]
+        all_avaliable_models = get_avaliable_models(candidates)
+        all_avaliable_model_ids = all_avaliable_models["local"] + all_avaliable_models["huggingface"]
+        logger.debug(f"avaliable models on {command['task']}: {all_avaliable_models}")
 
-        # controlnet direct choose
         if len(all_avaliable_model_ids) == 0:
+            logger.warning(f"no available models on {command['task']}")
             record_case(success=False, **{"input": input, "task": command, "reason": f"no available models: {command['task']}", "op":"message"})
             inference_result = {"error": f"no available models on {command['task']} task."}
             results[id] = colloct_result(command, "", inference_result)
             return False
-
             
         if len(all_avaliable_model_ids) == 1:
             best_model_id = all_avaliable_model_ids[0]
+            hosted_on = "unknown"
             reason = "Only one model available."
             choose = {"id": best_model_id, "reason": reason}
-            logger.info(f"chosen model: {choose}")
+            logger.debug(f"chosen model: {choose}")
         else:
             cand_models_info = []
             for model in candidates:
                 model_info = {}
+                model_info["id"] = model["id"]
                 if model["id"] not in all_avaliable_model_ids:
                     continue
+                if model["id"] in all_avaliable_models["local"]:
+                    model_info["inference endpoint"] = "local"
+                elif model["id"] in all_avaliable_models["huggingface"]:
+                    model_info["inference endpoint"] = "huggingface"
                 if "likes" in model:
                     model_info["likes"] = model["likes"]
-                model_info["id"] = model["id"]
                 if "description" in model:
                     model_info["description"] = model["description"][:100]
                 if "language" in model:
@@ -713,18 +746,21 @@ def run_task(input, command, results):
                 cand_models_info.append(model_info)
 
             choose_str = choose_model(input, command, cand_models_info)
-            logger.info(f"chosen model: {choose_str}")
+            logger.debug(f"chosen model: {choose_str}")
             try:
-                choose_str = find_json(choose_str)
-                best_model_id, reason, choose  = get_id_reason(choose_str)
-            except Exception as e:
-                print(e)
-                choose = json.loads(choose)
+                choose = json.loads(choose_str)
                 reason = choose["reason"]
                 best_model_id = choose["id"]
-    inference_result = model_inference(best_model_id, args, command['task'])
+                hosted_on = "local" if best_model_id in all_avaliable_models["local"] else "huggingface"
+            except Exception as e:
+                logger.warning(f"the response [ {choose_str} ] is not a valid JSON, try to find the model id and reason in the response.")
+                choose_str = find_json(choose_str)
+                best_model_id, reason, choose  = get_id_reason(choose_str)
+                hosted_on = "local" if best_model_id in all_avaliable_models["local"] else "huggingface"
+    inference_result = model_inference(best_model_id, args, hosted_on, command['task'])
 
     if "error" in inference_result:
+        logger.warning(f"Inference error: {inference_result['error']}")
         record_case(success=False, **{"input": input, "task": command, "reason": f"inference error: {inference_result['error']}", "op":"message"})
         results[id] = colloct_result(command, choose, inference_result)
         return False
@@ -732,21 +768,16 @@ def run_task(input, command, results):
     results[id] = colloct_result(command, choose, inference_result)
     return True
 
-def has_dep(command):
-    args = command["args"]
-    for k, v in args.items():
-        if "<GENERATED>" in v:
-            return True
-    return False
-
 def chat_huggingface(messages):
     start = time.time()
-    context = messages[1:-1]
+    context = messages[0:-1]
     input = messages[-1]["content"]
+    logger.info("*"*80)
+    logger.info(f"input: {input}")
 
     task_str = parse_task(context, input).strip()
 
-    if task_str == "[]":
+    if task_str == "[]" or "conversational" in task_str:  # using LLM response for empty task or conversational task
         record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
         response = chitchat(messages)
         return {"message": response}
@@ -754,7 +785,7 @@ def chat_huggingface(messages):
         logger.info(task_str)
         tasks = json.loads(task_str)
     except Exception as e:
-        logger.info(e)
+        logger.debug(e)
         response = chitchat(messages)
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
@@ -768,7 +799,7 @@ def chat_huggingface(messages):
         while True:
             num_process = len(processes)
             for task in tasks:
-                if not has_dep(task):
+                if not resource_has_dep(task):
                     task["dep"] = [-1]
                 dep = task["dep"]
                 if len(list(set(dep).intersection(d.keys()))) == len(dep) or dep[0] == -1:
@@ -780,7 +811,7 @@ def chat_huggingface(messages):
                 time.sleep(0.5)
                 retry += 1
             if retry > 160:
-                logger.info("User has waited too long, Loop break.")
+                logger.debug("User has waited too long, Loop break.")
                 break
             if len(tasks) == 0:
                 break
@@ -788,25 +819,51 @@ def chat_huggingface(messages):
             process.join()
         
         results = d.copy()
-    logger.info(results)
+    logger.debug(results)
     response = response_results(input, results).strip()
 
     end = time.time()
     during = end - start
 
-    logger.info(f"response to user: {response}")
     answer = {"message": response}
     record_case(success=True, **{"input": input, "task": task_str, "results": results, "response": response, "during": during, "op":"response"})
+    logger.info(f"response: {response}")
     return answer
 
-if __name__ == "__main__":
+def test():
+    # single round examples
     inputs = [
-        # "Given a collection of image A: /examples/cat.jpg, B: /examples/three-zebra.jpg, C: /examples/zebra.jpg, please tell me how many zebras in these picture?"
-        # "Can you give me a picture of a small bird flying in the sky with trees and clouds. Generate a high definition image if possible.",
-        # "Please answer all the named entities in the sentence: Iron Man is a superhero appearing in American comic books published by Marvel Comics. The character was co-created by writer and editor Stan Lee, developed by scripter Larry Lieber, and designed by artists Don Heck and Jack Kirby.",
-        # "please dub for me: 'Iron Man is a superhero appearing in American comic books published by Marvel Comics. The character was co-created by writer and editor Stan Lee, developed by scripter Larry Lieber, and designed by artists Don Heck and Jack Kirby.'"
+        "Given a collection of image A: /examples/cat.jpg, B: /examples/z3.jpg, C: /examples/z1.jpg, please tell me how many zebras in these picture?"
+        "Can you give me a picture of a small bird flying in the sky with trees and clouds. Generate a high definition image if possible.",
+        "Please answer all the named entities in the sentence: Iron Man is a superhero appearing in American comic books published by Marvel Comics. The character was co-created by writer and editor Stan Lee, developed by scripter Larry Lieber, and designed by artists Don Heck and Jack Kirby.",
+        "please dub for me: 'Iron Man is a superhero appearing in American comic books published by Marvel Comics. The character was co-created by writer and editor Stan Lee, developed by scripter Larry Lieber, and designed by artists Don Heck and Jack Kirby.'"
         "Given an image: https://huggingface.co/datasets/mishig/sample_images/resolve/main/palace.jpg, please answer the question: What is on top of the building?",
-        "What's in the picture?  https://huggingface.co/datasets/mishig/sample_images/resolve/main/teapot.jpg"
+        "Please generate a canny image based on /examples/savanna.jpg"
         ]
+        
     for input in inputs:
-        logger.info(chat_huggingface(input))                                    
+        messages = [{"role": "user", "content": input}]
+        chat_huggingface(messages)
+    
+    # multi rounds example
+    messages = [
+        {"role": "user", "content": "Please generate a canny image based on /examples/savanna.jpg"},
+        {"role": "assistant", "content": """Sure. I understand your request. Based on the inference results of the models, I have generated a canny image for you. The workflow I used is as follows: First, I used the image-to-text model (nlpconnect/vit-gpt2-image-captioning) to convert the image /examples/savanna.jpg to text. The generated text is "a herd of giraffes and zebras grazing in a field". Second, I used the canny-control model (canny-control) to generate a canny image from the text. Unfortunately, the model failed to generate the canny image. Finally, I used the canny-text-to-image model (lllyasviel/sd-controlnet-canny) to generate a canny image from the text. The generated image is located at /images/f16d.png. I hope this answers your request. Is there anything else I can help you with?"""},
+        {"role": "user", "content": """then based on the above canny image and a prompt "a photo of a zoo", generate a new image."""},
+    ]
+    chat_huggingface(messages)
+
+def cil_chat():
+    handler.setLevel(logging.WARNING)
+    messages = []
+    while True:
+        message = input("Input: ")
+        if message == "exit":
+            break
+        messages.append({"role": "user", "content": message})
+        answer = chat_huggingface(messages)
+        print("Output: ", answer["message"])
+        messages.append({"role": "assistant", "content": answer["message"]})
+
+if __name__ == "__main__":
+    cil_chat()
