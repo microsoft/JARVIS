@@ -144,3 +144,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+server/config.yaml
