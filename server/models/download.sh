@@ -46,6 +46,13 @@ lambdalabs/sd-image-variations-diffusers
 facebook/timesformer-base-finetuned-k400
 facebook/maskformer-swin-base-coco
 Intel/dpt-hybrid-midas
+lllyasviel/sd-controlnet-canny
+lllyasviel/sd-controlnet-depth
+lllyasviel/sd-controlnet-hed
+lllyasviel/sd-controlnet-mlsd
+lllyasviel/sd-controlnet-openpose
+lllyasviel/sd-controlnet-scribble
+lllyasviel/sd-controlnet-seg
 "
 
 # CURRENT_DIR=$(cd `dirname $0`; pwd)
