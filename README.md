@@ -4,8 +4,8 @@
 
 ## Updates
 
-+  [2023.04.03] We add the CLI mode and provide parameters for configuring the scale of local endpoints.
-+  [2023.04.01] We update a version of code for building.
++  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
++  [2023.04.01] We updated a version of code for building.
 
 ## Overview
 
@@ -15,9 +15,9 @@ See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hug
 
 <p align="center"><img src="./assets/overview.jpg"></p>
 
-We introduce a collaborative system that consists of **an LLM as the controller** and **numerous expert models as collaborative executors** (from HuggingFace Hub). The workflow of our system consists of four stages:
+We are introducing a collaborative system that consists of **an LLM as the controller** and **numerous expert models as collaborative executors** (from HuggingFace Hub). The workflow of our system consists of four stages:
 + **Task Planning**: Using ChatGPT to analyze the requests of users to understand their intention, and disassemble them into possible solvable sub-tasks.
-+ **Model Selection**: Based on the sub-tasks, ChatGPT invoke the corresponding models hosted on HuggingFace.
++ **Model Selection**: Based on the sub-tasks, ChatGPT invokes the corresponding models hosted on HuggingFace.
 + **Task Execution**: Executing each invoked model and returning the results to ChatGPT.
 + **Response Generation**: Finally, using ChatGPT to integrate the prediction of all models, and generate response.
 
