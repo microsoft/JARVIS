@@ -9,7 +9,7 @@ debug: false
 log_file: logs/debug.log
 model: text-davinci-003 # text-davinci-003
 use_completion: true
-inference_mode: hybrid # local, huggingface or hybrid
+inference_mode: huggingface # local, huggingface or hybrid
 local_deployment: minimal # no, minimal, standard or full
 num_candidate_models: 5
 max_description_length: 100

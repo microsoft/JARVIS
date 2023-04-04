@@ -5,7 +5,7 @@
 ## Updates
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
-   +  Just run `python awesome_chat.py` to experience it.
+   +  Just run `python awesome_chat.py --config light.yaml` to experience it.
 +  [2023.04.01] We updated a version of code for building.
 
 ## Overview
@@ -30,11 +30,10 @@ We introduce a collaborative system that consists of **an LLM as the controller*
 
 ## Quick Start
 
-First replace `openai.key` and `huggingface.cookie` in `server/config.yaml` with **your personal key** and **your cookies at huggingface.co**. 
+First replace `openai.key` and `huggingface.cookie` in `server/config.yaml` with **your personal key** and **your cookies at huggingface.co**. Then run the following commands:
 
 > The absence of the HuggingFace cookie may result in error message: `Rate limit reached. Please log in or use your apiToken`.
 
-Then run the following commands:
 
 ### For server:
 
@@ -52,8 +51,8 @@ sh download.sh
 
 # run server
 cd ..
-python models_server.py
-python bot_server.py --config config.yaml # for text-davinci-003
+python models_server.py --config config.yaml # required when `inference_mode` is `local` or `hybrid`
+python awesome_chat.py --config config.yaml --mode server # for text-davinci-003
 ```
 
 Now you can access Jarvis' services by the Web API. For example:
@@ -71,29 +70,13 @@ curl --location 'http://localhost:8004/hugginggpt' \
 }'
 ```
 
-### For web:
-
-We provide a user-friendly web page. You can run the commands to communicate with Jarvis in your browser:
-
-```bash
-cd web
-npm install
-npm run dev
-```
-Note that in order to display the video properly in HTML, you need to compile `ffmpeg` manually with H.264
-
-```bash
-# This command need be executed without errors.
-LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx264 output.mp4
-```
-
 ### For CLI:
 
 You can also run Jarvis more easily in chatbot console mode:
 
 ```bash
 cd server
-python awesome_chat.py
+python awesome_chat.py --config config.yaml --mode cli
 ```
 
 Examples of CLI mode:
@@ -106,6 +89,22 @@ Welcome to Jarvis! A collaborative system that consists of an LLM as the control
 [ Jarvis ]: Sure, I understand your request. Based on the inference results of the models, I will answer your request step by step. Firstly, I used the token-classification model dslim/bert-base-NER to recognize the named entities in the sentence. The inference result is that the named entities are Iron Man, Stan Lee, Larry Lieber, Don Heck and Jack Kirby. Then, I used the question-answering model deepset/roberta-base-squad2 to answer your request. The inference result is that there is no output since the context cannot be empty. Therefore, I cannot make it. I hope this answer your request. Is there anything else I can help you with?
 [ User ]: Please generate a canny image based on /examples/savanna.jpg
 [ Jarvis ]: Sure. I have generated a canny image based on /examples/savanna.jpg. To do this, I first used the image-to-text model nlpconnect/vit-gpt2-image-captioning to generate the text description of the image, which is "a herd of giraffes and zebras grazing in a field". Then I used the canny-control model to generate the canny image of the original image, which is stored in the path "/images/1ea2.png". Finally, I used the canny-text-to-image model lllyasviel/sd-controlnet-canny to generate the canny image based on the text description and the canny image, which is stored in the path "/images/ba66.png". Do you need anything else?
+```
+
+### For web:
+
+We provide a user-friendly web page. After starting `awesome_chat.py` in a server mode, you can run the commands to communicate with Jarvis in your browser:
+
+```bash
+cd web
+npm install
+npm run dev
+```
+Note that in order to display the video properly in HTML, you need to compile `ffmpeg` manually with H.264
+
+```bash
+# This command need be executed without errors.
+LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx264 output.mp4
 ```
 
 ## Configuration

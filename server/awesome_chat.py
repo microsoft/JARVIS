@@ -17,10 +17,15 @@ from PIL import Image, ImageDraw
 from diffusers.utils import load_image
 from pydub import AudioSegment
 import multiprocessing
+import flask
+from flask import request, jsonify
+import waitress
+from flask_cors import CORS
 from get_token_ids import get_token_ids_for_task_parsing, get_token_ids_for_choose_model, count_tokens, get_max_context_length
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--config", type=str, default="config.yaml")
+parser.add_argument("--mode", type=str, default="cli")
 args = parser.parse_args()
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
@@ -87,8 +92,16 @@ inference_mode = config["inference_mode"]
 HTTP_Server = "http://" + config["httpserver"]["host"] + ":" + str(config["httpserver"]["port"])
 Model_Server = "http://" + config["modelserver"]["host"] + ":" + str(config["modelserver"]["port"])
 
-if inference_mode!="huggingface" and requests.get(Model_Server + "/running").status_code != 200:
-    raise ValueError("Model Server is not running")
+# check the HTTP_Server
+if inference_mode!="huggingface":
+    message = "The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in config.yaml for a feature-limited experience)"
+    try:
+        r = requests.get(Model_Server + "/running")
+        if r.status_code != 200:
+            raise ValueError(message)
+    except:
+        raise ValueError(message)
+
 
 parse_task_demos_or_presteps = open(config["demos_or_presteps"]["parse_task"], "r").read()
 choose_model_demos_or_presteps = open(config["demos_or_presteps"]["choose_model"], "r").read()
@@ -886,7 +899,7 @@ def test():
     ]
     chat_huggingface(messages)
 
-def cli_chat():
+def cli():
     handler.setLevel(logging.WARNING)
     messages = []
     print("Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).")
@@ -899,5 +912,29 @@ def cli_chat():
         print("[ Jarvis ]: ", answer["message"])
         messages.append({"role": "assistant", "content": answer["message"]})
 
+
+def server():
+    handler.setLevel(logging.CRITICAL)
+    httpserver = config["httpserver"]
+    host = httpserver["host"]
+    port = httpserver["port"]
+
+    app = flask.Flask(__name__, static_folder="public", static_url_path="/")
+    app.config['DEBUG'] = False
+    CORS(app)
+
+    @app.route('/hugginggpt', methods=['POST'])
+    def chat():
+        data = request.get_json()
+        messages = data["messages"]
+        response = chat_huggingface(messages)
+        return jsonify(response)
+    waitress.serve(app, host=host, port=port)
+
 if __name__ == "__main__":
-    cli_chat()
+    if args.mode == "test":
+        test()
+    elif args.mode == "server":
+        server()
+    elif args.mode == "cli":
+        cli()

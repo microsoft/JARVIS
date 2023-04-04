@@ -1,3 +1,6 @@
+# ALL
+*.dev
+
 # for server
 server/models/*
 !server/models/download.sh
