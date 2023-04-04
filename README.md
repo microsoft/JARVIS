@@ -16,11 +16,13 @@ See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hug
 
 <p align="center"><img src="./assets/overview.jpg"></p>
 
+
+
 We introduce a collaborative system that consists of **an LLM as the controller** and **numerous expert models as collaborative executors** (from HuggingFace Hub). The workflow of our system consists of four stages:
 + **Task Planning**: Using ChatGPT to analyze the requests of users to understand their intention, and disassemble them into possible solvable tasks.
 + **Model Selection**: To solve the planned tasks, ChatGPT selects expert models hosted on Hugging Face based on their descriptions.
-+ **Task Execution**: Invoke and execute each selected model, and return the results to ChatGPT.
-+ **Response Generation**: Finally, using ChatGPT to integrate the prediction of all models, and generate response.
++ **Task Execution**: Invokes and executes each selected model, and return the results to ChatGPT.
++ **Response Generation**: Finally, using ChatGPT to integrate the prediction of all models, and generate responses.
 
 ## System Requirements
 
