@@ -1,8 +1,11 @@
 # for server
 server/models/*
 !server/models/download.sh
-server/*.jsonl
+server/logs/
 server/public/
+
+# for gradio
+server/run_gradio.py
 
 # for web
 web/node_modules
