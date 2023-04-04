@@ -5,7 +5,7 @@
 ## Updates
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
-   +  Just run `python awesome_chat.py --config light.yaml` to experience it.
+   +  Just run `python awesome_chat.py --config lite.yaml` to experience it.
 +  [2023.04.01] We updated a version of code for building.
 
 ## Overview
@@ -26,9 +26,17 @@ We introduce a collaborative system that consists of **an LLM as the controller*
 
 ## System Requirements
 
+### Default
+
 + Ubuntu 16.04 LTS
 + NVIDIA GeForce RTX 3090 * 1
-+ RAM > 24GB
++ RAM > 25GB (minimal), 80GB (full)
+  
+### Minimum
+
++ Ubuntu 16.04 LTS
+
+The configuration `lite.yaml` does not require any expert models to be downloaded and deployed locally. However, it means that Jarvis is restricted to models running stably on HuggingFace Inference Endpoints.
 
 ## Quick Start
 
@@ -49,7 +57,7 @@ pip install -r requirements.txt
 
 # download models
 cd models
-sh download.sh
+sh download.sh # required when `inference_mode` is `local` or `hybrid`
 
 # run server
 cd ..
@@ -72,9 +80,27 @@ curl --location 'http://localhost:8004/hugginggpt' \
 }'
 ```
 
+
+### For web:
+
+We provide a user-friendly web page. After starting `awesome_chat.py` in a server mode, you can run the commands to communicate with Jarvis in your browser:
+
+```bash
+cd web
+npm install
+npm run dev
+```
+Note that in order to display the video properly in HTML, you need to compile `ffmpeg` manually with H.264
+
+```bash
+# Optional: Install ffmpeg
+# This command need be executed without errors.
+LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx264 output.mp4
+```
+
 ### For CLI:
 
-You can also run Jarvis more easily in chatbot console mode:
+You can also run Jarvis more easily in CLI mode:
 
 ```bash
 cd server
@@ -93,21 +119,6 @@ Welcome to Jarvis! A collaborative system that consists of an LLM as the control
 [ Jarvis ]: Sure. I have generated a canny image based on /examples/savanna.jpg. To do this, I first used the image-to-text model nlpconnect/vit-gpt2-image-captioning to generate the text description of the image, which is "a herd of giraffes and zebras grazing in a field". Then I used the canny-control model to generate the canny image of the original image, which is stored in the path "/images/1ea2.png". Finally, I used the canny-text-to-image model lllyasviel/sd-controlnet-canny to generate the canny image based on the text description and the canny image, which is stored in the path "/images/ba66.png". Do you need anything else?
 ```
 
-### For web:
-
-We provide a user-friendly web page. After starting `awesome_chat.py` in a server mode, you can run the commands to communicate with Jarvis in your browser:
-
-```bash
-cd web
-npm install
-npm run dev
-```
-Note that in order to display the video properly in HTML, you need to compile `ffmpeg` manually with H.264
-
-```bash
-# This command need be executed without errors.
-LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx264 output.mp4
-```
 
 ## Configuration
 

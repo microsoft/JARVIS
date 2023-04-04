@@ -1,19 +1,19 @@
 openai:
-  key: your_personal_key # gradio, your_personal_key
+  key: your_personal_openai_key # required: gradio or your_personal_openai_key
 huggingface:
-  cookie: # required for huggingface inference
+  cookie: # required: cookies at huggingface.co
 local: # ignore: just for development
   endpoint: http://localhost:8003
 dev: false
 debug: false
 log_file: logs/debug.log
-model: text-davinci-003 # text-davinci-003
+model: text-davinci-003 # currently only support text-davinci-003, we will support more open-source LLMs in the future
 use_completion: true
-inference_mode: huggingface # local, huggingface or hybrid
-local_deployment: minimal # no, minimal, standard or full
+inference_mode: huggingface # local, huggingface or hybrid, prefer hybrid
+local_deployment: minimal # minimal, standard or full, prefer full
 num_candidate_models: 5
 max_description_length: 100
-proxy: 
+proxy: # optional: your proxy server "http://ip:port"
 httpserver:
   host: localhost
   port: 8004

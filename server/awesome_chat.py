@@ -221,6 +221,44 @@ def resource_has_dep(command):
             return True
     return False
 
+def fix_dep(tasks):
+    for task in tasks:
+        args = task["args"]
+        task["dep"] = []
+        for k, v in args.items():
+            if "<GENERATED>" in v:
+                dep_task_id = int(v.split("-")[1])
+                task["dep"].append(dep_task_id)
+        if len(task["dep"]) == 0:
+            task["dep"] = [-1]
+    return tasks
+
+def unfold(tasks):
+    flag_unfold_task = False
+    try:
+        for task in tasks:
+            for key, value in task["args"].items():
+                if "<GENERATED>" in value:
+                    generated_items = value.split(",")
+                    if len(generated_items) > 1:
+                        flag_unfold_task = True
+                        for item in generated_items:
+                            new_task = copy.deepcopy(task)
+                            dep_task_id = int(item.split("-")[1])
+                            new_task["dep"] = [dep_task_id]
+                            new_task["args"][key] = item
+                            tasks.append(new_task)
+                        tasks.remove(task)
+    except Exception as e:
+        print(e)
+        traceback.print_exc()
+        logger.debug("unfold task failed.")
+
+    if flag_unfold_task:
+        logger.debug(f"unfold tasks: {tasks}")
+        
+    return tasks
+
 def chitchat(messages):
     data = {
         "model": LLM,
@@ -313,7 +351,7 @@ def huggingface_model_inference(model_id, data, task):
         response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": {"source_sentence": data["text1"], "target_sentence": data["text2"]}})
         return response.json()
     if task in ["text-classification",  "token-classification", "text2text-generation", "summarization", "translation", "conversational", "text-generation"]:
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json=data)
+        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": data["text"]})
         return response.json()
     
     # CV tasks
@@ -623,7 +661,7 @@ def get_avaliable_models(candidates, topk=5):
 
     return all_available_models
 
-def colloct_result(command, choose, inference_result):
+def collect_result(command, choose, inference_result):
     result = {"task": command}
     result["inference result"] = inference_result
     result["choose model result"] = choose
@@ -724,14 +762,25 @@ def run_task(input, command, results):
             logger.warning(f"Task {command['task']} is not available. ControlNet need to be deployed locally.")
             record_case(success=False, **{"input": input, "task": command, "reason": f"Task {command['task']} is not available. ControlNet need to be deployed locally.", "op":"message"})
             inference_result = {"error": f"service related to ControlNet is not available."}
-            results[id] = colloct_result(command, "", inference_result)
+            results[id] = collect_result(command, "", inference_result)
             return False
+    elif task in ["summarization", "translation", "conversational", "text-generation"]: # ChatGPT Can do
+        best_model_id = "ChatGPT"
+        reason = "ChatGPT is the best model for this task."
+        choose = {"id": best_model_id, "reason": reason}
+        messages = [{
+            "role": "user",
+            "content": f"[ {input} ] contains a task in JSON format {command}, 'task' indicates the task type and 'args' indicates the arguments required for the task. Please help me with this task"
+        }]
+        response = chitchat(messages)
+        results[id] = collect_result(command, choose, {"response": response})
+        return True
     else:
         if task not in MODELS_MAP:
             logger.warning(f"no available models on {task} task.")
             record_case(success=False, **{"input": input, "task": command, "reason": f"task not support: {command['task']}", "op":"message"})
             inference_result = {"error": f"{command['task']} not found in available tasks."}
-            results[id] = colloct_result(command, choose, inference_result)
+            results[id] = collect_result(command, choose, inference_result)
             return False
 
         candidates = MODELS_MAP[task][:10]
@@ -743,7 +792,7 @@ def run_task(input, command, results):
             logger.warning(f"no available models on {command['task']}")
             record_case(success=False, **{"input": input, "task": command, "reason": f"no available models: {command['task']}", "op":"message"})
             inference_result = {"error": f"no available models on {command['task']} task."}
-            results[id] = colloct_result(command, "", inference_result)
+            results[id] = collect_result(command, "", inference_result)
             return False
             
         if len(all_avaliable_model_ids) == 1:
@@ -785,10 +834,10 @@ def run_task(input, command, results):
     if "error" in inference_result:
         logger.warning(f"Inference error: {inference_result['error']}")
         record_case(success=False, **{"input": input, "task": command, "reason": f"inference error: {inference_result['error']}", "op":"message"})
-        results[id] = colloct_result(command, choose, inference_result)
+        results[id] = collect_result(command, choose, inference_result)
         return False
     
-    results[id] = colloct_result(command, choose, inference_result)
+    results[id] = collect_result(command, choose, inference_result)
     return True
 
 def chat_huggingface(messages):
@@ -799,13 +848,13 @@ def chat_huggingface(messages):
     logger.info(f"input: {input}")
 
     task_str = parse_task(context, input).strip()
+    logger.info(task_str)
 
-    if task_str == "[]" or "conversational" in task_str:  # using LLM response for empty task or conversational task
-        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty or conversational task", "op": "chitchat"})
+    if task_str == "[]":  # using LLM response for empty task
+        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
         response = chitchat(messages)
         return {"message": response}
     try:
-        logger.info(task_str)
         tasks = json.loads(task_str)
     except Exception as e:
         logger.debug(e)
@@ -813,28 +862,10 @@ def chat_huggingface(messages):
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
     
-    flag_unfold_task = False
-    try:
-        for task in tasks:
-            for key, value in task["args"].items():
-                if "<GENERATED>" in value:
-                    generated_items = value.split(",")
-                    if len(generated_items) > 1:
-                        flag_unfold_task = True
-                        for item in generated_items:
-                            new_task = copy.deepcopy(task)
-                            dep_task_id = int(item.split("-")[1])
-                            new_task["dep"] = [dep_task_id]
-                            new_task["args"][key] = item
-                            tasks.append(new_task)
-                        tasks.remove(task)
-    except Exception as e:
-        print(e)
-        traceback.print_exc()
-        logger.debug("unfold task failed.")
 
-    if flag_unfold_task:
-        logger.debug(f"unfold tasks: {tasks}")
+    tasks = unfold(tasks)
+    tasks = fix_dep(tasks)
+    logger.debug(tasks)
 
     results = {}
     processes = []
@@ -845,9 +876,8 @@ def chat_huggingface(messages):
         while True:
             num_process = len(processes)
             for task in tasks:
-                if not resource_has_dep(task):
-                    task["dep"] = [-1]
                 dep = task["dep"]
+                # logger.debug(f"d.keys(): {d.keys()}, dep: {dep}")
                 if len(list(set(dep).intersection(d.keys()))) == len(dep) or dep[0] == -1:
                     tasks.remove(task)
                     process = multiprocessing.Process(target=run_task, args=(input, task, d))
@@ -900,7 +930,7 @@ def test():
     chat_huggingface(messages)
 
 def cli():
-    handler.setLevel(logging.WARNING)
+    handler.setLevel(logging.CRITICAL)
     messages = []
     print("Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).")
     while True:

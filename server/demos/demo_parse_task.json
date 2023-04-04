@@ -37,10 +37,10 @@
 
     {
         "role": "user",
-        "content": "please generate a video based on the text (prompt) 'a boy is running' and dub it"
+        "content": "please show me a video and an image about (based on the text) 'a boy is running' and dub it"
     },
     {
         "role": "assistant",
-        "content": "[{\"task\": \"text-to-video\", \"id\": 0, \"dep\": [-1], \"args\": {\"text\": \"a boy is running\" }}, {\"task\": \"text-to-speech\", \"id\": 0, \"dep\": [-1], \"args\": {\"text\": \"a boy is running\" }}]"
+        "content": "[{\"task\": \"text-to-video\", \"id\": 0, \"dep\": [-1], \"args\": {\"text\": \"a boy is running\" }}, {\"task\": \"text-to-speech\", \"id\": 1, \"dep\": [-1], \"args\": {\"text\": \"a boy is running\" }}, {\"task\": \"text-to-image\", \"id\": 2, \"dep\": [-1], \"args\": {\"text\": \"a boy is running\" }}]"
     }
 ]
