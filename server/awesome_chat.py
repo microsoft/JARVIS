@@ -1,6 +1,8 @@
 import base64
+import copy
 from io import BytesIO
 import io
+import os
 import random
 import time
 import traceback
@@ -22,6 +24,9 @@ parser.add_argument("--config", type=str, default="config.yaml")
 args = parser.parse_args()
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
+
+if not os.path.exists("logs"):
+    os.mkdir("logs")
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -60,8 +65,8 @@ else:
     api_name = "chat/completions"
 
 if not config["dev"]:
-    if not config["openai"]["key"].startswith("sk-"):
-        raise ValueError("OpenAI key is not a secret key")
+    if not config["openai"]["key"].startswith("sk-") and not config["openai"]["key"]=="gradio":
+        raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
     OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
     HEADER = {
@@ -82,7 +87,7 @@ inference_mode = config["inference_mode"]
 HTTP_Server = "http://" + config["httpserver"]["host"] + ":" + str(config["httpserver"]["port"])
 Model_Server = "http://" + config["modelserver"]["host"] + ":" + str(config["modelserver"]["port"])
 
-if requests.get(Model_Server + "/running").status_code != 200:
+if inference_mode!="huggingface" and requests.get(Model_Server + "/running").status_code != 200:
     raise ValueError("Model Server is not running")
 
 parse_task_demos_or_presteps = open(config["demos_or_presteps"]["parse_task"], "r").read()
@@ -136,14 +141,19 @@ def convert_chat_to_completion(data):
     return data
 
 def send_request(data):
+    global HEADER
     if use_completion:
         data = convert_chat_to_completion(data)
+    if "openaikey" in data:
+        HEADER = {
+            "Authorization": f"Bearer {data['openaikey']}"
+        }
     response = requests.post(endpoint, json=data, headers=HEADER, proxies=PROXY)
-    # print(response.json())
+    logger.debug(response.text.strip())
     if use_completion:
-        return response.json()["choices"][0]["text"].replace("\n", "")
+        return response.json()["choices"][0]["text"].strip()
     else:
-        return response.json()["choices"][0]["message"]["content"].replace("\n", "")
+        return response.json()["choices"][0]["message"]["content"].strip()
 
 def replace_slot(text, entries):
     for key, value in entries.items():
@@ -159,7 +169,6 @@ def find_json(s):
     res = s[start:end+1]
     res = res.replace("\n", "")
     return res
-
 
 def field_extract(s, field):
     try:
@@ -178,9 +187,9 @@ def get_id_reason(choose_str):
 
 def record_case(success, **args):
     if success:
-        f = open("log_success.jsonl", "a")
+        f = open("logs/log_success.jsonl", "a")
     else:
-        f = open("log_fail.jsonl", "a")
+        f = open("logs/log_fail.jsonl", "a")
     log = args
     f.write(json.dumps(log) + "\n")
     f.close()
@@ -207,7 +216,6 @@ def chitchat(messages):
     return send_request(data)
 
 def parse_task(context, input):
-
     demos_or_presteps = parse_task_demos_or_presteps
     messages = json.loads(demos_or_presteps)
     messages.insert(0, {"role": "system", "content": parse_task_tprompt})
@@ -390,8 +398,7 @@ def huggingface_model_inference(model_id, data, task):
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
         response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
         return response.json()
-
-
+    
     # AUDIO tasks
     if task == "text-to-speech":
         text = data["text"]
@@ -542,28 +549,32 @@ def model_inference(model_id, data, hosted_on, task):
             logger.debug("Huggingface Status: " + str(r.json()))
             if r.status_code == 200 and "loaded" in r.json() and r.json()["loaded"]:
                 hosted_on = "huggingface"
-    
     try:
         if hosted_on == "local":
             inference_result = local_model_inference(model_id, data, task)
         elif hosted_on == "huggingface":
             inference_result = huggingface_model_inference(model_id, data, task)
     except Exception as e:
+        print(e)
         traceback.print_exc()
         inference_result = {"error":{"message": str(e)}}
     return inference_result
 
 
-def get_model_status(model_id, url, headers, queue):
+def get_model_status(model_id, url, headers, queue = None):
     endpoint_type = "huggingface" if "huggingface" in url else "local"
     if "huggingface" in url:
         r = requests.get(url, headers=headers, proxies=PROXY)
     else:
         r = requests.get(url)
     if r.status_code == 200 and "loaded" in r.json() and r.json()["loaded"]:
-        queue.put((model_id, True, endpoint_type))
+        if queue:
+            queue.put((model_id, True, endpoint_type))
+        return True
     else:
-        queue.put((model_id, False, None))
+        if queue:
+            queue.put((model_id, False, None))
+        return False
 
 def get_avaliable_models(candidates, topk=5):
     all_available_models = {"local": [], "huggingface": []}
@@ -579,7 +590,7 @@ def get_avaliable_models(candidates, topk=5):
             processes.append(process)
             process.start()
         
-        if inference_mode != "huggingface":
+        if inference_mode != "huggingface" and config["local_deployment"] != "minimal":
             localStatusUrl = f"{Model_Server}/status/{model_id}"
             process = multiprocessing.Process(target=get_model_status, args=(model_id, localStatusUrl, {}, result_queue))
             processes.append(process)
@@ -685,19 +696,23 @@ def run_task(input, command, results):
     command["args"] = args
     logger.debug(f"parsed task: {command}")
 
-    if task.endswith("-text-to-image"):
-        control = task.split("-")[0]
-        best_model_id = f"lllyasviel/sd-controlnet-{control}"
-        hosted_on = "local"
-        reason = "ControlNet is the best model for this task."
-        choose = {"id": best_model_id, "reason": reason}
-        logger.debug(f"chosen model: {choose}")
-    elif task.endswith("-control"):
-        best_model_id = task
-        hosted_on = "local"
-        reason = "ControlNet tools"
-        choose = {"id": best_model_id, "reason": reason}
-        logger.debug(f"chosen model: {choose}")
+    if task.endswith("-text-to-image") or task.endswith("-control"):
+        if inference_mode != "huggingface":
+            if task.endswith("-text-to-image"):
+                control = task.split("-")[0]
+                best_model_id = f"lllyasviel/sd-controlnet-{control}"
+            else:
+                best_model_id = task
+            hosted_on = "local"
+            reason = "ControlNet is the best model for this task."
+            choose = {"id": best_model_id, "reason": reason}
+            logger.debug(f"chosen model: {choose}")
+        else:
+            logger.warning(f"Task {command['task']} is not available. ControlNet need to be deployed locally.")
+            record_case(success=False, **{"input": input, "task": command, "reason": f"Task {command['task']} is not available. ControlNet need to be deployed locally.", "op":"message"})
+            inference_result = {"error": f"service related to ControlNet is not available."}
+            results[id] = colloct_result(command, "", inference_result)
+            return False
     else:
         if task not in MODELS_MAP:
             logger.warning(f"no available models on {task} task.")
@@ -707,7 +722,7 @@ def run_task(input, command, results):
             return False
 
         candidates = MODELS_MAP[task][:10]
-        all_avaliable_models = get_avaliable_models(candidates)
+        all_avaliable_models = get_avaliable_models(candidates, config["num_candidate_models"])
         all_avaliable_model_ids = all_avaliable_models["local"] + all_avaliable_models["huggingface"]
         logger.debug(f"avaliable models on {command['task']}: {all_avaliable_models}")
 
@@ -720,7 +735,7 @@ def run_task(input, command, results):
             
         if len(all_avaliable_model_ids) == 1:
             best_model_id = all_avaliable_model_ids[0]
-            hosted_on = "unknown"
+            hosted_on = "local" if best_model_id in all_avaliable_models["local"] else "huggingface"
             reason = "Only one model available."
             choose = {"id": best_model_id, "reason": reason}
             logger.debug(f"chosen model: {choose}")
@@ -732,7 +747,7 @@ def run_task(input, command, results):
                         "local" if model["id"] in all_avaliable_models["local"] else "huggingface"
                     ),
                     "likes": model.get("likes"),
-                    "description": model.get("description", "")[:100],
+                    "description": model.get("description", "")[:config["max_description_length"]],
                     "language": model.get("language"),
                     "tags": model.get("tags"),
                 }
@@ -773,7 +788,7 @@ def chat_huggingface(messages):
     task_str = parse_task(context, input).strip()
 
     if task_str == "[]" or "conversational" in task_str:  # using LLM response for empty task or conversational task
-        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
+        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty or conversational task", "op": "chitchat"})
         response = chitchat(messages)
         return {"message": response}
     try:
@@ -784,6 +799,29 @@ def chat_huggingface(messages):
         response = chitchat(messages)
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
+    
+    flag_unfold_task = False
+    try:
+        for task in tasks:
+            for key, value in task["args"].items():
+                if "<GENERATED>" in value:
+                    generated_items = value.split(",")
+                    if len(generated_items) > 1:
+                        flag_unfold_task = True
+                        for item in generated_items:
+                            new_task = copy.deepcopy(task)
+                            dep_task_id = int(item.split("-")[1])
+                            new_task["dep"] = [dep_task_id]
+                            new_task["args"][key] = item
+                            tasks.append(new_task)
+                        tasks.remove(task)
+    except Exception as e:
+        print(e)
+        traceback.print_exc()
+        logger.debug("unfold task failed.")
+
+    if flag_unfold_task:
+        logger.debug(f"unfold tasks: {tasks}")
 
     results = {}
     processes = []
@@ -851,14 +889,14 @@ def test():
 def cli_chat():
     handler.setLevel(logging.WARNING)
     messages = []
-    print("System: Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).")
+    print("Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).")
     while True:
-        message = input("Input: ")
+        message = input("[ User ]: ")
         if message == "exit":
             break
         messages.append({"role": "user", "content": message})
         answer = chat_huggingface(messages)
-        print("Output: ", answer["message"])
+        print("[ Jarvis ]: ", answer["message"])
         messages.append({"role": "assistant", "content": answer["message"]})
 
 if __name__ == "__main__":

@@ -59,7 +59,7 @@ config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
 host = config["modelserver"]["host"]
 port = config["modelserver"]["port"]
 
-local_models = config["local_models"]
+local_deployment = config["local_deployment"]
 
 PROXY = None
 if config["proxy"]:
@@ -73,11 +73,11 @@ CORS(app)
 start = time.time()
 local_fold = "models"
 
-def load_pipes(local_models):
+def load_pipes(local_deployment):
     other_pipes = {}
     standard_pipes = {}
     controlnet_sd_pipes = {}
-    if local_models in ["full"]:
+    if local_deployment in ["full"]:
         other_pipes = {
             "nlpconnect/vit-gpt2-image-captioning":{
                 "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
@@ -171,7 +171,7 @@ def load_pipes(local_models):
             }
         }
 
-    if local_models in ["full", "standard"]:
+    if local_deployment in ["full", "standard"]:
         standard_pipes = {
             "superb/wav2vec2-base-superb-ks": {
                 "model": pipeline(task="audio-classification", model=f"{local_fold}/superb/wav2vec2-base-superb-ks"), 
@@ -263,7 +263,7 @@ def load_pipes(local_models):
             }
         }
 
-    if local_models in ["full", "standard", "minimal"]:
+    if local_deployment in ["full", "standard", "minimal"]:
         controlnet = ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-canny", torch_dtype=torch.float16)
         controlnetpipe = StableDiffusionControlNetPipeline.from_pretrained(
             f"{local_fold}/runwayml/stable-diffusion-v1-5", controlnet=controlnet, torch_dtype=torch.float16
@@ -335,7 +335,7 @@ def load_pipes(local_models):
     pipes = {**standard_pipes, **other_pipes, **controlnet_sd_pipes}
     return pipes
 
-pipes = load_pipes(local_models)
+pipes = load_pipes(local_deployment)
 
 end = time.time()
 during = end - start

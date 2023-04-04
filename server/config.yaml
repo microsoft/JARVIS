@@ -1,16 +1,18 @@
 openai:
-  key: your_personal_key
+  key: your_personal_key # gradio, your_personal_key
 huggingface:
-  cookie: 
+  cookie: # required for huggingface inference
 local: # ignore: just for development
   endpoint: http://localhost:8003
 dev: false
 debug: false
-log_file: ./debug.log
+log_file: logs/debug.log
 model: text-davinci-003 # text-davinci-003
 use_completion: true
-inference_mode: hybrid # local or huggingface or hybrid
-local_models: full # minimal or standard or full
+inference_mode: huggingface # local, huggingface or hybrid
+local_deployment: minimal # no, minimal, standard or full
+num_candidate_models: 5
+max_description_length: 100
 proxy: 
 httpserver:
   host: localhost
@@ -29,9 +31,9 @@ tprompt:
   response_results: >-
     #4 Response Generation Stage: With the task execution logs, the AI assistant needs to describe the process and inference results.
 demos_or_presteps:
-  parse_task: demo_parse_task.json
-  choose_model: demo_choose_model.json
-  response_results: demo_response_results.json 
+  parse_task: demos/demo_parse_task.json
+  choose_model: demos/demo_choose_model.json
+  response_results: demos/demo_response_results.json 
 prompt:
   parse_task: The chat log [ {{context}} ] may contain the resources I mentioned. Now I input { {{input}} }, please parse out as many as the required tasks to solve my request in a JSON format.
   choose_model: >-
