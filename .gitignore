@@ -6,6 +6,7 @@ server/models/*
 !server/models/download.sh
 server/logs/
 server/public/
+server/models_dev
 
 # for gradio
 server/run_gradio.py

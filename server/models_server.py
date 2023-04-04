@@ -71,7 +71,11 @@ app = flask.Flask(__name__)
 CORS(app)
 
 start = time.time()
+
 local_fold = "models"
+if args.config.endswith(".dev"):
+    local_fold = "models_dev"
+
 
 def load_pipes(local_deployment):
     other_pipes = {}
@@ -99,16 +103,16 @@ def load_pipes(local_deployment):
                 "feature_extractor" : AutoFeatureExtractor.from_pretrained("facebook/maskformer-swin-large-ade"),
                 "device": "cuda:0"
             },
-            "microsoft/trocr-base-printed": {
-                "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
-                "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
-                "device": "cuda:0"
-            },
-            "microsoft/trocr-base-handwritten": {
-                "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
-                "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
-                "device": "cuda:0"
-            },
+            # "microsoft/trocr-base-printed": {
+            #     "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
+            #     "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
+            #     "device": "cuda:0"
+            # },
+            # "microsoft/trocr-base-handwritten": {
+            #     "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
+            #     "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-handwritten"),
+            #     "device": "cuda:0"
+            # },
             "JorisCos/DCCRNet_Libri1Mix_enhsingle_16k": {
                 "model": BaseModel.from_pretrained("JorisCos/DCCRNet_Libri1Mix_enhsingle_16k"),
                 "device": "cuda:0"
@@ -121,10 +125,10 @@ def load_pipes(local_deployment):
                 "model": DiffusionPipeline.from_pretrained(f"{local_fold}/lambdalabs/sd-image-variations-diffusers"), #torch_dtype=torch.float16
                 "device": "cuda:0"
             },
-            "CompVis/stable-diffusion-v1-4": {
-                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/CompVis/stable-diffusion-v1-4"),
-                "device": "cuda:0"
-            },
+            # "CompVis/stable-diffusion-v1-4": {
+            #     "model": DiffusionPipeline.from_pretrained(f"{local_fold}/CompVis/stable-diffusion-v1-4"),
+            #     "device": "cuda:0"
+            # },
             "stabilityai/stable-diffusion-2-1": {
                 "model": DiffusionPipeline.from_pretrained(f"{local_fold}/stabilityai/stable-diffusion-2-1"),
                 "device": "cuda:0"
@@ -140,10 +144,10 @@ def load_pipes(local_deployment):
                 "embeddings_dataset": load_dataset(f"{local_fold}/Matthijs/cmu-arctic-xvectors", split="validation"),
                 "device": "cuda:0"
             },
-            "speechbrain/mtl-mimic-voicebank": {
-                "model": WaveformEnhancement.from_hparams(source="speechbrain/mtl-mimic-voicebank", savedir="models/mtl-mimic-voicebank"),
-                "device": "cuda:0"
-            },
+            # "speechbrain/mtl-mimic-voicebank": {
+            #     "model": WaveformEnhancement.from_hparams(source="speechbrain/mtl-mimic-voicebank", savedir="models/mtl-mimic-voicebank"),
+            #     "device": "cuda:0"
+            # },
             "microsoft/speecht5_vc":{
                 "processor": SpeechT5Processor.from_pretrained(f"{local_fold}/microsoft/speecht5_vc"),
                 "model": SpeechT5ForSpeechToSpeech.from_pretrained(f"{local_fold}/microsoft/speecht5_vc"),
@@ -151,14 +155,14 @@ def load_pipes(local_deployment):
                 "embeddings_dataset": load_dataset(f"{local_fold}/Matthijs/cmu-arctic-xvectors", split="validation"),
                 "device": "cuda:0"
             },
-            "julien-c/wine-quality": {
-                "model": joblib.load(cached_download(hf_hub_url("julien-c/wine-quality", "sklearn_model.joblib")))
-            },
-            "facebook/timesformer-base-finetuned-k400": {
-                "processor": AutoImageProcessor.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
-                "model": TimesformerForVideoClassification.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
-                "device": "cuda:0"
-            },
+            # "julien-c/wine-quality": {
+            #     "model": joblib.load(cached_download(hf_hub_url("julien-c/wine-quality", "sklearn_model.joblib")))
+            # },
+            # "facebook/timesformer-base-finetuned-k400": {
+            #     "processor": AutoImageProcessor.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
+            #     "model": TimesformerForVideoClassification.from_pretrained(f"{local_fold}/facebook/timesformer-base-finetuned-k400"),
+            #     "device": "cuda:0"
+            # },
             "facebook/maskformer-swin-base-coco": {
                 "feature_extractor": MaskFormerFeatureExtractor.from_pretrained(f"{local_fold}/facebook/maskformer-swin-base-coco"),
                 "model": MaskFormerForInstanceSegmentation.from_pretrained(f"{local_fold}/facebook/maskformer-swin-base-coco"),
@@ -173,10 +177,10 @@ def load_pipes(local_deployment):
 
     if local_deployment in ["full", "standard"]:
         standard_pipes = {
-            "superb/wav2vec2-base-superb-ks": {
-                "model": pipeline(task="audio-classification", model=f"{local_fold}/superb/wav2vec2-base-superb-ks"), 
-                "device": "cuda:0"
-            },
+            # "superb/wav2vec2-base-superb-ks": {
+            #     "model": pipeline(task="audio-classification", model=f"{local_fold}/superb/wav2vec2-base-superb-ks"), 
+            #     "device": "cuda:0"
+            # },
             "openai/whisper-base": {
                 "model": pipeline(task="automatic-speech-recognition", model=f"{local_fold}/openai/whisper-base"), 
                 "device": "cuda:0"
@@ -189,10 +193,10 @@ def load_pipes(local_deployment):
                 "model": pipeline(task="depth-estimation", model=f"{local_fold}/Intel/dpt-large"), 
                 "device": "cuda:0"
             },
-            "microsoft/beit-base-patch16-224-pt22k-ft22k": {
-                "model": pipeline(task="image-classification", model=f"{local_fold}/microsoft/beit-base-patch16-224-pt22k-ft22k"), 
-                "device": "cuda:0"
-            },
+            # "microsoft/beit-base-patch16-224-pt22k-ft22k": {
+            #     "model": pipeline(task="image-classification", model=f"{local_fold}/microsoft/beit-base-patch16-224-pt22k-ft22k"), 
+            #     "device": "cuda:0"
+            # },
             "facebook/detr-resnet-50-panoptic": {
                 "model": pipeline(task="image-segmentation", model=f"{local_fold}/facebook/detr-resnet-50-panoptic"), 
                 "device": "cuda:0"
@@ -201,54 +205,54 @@ def load_pipes(local_deployment):
                 "model": pipeline(task="object-detection", model=f"{local_fold}/facebook/detr-resnet-101"), 
                 "device": "cuda:0"
             },
-            "openai/clip-vit-large-patch14": {
-                "model": pipeline(task="zero-shot-image-classification", model=f"{local_fold}/openai/clip-vit-large-patch14"), 
-                "device": "cuda:0"
-            },
+            # "openai/clip-vit-large-patch14": {
+            #     "model": pipeline(task="zero-shot-image-classification", model=f"{local_fold}/openai/clip-vit-large-patch14"), 
+            #     "device": "cuda:0"
+            # },
             "google/owlvit-base-patch32": {
                 "model": pipeline(task="zero-shot-object-detection", model=f"{local_fold}/google/owlvit-base-patch32"), 
                 "device": "cuda:0"
             },
-            "microsoft/DialoGPT-medium": {
-                "model": pipeline(task="conversational", model=f"{local_fold}/microsoft/DialoGPT-medium"), 
-                "device": "cuda:0"
-            },
-            "bert-base-uncased": {
-                "model": pipeline(task="fill-mask", model=f"{local_fold}/bert-base-uncased"), 
-                "device": "cuda:0"
-            },
-            "deepset/roberta-base-squad2": {
-                "model": pipeline(task = "question-answering", model=f"{local_fold}/deepset/roberta-base-squad2"), 
-                "device": "cuda:0"
-            },
-            "facebook/bart-large-cnn": {
-                "model": pipeline(task="summarization", model=f"{local_fold}/facebook/bart-large-cnn"), 
-                "device": "cuda:0"
-            },
-            "google/tapas-base-finetuned-wtq": {
-                "model": pipeline(task="table-question-answering", model=f"{local_fold}/google/tapas-base-finetuned-wtq"), 
-                "device": "cuda:0"
-            },
-            "distilbert-base-uncased-finetuned-sst-2-english": {
-                "model": pipeline(task="text-classification", model=f"{local_fold}/distilbert-base-uncased-finetuned-sst-2-english"), 
-                "device": "cuda:0"
-            },
-            "gpt2": {
-                "model": pipeline(task="text-generation", model="gpt2"), 
-                "device": "cuda:0"
-            },
-            "mrm8488/t5-base-finetuned-question-generation-ap": {
-                "model": pipeline(task="text2text-generation", model=f"{local_fold}/mrm8488/t5-base-finetuned-question-generation-ap"), 
-                "device": "cuda:0"
-            },
-            "Jean-Baptiste/camembert-ner": {
-                "model": pipeline(task="token-classification", model=f"{local_fold}/Jean-Baptiste/camembert-ner", aggregation_strategy="simple"), 
-                "device": "cuda:0"
-            },
-            "t5-base": {
-                "model": pipeline(task="translation", model=f"{local_fold}/t5-base"), 
-                "device": "cuda:0"
-            },
+            # "microsoft/DialoGPT-medium": {
+            #     "model": pipeline(task="conversational", model=f"{local_fold}/microsoft/DialoGPT-medium"), 
+            #     "device": "cuda:0"
+            # },
+            # "bert-base-uncased": {
+            #     "model": pipeline(task="fill-mask", model=f"{local_fold}/bert-base-uncased"), 
+            #     "device": "cuda:0"
+            # },
+            # "deepset/roberta-base-squad2": {
+            #     "model": pipeline(task = "question-answering", model=f"{local_fold}/deepset/roberta-base-squad2"), 
+            #     "device": "cuda:0"
+            # },
+            # "facebook/bart-large-cnn": {
+            #     "model": pipeline(task="summarization", model=f"{local_fold}/facebook/bart-large-cnn"), 
+            #     "device": "cuda:0"
+            # },
+            # "google/tapas-base-finetuned-wtq": {
+            #     "model": pipeline(task="table-question-answering", model=f"{local_fold}/google/tapas-base-finetuned-wtq"), 
+            #     "device": "cuda:0"
+            # },
+            # "distilbert-base-uncased-finetuned-sst-2-english": {
+            #     "model": pipeline(task="text-classification", model=f"{local_fold}/distilbert-base-uncased-finetuned-sst-2-english"), 
+            #     "device": "cuda:0"
+            # },
+            # "gpt2": {
+            #     "model": pipeline(task="text-generation", model="gpt2"), 
+            #     "device": "cuda:0"
+            # },
+            # "mrm8488/t5-base-finetuned-question-generation-ap": {
+            #     "model": pipeline(task="text2text-generation", model=f"{local_fold}/mrm8488/t5-base-finetuned-question-generation-ap"), 
+            #     "device": "cuda:0"
+            # },
+            # "Jean-Baptiste/camembert-ner": {
+            #     "model": pipeline(task="token-classification", model=f"{local_fold}/Jean-Baptiste/camembert-ner", aggregation_strategy="simple"), 
+            #     "device": "cuda:0"
+            # },
+            # "t5-base": {
+            #     "model": pipeline(task="translation", model=f"{local_fold}/t5-base"), 
+            #     "device": "cuda:0"
+            # },
             "impira/layoutlm-document-qa": {
                 "model": pipeline(task="document-question-answering", model=f"{local_fold}/impira/layoutlm-document-qa"), 
                 "device": "cuda:0"
@@ -463,7 +467,7 @@ def models(model_id):
             result = {"generated text": generated_text}
 
         # text to image
-        if model_id == "CompVis/stable-diffusion-v1-4" or model_id == "stabilityai/stable-diffusion-2-1" or model_id == "runwayml/stable-diffusion-v1-5":
+        if model_id == "stabilityai/stable-diffusion-2-1" or model_id == "runwayml/stable-diffusion-v1-5":
             file_name = str(uuid.uuid4())[:4]
             text = request.get_json()["text"]
             out = pipe(prompt=text)

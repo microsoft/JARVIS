@@ -16,8 +16,6 @@ See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hug
 
 <p align="center"><img src="./assets/overview.jpg"></p>
 
-
-
 We introduce a collaborative system that consists of **an LLM as the controller** and **numerous expert models as collaborative executors** (from HuggingFace Hub). The workflow of our system consists of four stages:
 + **Task Planning**: Using ChatGPT to analyze the requests of users to understand their intention, and disassemble them into possible solvable tasks.
 + **Model Selection**: To solve the planned tasks, ChatGPT selects expert models hosted on Hugging Face based on their descriptions.
@@ -30,7 +28,7 @@ We introduce a collaborative system that consists of **an LLM as the controller*
 
 + Ubuntu 16.04 LTS
 + NVIDIA GeForce RTX 3090 * 1
-+ RAM > 25GB (minimal), 80GB (full)
++ RAM > 12GB (minimal), 16GB (standard), 42GB (full)
   
 ### Minimum
 
@@ -130,9 +128,9 @@ The server-side configuration file is `server/config.yaml`, and some parameters 
   + `huggingface`: only use the Hugging Face Inference Endpoints **(free of local inference endpoints)**
   + `hybrid`: both of `local` and `huggingface`
 + `local_deployment`: scale of locally deployed models, works under `local` or `hybrid` inference mode:
-  +  `minimal` (RAM>24GB, ControlNet only)
-  +  `standard` (RAM>40GB, ControlNet + Standard Pipelines)
-  +  `full` (RAM>80GB, All registered models)
+  +  `minimal` (RAM>12GB, ControlNet only)
+  +  `standard` (RAM>16GB, ControlNet + Standard Pipelines)
+  +  `full` (RAM>42GB, All registered models)
 
 On a personal laptop, we recommend the configuration of `inference_mode: hybrid `and `local_deployment: minimal`. But the available models under this setting may be limited due to the instability of remote Hugging Face Inference Endpoints.
 
