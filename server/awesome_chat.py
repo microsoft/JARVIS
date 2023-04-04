@@ -133,24 +133,16 @@ if config["huggingface"]["cookie"]:
     }
 
 def convert_chat_to_completion(data):
-    messages = data.pop('messages', [])
-    tprompt = ""
-    if messages[0]['role'] == "system":
-        tprompt = messages[0]['content']
-        messages = messages[1:]
-    final_prompt = ""
-    for message in messages:
-        if message['role'] == "user":
-            final_prompt += ("<im_start>"+ "user" + "\n" + message['content'] + "<im_end>\n")
-        elif message['role'] == "assistant":
-            final_prompt += ("<im_start>"+ "assistant" + "\n" + message['content'] + "<im_end>\n")
-        else:
-            final_prompt += ("<im_start>"+ "system" + "\n" + message['content'] + "<im_end>\n")
-    final_prompt = tprompt + final_prompt
-    final_prompt = final_prompt + "<im_start>assistant"
-    data["prompt"] = final_prompt
-    data['stop'] = data.get('stop', ["<im_end>"])
-    data['max_tokens'] = data.get('max_tokens', max(get_max_context_length(LLM) - count_tokens(LLM_encoding, final_prompt), 1))
+    messages = data.get('messages', [])
+    final_prompt = [f"<im_start>{message['role']}\n{message['content']}<im_end>\n" 
+                    for message in messages if message['role'] in ['user', 'assistant', 'system']]
+    tprompt = messages[0]['content'] if messages and messages[0]['role'] == 'system' else ""
+    final_prompt = tprompt + ''.join(final_prompt)
+    data.update({
+        "prompt": final_prompt,
+        "stop": data.get('stop', ["<im_end>"]),
+        "max_tokens": data.get('max_tokens', max(get_max_context_length(LLM) - count_tokens(LLM_encoding, final_prompt), 1))
+    })
     return data
 
 def send_request(data):
