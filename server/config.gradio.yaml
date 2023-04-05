@@ -1,5 +1,5 @@
 openai:
-  key: your_personal_openai_key # "gradio" (set when request) or your_personal_key
+  key: gradio # "gradio" (set when request) or your_personal_key
 huggingface:
   token: # required: huggingface token @ https://huggingface.co/settings/tokens
 local: # ignore: just for development
@@ -7,13 +7,13 @@ local: # ignore: just for development
 dev: false
 debug: false
 log_file: logs/debug.log
-model: text-davinci-003 # currently only support text-davinci-003, we will support more open-source LLMs in the future
+model: text-davinci-003 # text-davinci-003
 use_completion: true
-inference_mode: hybrid # local, huggingface or hybrid, prefer hybrid
-local_deployment: full # minimal, standard or full, prefer full
+inference_mode: hybrid # local, huggingface or hybrid
+local_deployment: full # no, minimal, standard or full
 num_candidate_models: 5
 max_description_length: 100
-proxy: # optional: your proxy server "http://ip:port"
+proxy: 
 httpserver:
   host: localhost
   port: 8004

@@ -1,5 +1,5 @@
 openai:
-  key: your_personal_openai_key # required: gradio or your_personal_openai_key
+  key: your_personal_openai_key # "gradio" (set when request) or your_personal_key
 huggingface:
   token: # required: huggingface token @ https://huggingface.co/settings/tokens
 local: # ignore: just for development

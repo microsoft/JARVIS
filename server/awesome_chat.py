@@ -22,11 +22,16 @@ from flask import request, jsonify
 import waitress
 from flask_cors import CORS
 from get_token_ids import get_token_ids_for_task_parsing, get_token_ids_for_choose_model, count_tokens, get_max_context_length
+from huggingface_hub.inference_api import InferenceApi
+from huggingface_hub.inference_api import ALL_TASKS
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", type=str, default="config.yaml")
+parser.add_argument("--config", type=str, default="config.yaml.dev")
 parser.add_argument("--mode", type=str, default="cli")
 args = parser.parse_args()
+
+if __name__ != "__main__":
+    args.config = "config.gradio.yaml"
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
 
@@ -229,7 +234,8 @@ def fix_dep(tasks):
         for k, v in args.items():
             if "<GENERATED>" in v:
                 dep_task_id = int(v.split("-")[1])
-                task["dep"].append(dep_task_id)
+                if dep_task_id not in task["dep"]:
+                    task["dep"].append(dep_task_id)
         if len(task["dep"]) == 0:
             task["dep"] = [-1]
     return tasks
@@ -346,18 +352,19 @@ def response_results(input, results, openaikey=None):
     return send_request(data)
 
 def huggingface_model_inference(model_id, data, task):
-    task_url = f"https://api-inference.huggingface.co/models/{model_id}"
+    task_url = f"https://api-inference.huggingface.co/models/{model_id}" # InferenceApi does not yet support some tasks
+    inference = InferenceApi(repo_id=model_id, token=config["huggingface"]["token"])
     
     # NLP tasks
     if task == "question-answering":
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": {"question": data["text"], "context": (data["context"] if "context" in data else "" )}})
-        return response.json()
+        inputs = {"question": data["text"], "context": (data["context"] if "context" in data else "" )}
+        result = inference(inputs)
     if task == "sentence-similarity":
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": {"source_sentence": data["text1"], "target_sentence": data["text2"]}})
-        return response.json()
+        inputs = {"source_sentence": data["text1"], "target_sentence": data["text2"]}
+        result = inference(inputs)
     if task in ["text-classification",  "token-classification", "text2text-generation", "summarization", "translation", "conversational", "text-generation"]:
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": data["text"]})
-        return response.json()
+        inputs = data["text"]
+        result = inference(inputs)
     
     # CV tasks
     if task == "visual-question-answering" or task == "document-question-answering":
@@ -369,34 +376,32 @@ def huggingface_model_inference(model_id, data, task):
         json_data["inputs"] = {}
         json_data["inputs"]["question"] = text
         json_data["inputs"]["image"] = img_base64
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json=json_data)
-        return response.json()
+        result = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json=json_data).json()
+        # result = inference(inputs) # not support
+
     if task == "image-to-image":
         img_url = data["image"]
         img_data = image_to_bytes(img_url)
+        # result = inference(data=img_data) # not support
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
-        results = response.json()
-        if "path" in results:
-            results["generated image"] = results.pop("path")
-        return results
+        r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
+        result = r.json()
+        if "path" in result:
+            result["generated image"] = result.pop("path")
+    
     if task == "text-to-image":
-        text = data["text"]
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": text})
-        img_data = response.content
-        img = Image.open(BytesIO(img_data))
+        inputs = data["text"]
+        img = inference(inputs)
         name = str(uuid.uuid4())[:4]
         img.save(f"public/images/{name}.png")
-        results = {}
-        results["generated image"] = f"/images/{name}.png"
-        return results
+        result = {}
+        result["generated image"] = f"/images/{name}.png"
+
     if task == "image-segmentation":
         img_url = data["image"]
         img_data = image_to_bytes(img_url)
         image = Image.open(BytesIO(img_data))
-        HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data, proxies=PROXY)
-        predicted = response.json()
+        predicted = inference(data=img_data)
         colors = []
         for i in range(len(predicted)):
             colors.append((random.randint(100, 255), random.randint(100, 255), random.randint(100, 255), 155))
@@ -411,16 +416,14 @@ def huggingface_model_inference(model_id, data, task):
             image.paste(layer, (0, 0), mask)
         name = str(uuid.uuid4())[:4]
         image.save(f"public/images/{name}.jpg")
-        results = {}
-        results["generated image with segmentation mask"] = f"/images/{name}.jpg"
-        results["predicted"] = predicted
-        return results
+        result = {}
+        result["generated image with segmentation mask"] = f"/images/{name}.jpg"
+        result["predicted"] = predicted
+
     if task == "object-detection":
         img_url = data["image"]
         img_data = image_to_bytes(img_url)
-        HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
-        r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data, proxies=PROXY)
-        predicted = r.json()
+        predicted = inference(data=img_data)
         image = Image.open(BytesIO(img_data))
         draw = ImageDraw.Draw(image)
         labels = list(item['label'] for item in predicted)
@@ -434,47 +437,42 @@ def huggingface_model_inference(model_id, data, task):
             draw.text((box["xmin"]+5, box["ymin"]-15), label["label"], fill=color_map[label["label"]])
         name = str(uuid.uuid4())[:4]
         image.save(f"public/images/{name}.jpg")
-        response = {}
-        response["generated image with predicted box"] = f"/images/{name}.jpg"
-        response["predicted"] = predicted
-        return response
-    if task == "image-to-text":
-        img_url = data["image"]
-        img_data = image_to_bytes(img_url)
-        HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
-        results = {}
-        if "generated_text" in response.json()[0]:
-            results["generated text"] = response.json()[0].pop("generated_text")
-        return results
+        result = {}
+        result["generated image with predicted box"] = f"/images/{name}.jpg"
+        result["predicted"] = predicted
 
     if task in ["image-classification"]:
         img_url = data["image"]
         img_data = image_to_bytes(img_url)
+        result = inference(data=img_data)
+ 
+    if task == "image-to-text":
+        img_url = data["image"]
+        img_data = image_to_bytes(img_url)
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
-        return response.json()
+        r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
+        result = {}
+        if "generated_text" in r.json()[0]:
+            result["generated text"] = r.json()[0].pop("generated_text")
     
     # AUDIO tasks
     if task == "text-to-speech":
-        text = data["text"]
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": text})
+        inputs = data["text"]
+        response = inference(inputs, raw_response=True)
+        # response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, json={"inputs": text})
         name = str(uuid.uuid4())[:4]
         with open(f"public/audios/{name}.flac", "wb") as f:
             f.write(response.content)
-        return {"generated audio": f"/audios/{name}.flac"}
+        result = {"generated audio": f"/audios/{name}.flac"}
     if task in ["automatic-speech-recognition", "audio-to-audio", "audio-classification"]:
         audio_url = data["audio"]
-        audio_type = audio_url.split(".")[-1]
         audio_data = requests.get(audio_url, timeout=10).content
-        HUGGINGFACE_HEADERS["Content-Length"] = str(len(audio_data))
-        HUGGINGFACE_HEADERS["Content-Type"] = f"audio/{audio_type}"
-        response = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=audio_data)
-        results = response.json()
+        response = inference(data=audio_data, raw_response=True)
+        result = response.json()
         if task == "audio-to-audio":
             content = None
             type = None
-            for k, v in results[0].items():
+            for k, v in result[0].items():
                 if k == "blob":
                     content = base64.b64decode(v.encode("utf-8"))
                 if k == "content-type":
@@ -482,9 +480,8 @@ def huggingface_model_inference(model_id, data, task):
             audio = AudioSegment.from_file(BytesIO(content))
             name = str(uuid.uuid4())[:4]
             audio.export(f"public/audios/{name}.{type}", format=type)
-            return {"generated audio": f"/audios/{name}.{type}"}
-        else:
-            return results
+            result = {"generated audio": f"/audios/{name}.{type}"}
+    return result
 
 def local_model_inference(model_id, data, task):
     task_url = f"{Model_Server}/models/{model_id}"
@@ -845,7 +842,7 @@ def run_task(input, command, results, openaikey = None):
     results[id] = collect_result(command, choose, inference_result)
     return True
 
-def chat_huggingface(messages, openaikey = None):
+def chat_huggingface(messages, openaikey = None, return_planning = False, return_results = False):
     start = time.time()
     context = messages[:-1]
     input = messages[-1]["content"]
@@ -871,6 +868,9 @@ def chat_huggingface(messages, openaikey = None):
     tasks = unfold(tasks)
     tasks = fix_dep(tasks)
     logger.debug(tasks)
+    
+    if return_planning:
+        return tasks
 
     results = {}
     processes = []
@@ -900,7 +900,11 @@ def chat_huggingface(messages, openaikey = None):
             process.join()
         
         results = d.copy()
+
     logger.debug(results)
+    if return_results:
+        return results
+    
     response = response_results(input, results, openaikey).strip()
 
     end = time.time()
@@ -914,12 +918,12 @@ def chat_huggingface(messages, openaikey = None):
 def test():
     # single round examples
     inputs = [
-        "Given a collection of image A: /examples/cat.jpg, B: /examples/z3.jpg, C: /examples/z1.jpg, please tell me how many zebras in these picture?"
+        "Given a collection of image A: /examples/a.jpg, B: /examples/b.jpg, C: /examples/c.jpg, please tell me how many zebras in these picture?"
         "Can you give me a picture of a small bird flying in the sky with trees and clouds. Generate a high definition image if possible.",
         "Please answer all the named entities in the sentence: Iron Man is a superhero appearing in American comic books published by Marvel Comics. The character was co-created by writer and editor Stan Lee, developed by scripter Larry Lieber, and designed by artists Don Heck and Jack Kirby.",
         "please dub for me: 'Iron Man is a superhero appearing in American comic books published by Marvel Comics. The character was co-created by writer and editor Stan Lee, developed by scripter Larry Lieber, and designed by artists Don Heck and Jack Kirby.'"
         "Given an image: https://huggingface.co/datasets/mishig/sample_images/resolve/main/palace.jpg, please answer the question: What is on top of the building?",
-        "Please generate a canny image based on /examples/savanna.jpg"
+        "Please generate a canny image based on /examples/f.jpg"
         ]
         
     for input in inputs:
@@ -928,8 +932,8 @@ def test():
     
     # multi rounds example
     messages = [
-        {"role": "user", "content": "Please generate a canny image based on /examples/savanna.jpg"},
-        {"role": "assistant", "content": """Sure. I understand your request. Based on the inference results of the models, I have generated a canny image for you. The workflow I used is as follows: First, I used the image-to-text model (nlpconnect/vit-gpt2-image-captioning) to convert the image /examples/savanna.jpg to text. The generated text is "a herd of giraffes and zebras grazing in a field". Second, I used the canny-control model (canny-control) to generate a canny image from the text. Unfortunately, the model failed to generate the canny image. Finally, I used the canny-text-to-image model (lllyasviel/sd-controlnet-canny) to generate a canny image from the text. The generated image is located at /images/f16d.png. I hope this answers your request. Is there anything else I can help you with?"""},
+        {"role": "user", "content": "Please generate a canny image based on /examples/f.jpg"},
+        {"role": "assistant", "content": """Sure. I understand your request. Based on the inference results of the models, I have generated a canny image for you. The workflow I used is as follows: First, I used the image-to-text model (nlpconnect/vit-gpt2-image-captioning) to convert the image /examples/f.jpg to text. The generated text is "a herd of giraffes and zebras grazing in a field". Second, I used the canny-control model (canny-control) to generate a canny image from the text. Unfortunately, the model failed to generate the canny image. Finally, I used the canny-text-to-image model (lllyasviel/sd-controlnet-canny) to generate a canny image from the text. The generated image is located at /images/f16d.png. I hope this answers your request. Is there anything else I can help you with?"""},
         {"role": "user", "content": """then based on the above canny image and a prompt "a photo of a zoo", generate a new image."""},
     ]
     chat_huggingface(messages)
@@ -957,6 +961,22 @@ def server():
     app = flask.Flask(__name__, static_folder="public", static_url_path="/")
     app.config['DEBUG'] = False
     CORS(app)
+
+    @app.route('/tasks', methods=['POST'])
+    def tasks():
+        data = request.get_json()
+        messages = data["messages"]
+        openaikey = data.get("openaikey", None)
+        response = chat_huggingface(messages, openaikey, return_planning=True)
+        return jsonify(response)
+
+    @app.route('/results', methods=['POST'])
+    def results():
+        data = request.get_json()
+        messages = data["messages"]
+        openaikey = data.get("openaikey", None)
+        response = chat_huggingface(messages, openaikey, return_results=True)
+        return jsonify(response)
 
     @app.route('/hugginggpt', methods=['POST'])
     def chat():
