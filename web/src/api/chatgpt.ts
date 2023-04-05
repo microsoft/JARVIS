@@ -6,11 +6,15 @@ const model = "gpt-3.5-turbo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export async function chatgpt(messageList: CleanChatMessage[], apiKey: string, dev: boolean) {
-  if(dev){
-    var endpoint = "http://localhost:8003/v1/chat/completions"
-  }else{
-    var endpoint = "https://api.openai.com/v1/chat/completions"
+export async function chatgpt(
+  messageList: CleanChatMessage[],
+  apiKey: string,
+  dev: boolean
+) {
+  if (dev) {
+    var endpoint = "http://localhost:8003/v1/chat/completions";
+  } else {
+    var endpoint = "https://api.openai.com/v1/chat/completions";
   }
 
   try {
@@ -22,7 +26,7 @@ export async function chatgpt(messageList: CleanChatMessage[], apiKey: string, d
       },
       data: {
         model,
-        messages: messageList
+        messages: messageList,
       },
     });
     return {
