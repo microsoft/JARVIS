@@ -1,18 +1,23 @@
-import uuid
-import gradio as gr
 import re
-from diffusers.utils import load_image
+import uuid
+
+import gradio as gr
 import requests
+from diffusers.utils import load_image
 
 all_messages = []
 OPENAI_KEY = ""
 
+
 def add_message(content, role):
-    message = {"role":role, "content":content}
+    message = {"role": role, "content": content}
     all_messages.append(message)
 
+
 def extract_medias(message):
-    image_pattern = re.compile(r"(http(s?):|\/)?([\.\/_\w:-])*?\.(jpg|jpeg|tiff|gif|png)")
+    image_pattern = re.compile(
+        r"(http(s?):|\/)?([\.\/_\w:-])*?\.(jpg|jpeg|tiff|gif|png)"
+    )
     image_urls = []
     for match in image_pattern.finditer(message):
         if match.group(0) not in image_urls:
@@ -32,10 +37,12 @@ def extract_medias(message):
 
     return image_urls, audio_urls, video_urls
 
+
 def set_openai_key(openai_key):
     global OPENAI_KEY
     OPENAI_KEY = openai_key
     return OPENAI_KEY
+
 
 def add_text(messages, message):
     if len(OPENAI_KEY) == 0 or not OPENAI_KEY.startswith("sk-"):
@@ -48,7 +55,7 @@ def add_text(messages, message):
         if not image_url.startswith("http"):
             image_url = "public/" + image_url
         image = load_image(image_url)
-        name = f"public/images/{str(uuid.uuid4())[:4]}.jpg" 
+        name = f"public/images/{str(uuid.uuid4())[:4]}.jpg"
         image.save(name)
         messages = messages + [((f"{name}",), None)]
     for audio_url in audio_urls:
@@ -71,10 +78,14 @@ def add_text(messages, message):
         messages = messages + [((f"{name}",), None)]
     return messages, ""
 
+
 def bot(messages):
     if len(OPENAI_KEY) == 0 or not OPENAI_KEY.startswith("sk-"):
         return messages
-    response = requests.post("http://localhost:8004/hugginggpt", json={"messages": all_messages, "openaikey": OPENAI_KEY})
+    response = requests.post(
+        "http://localhost:8004/hugginggpt",
+        json={"messages": all_messages, "openaikey": OPENAI_KEY},
+    )
     message = response.json()["message"]
     print(message)
     image_urls, audio_urls, video_urls = extract_medias(message)
@@ -87,6 +98,7 @@ def bot(messages):
     for video_url in video_urls:
         messages = messages + [((None, (f"public/{video_url}",)))]
     return messages
+
 
 with gr.Blocks() as demo:
     with gr.Row():
@@ -105,19 +117,18 @@ with gr.Blocks() as demo:
             placeholder="Enter text and press enter. The url of the multimedia resource must contain the extension name.",
         ).style(container=False)
 
-    txt.submit(add_text, [chatbot, txt], [chatbot, txt]).then(
-        bot, chatbot, chatbot
-    )
+    txt.submit(add_text, [chatbot, txt], [chatbot, txt]).then(bot, chatbot, chatbot)
     openai_api_key.submit(set_openai_key, [openai_api_key], [openai_api_key])
 
     gr.Examples(
-        examples=["Given a collection of image A: /examples/a.jpg, B: /examples/b.jpg, C: /examples/c.jpg, please tell me how many zebras in these picture?",
-                    "Please generate a canny image based on /examples/savanna.jpg",
-                    "show me a joke and an image of cat",
-                    "what is in the https://c-ssl.duitang.com/uploads/item/201808/20/20180820222902_eigcc.jpg",
-                    "generate a video and audio about a dog is running on the grass"
-                    ],
-        inputs=txt
+        examples=[
+            "Given a collection of image A: /examples/a.jpg, B: /examples/b.jpg, C: /examples/c.jpg, please tell me how many zebras in these picture?",
+            "Please generate a canny image based on /examples/savanna.jpg",
+            "show me a joke and an image of cat",
+            "what is in the https://c-ssl.duitang.com/uploads/item/201808/20/20180820222902_eigcc.jpg",
+            "generate a video and audio about a dog is running on the grass",
+        ],
+        inputs=txt,
     )
 
 demo.launch()
