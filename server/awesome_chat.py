@@ -875,7 +875,7 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
     results = {}
     processes = []
     tasks = tasks[:]
-    with  multiprocessing.Manager() as manager:
+    with multiprocessing.Manager() as manager:
         d = manager.dict()
         retry = 0
         while True:
