@@ -3,9 +3,9 @@
 **This project is under construction and we will have all the code ready soon.**
 
 ## Updates
-+  [2023.04.06] We added the Gradio demo and built the web API for `tasks` and `results` in `server` mode.
++  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
    +  The Gradio demo is still in development. We will host it on Hugging Face Space. See <a href="#Gradio">here</a>.
-   +  `tasks` and `results` access intermediate results for `Stage #2`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
+   +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
    +  Just run `python awesome_chat.py --config lite.yaml` to experience it.
@@ -72,7 +72,7 @@ python awesome_chat.py --config config.yaml --mode server # for text-davinci-003
 Now you can access Jarvis' services by the Web API. 
 
 + `/hugginggpt` --method `POST`, access the full service.
-+ `/tasks` --method `POST`, access intermediate results for Stage #2.
++ `/tasks` --method `POST`, access intermediate results for Stage #1.
 + `/results` --method `POST`, access intermediate results for Stage #1-3.
 
 For example:
@@ -85,13 +85,13 @@ curl --location 'http://localhost:8004/tasks' \
     "messages": [
         {
             "role": "user",
-            "content": "based on pose of /examples/d.jpg and content of e.jpg, please show me a new image"
+            "content": "based on pose of /examples/d.jpg and content of /examples/e.jpg, please show me a new image"
         }
     ]
 }'
 
 # response
-[{"args":{"image":"/examples/d.jpg"},"dep":[-1],"id":0,"task":"openpose-control"},{"args":{"image":"/e.jpg"},"dep":[-1],"id":1,"task":"image-to-text"},{"args":{"image":"<GENERATED>-0","text":"<GENERATED>-1"},"dep":[1,0],"id":2,"task":"openpose-text-to-image"}]
+[{"args":{"image":"/examples/d.jpg"},"dep":[-1],"id":0,"task":"openpose-control"},{"args":{"image":"/examples/e.jpg"},"dep":[-1],"id":1,"task":"image-to-text"},{"args":{"image":"<GENERATED>-0","text":"<GENERATED>-1"},"dep":[1,0],"id":2,"task":"openpose-text-to-image"}]
 ```
 
 

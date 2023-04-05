@@ -120,7 +120,7 @@ with gr.Blocks() as demo:
                     "what is in the examples/a.jpg",
                     "generate a video and audio about a dog is running on the grass",
                     "based on the /examples/a.jpg, please generate a video and audio",
-                    "based on pose of /examples/d.jpg and content of e.jpg, please show me a new image",
+                    "based on pose of /examples/d.jpg and content of /examples/e.jpg, please show me a new image",
                     ],
         inputs=txt
     )
