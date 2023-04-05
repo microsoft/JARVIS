@@ -1,0 +1,14 @@
+version: '3'
+services:
+  jarvis:
+    build: .
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    volumes:
+      - ./server:/app/server
+      - ./models:/app/models
+      - ./openai.key:/app/server/openai.key
+      - ./huggingface.cookie:/app/server/huggingface.cookie
+    ports:
+      - "8004:8004"
