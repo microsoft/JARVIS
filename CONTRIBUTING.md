@@ -6,7 +6,7 @@ To contribute to this GitHub project, you can follow these steps:
 2. Clone the repository to your local machine using the following command:
 
 ```
-git clonehttps://github.com/microsoft/JARVIS
+git clone https://github.com/microsoft/JARVIS
 ```
 3. Create a new branch for your changes using the following command:
 
