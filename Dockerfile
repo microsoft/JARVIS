@@ -1,9 +1,27 @@
 # Base image
 FROM nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu16.04
 
-# Install system dependencies
+# Install system dependencies and NVIDIA drivers
 RUN apt-get update && \
-    apt-get install -y curl wget git python3.8 python3-pip python3-dev build-essential && \
+    apt-get install -y curl wget git && \
+    rm -rf /var/lib/apt/lists/* && \
+    curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | apt-key add - && \
+    distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && \
+    curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | tee /etc/apt/sources.list.d/nvidia-docker.list && \
+    apt-get update && \
+    apt-get install -y nvidia-driver-470 && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install NVIDIA Container Toolkit
+RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && \
+    curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | tee /etc/apt/sources.list.d/nvidia-docker.list && \
+    apt-get update && \
+    apt-get install -y nvidia-container-toolkit && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python and other dependencies
+RUN apt-get update && \
+    apt-get install -y python3.8 python3-pip python3-dev build-essential && \
     rm -rf /var/lib/apt/lists/*
 
 # Create a working directory
