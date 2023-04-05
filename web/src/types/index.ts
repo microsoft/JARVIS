@@ -1,9 +1,9 @@
 export interface ChatMessage {
-    role: "user" | "assistant" | "system";
-    type: "text" | "image" | "audio" | "video" | "code";
-    first: boolean;
-    content: string;
-  }
+  role: "user" | "assistant" | "system";
+  type: "text" | "image" | "audio" | "video" | "code";
+  first: boolean;
+  content: string;
+}
 
 export interface CleanChatMessage {
   role: "user" | "assistant" | "system";
