@@ -35,8 +35,8 @@ demos_or_presteps:
   choose_model: demos/demo_choose_model.json
   response_results: demos/demo_response_results.json 
 prompt:
-  parse_task: The chat log [ {{context}} ] may contain the resources I mentioned. Now I input { {{input}} }, please parse out as many as the required tasks to solve my request in a JSON format.
+  parse_task: The chat log [ {{context}} ] may contain the resources I mentioned. Now I input { {{input}} }. Pay attention to the input and output types of tasks and the dependencies between tasks.
   choose_model: >-
     Please choose a most suitable model from {{metas}} for the task {{task}}. The output must be in a strict JSON format: {"id": "id", "reason": "your detail reasons for the choice"}. 
   response_results: >-
-    Yes. You must first answer my request directly. Please think step by step about my request based on the inference results of the models. Then please detail your workflow step by step including the used models and all inference results for my request in your friendly tone. If any generated files of images, audios or videos in the inference results, must tell me the complete path. If there is nothing in the results, please tell me you can't make it. }
+    Yes. Please first think cafefully and directly answer my request based on the inference results. Then please detail your workflow step by step including the used models and inference results for my request in your friendly tone. Please filter out information that is not relevant to my request. If any generated files of images, audios or videos in the inference results, must tell me the complete path. If there is nothing in the results, please tell me you can't make it. }

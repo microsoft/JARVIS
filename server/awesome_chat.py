@@ -155,6 +155,7 @@ def convert_chat_to_completion(data):
 
 def send_request(data):
     global HEADER
+    openaikey = data.pop("openaikey")
     if use_completion:
         data = convert_chat_to_completion(data)
     if "openaikey" in data:
@@ -259,14 +260,15 @@ def unfold(tasks):
         
     return tasks
 
-def chitchat(messages):
+def chitchat(messages, openaikey=None):
     data = {
         "model": LLM,
-        "messages": messages
+        "messages": messages,
+        "openaikey": openaikey
     }
     return send_request(data)
 
-def parse_task(context, input):
+def parse_task(context, input, openaikey=None):
     demos_or_presteps = parse_task_demos_or_presteps
     messages = json.loads(demos_or_presteps)
     messages.insert(0, {"role": "system", "content": parse_task_tprompt})
@@ -292,11 +294,12 @@ def parse_task(context, input):
         "model": LLM,
         "messages": messages,
         "temperature": 0,
-        "logit_bias": {item: config["logit_bias"]["parse_task"] for item in task_parsing_highlight_ids}
+        "logit_bias": {item: config["logit_bias"]["parse_task"] for item in task_parsing_highlight_ids},
+        "openaikey": openaikey
     }
     return send_request(data)
 
-def choose_model(input, task, metas, preference=["High efficiency", "Good performance."]):
+def choose_model(input, task, metas, openaikey = None):
     prompt = replace_slot(choose_model_prompt, {
         "input": input,
         "task": task,
@@ -315,12 +318,13 @@ def choose_model(input, task, metas, preference=["High efficiency", "Good perfor
         "model": LLM,
         "messages": messages,
         "temperature": 0,
-        "logit_bias": {item: config["logit_bias"]["choose_model"] for item in choose_model_highlight_ids} # 5
+        "logit_bias": {item: config["logit_bias"]["choose_model"] for item in choose_model_highlight_ids}, # 5
+        "openaikey": openaikey
     }
     return send_request(data)
 
 
-def response_results(input, results):
+def response_results(input, results, openaikey=None):
     results = [v for k, v in sorted(results.items(), key=lambda item: item[0])]
     prompt = replace_slot(response_results_prompt, {
         "input": input,
@@ -336,7 +340,8 @@ def response_results(input, results):
     data = {
         "model": LLM,
         "messages": messages,
-        "temperature": 0
+        "temperature": 0,
+        "openaikey": openaikey
     }
     return send_request(data)
 
@@ -669,7 +674,7 @@ def collect_result(command, choose, inference_result):
     return result
 
 
-def run_task(input, command, results):
+def run_task(input, command, results, openaikey = None):
     id = command["id"]
     args = command["args"]
     task = command["task"]
@@ -764,15 +769,15 @@ def run_task(input, command, results):
             inference_result = {"error": f"service related to ControlNet is not available."}
             results[id] = collect_result(command, "", inference_result)
             return False
-    elif task in ["summarization", "translation", "conversational", "text-generation"]: # ChatGPT Can do
+    elif task in ["summarization", "translation", "conversational", "text-generation", "text2text-generation"]: # ChatGPT Can do
         best_model_id = "ChatGPT"
         reason = "ChatGPT is the best model for this task."
         choose = {"id": best_model_id, "reason": reason}
         messages = [{
             "role": "user",
-            "content": f"[ {input} ] contains a task in JSON format {command}, 'task' indicates the task type and 'args' indicates the arguments required for the task. Please help me with this task"
+            "content": f"[ {input} ] contains a task in JSON format {command}, 'task' indicates the task type and 'args' indicates the arguments required for the task. Don't explain the task to me, just help me do it and give me the result. The result can must be in text form."
         }]
-        response = chitchat(messages)
+        response = chitchat(messages, openaikey)
         results[id] = collect_result(command, choose, {"response": response})
         return True
     else:
@@ -817,7 +822,7 @@ def run_task(input, command, results):
                 if model["id"] in all_avaliable_model_ids
             ]
 
-            choose_str = choose_model(input, command, cand_models_info)
+            choose_str = choose_model(input, command, cand_models_info, openaikey)
             logger.debug(f"chosen model: {choose_str}")
             try:
                 choose = json.loads(choose_str)
@@ -840,25 +845,25 @@ def run_task(input, command, results):
     results[id] = collect_result(command, choose, inference_result)
     return True
 
-def chat_huggingface(messages):
+def chat_huggingface(messages, openaikey = None):
     start = time.time()
     context = messages[:-1]
     input = messages[-1]["content"]
     logger.info("*"*80)
     logger.info(f"input: {input}")
 
-    task_str = parse_task(context, input).strip()
+    task_str = parse_task(context, input, openaikey).strip()
     logger.info(task_str)
 
     if task_str == "[]":  # using LLM response for empty task
         record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
-        response = chitchat(messages)
+        response = chitchat(messages, openaikey)
         return {"message": response}
     try:
         tasks = json.loads(task_str)
     except Exception as e:
         logger.debug(e)
-        response = chitchat(messages)
+        response = chitchat(messages, openaikey)
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
     
@@ -880,7 +885,7 @@ def chat_huggingface(messages):
                 # logger.debug(f"d.keys(): {d.keys()}, dep: {dep}")
                 if len(list(set(dep).intersection(d.keys()))) == len(dep) or dep[0] == -1:
                     tasks.remove(task)
-                    process = multiprocessing.Process(target=run_task, args=(input, task, d))
+                    process = multiprocessing.Process(target=run_task, args=(input, task, d, openaikey))
                     process.start()
                     processes.append(process)
             if num_process == len(processes):
@@ -896,7 +901,7 @@ def chat_huggingface(messages):
         
         results = d.copy()
     logger.debug(results)
-    response = response_results(input, results).strip()
+    response = response_results(input, results, openaikey).strip()
 
     end = time.time()
     during = end - start
@@ -957,7 +962,8 @@ def server():
     def chat():
         data = request.get_json()
         messages = data["messages"]
-        response = chat_huggingface(messages)
+        openaikey = data.get("openaikey", None)
+        response = chat_huggingface(messages, openaikey)
         return jsonify(response)
     waitress.serve(app, host=host, port=port)
 

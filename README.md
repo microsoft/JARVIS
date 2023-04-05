@@ -96,6 +96,15 @@ Note that in order to display the video properly in HTML, you need to compile `f
 LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx264 output.mp4
 ```
 
+### For Gradio
+
+We now provide a Gradio demo and plan to host it on Hugging Face Space. You can run the following commands to start the demo locally:
+
+```bash
+# need start model server (models_server.py) and chat server (awesome_chat.py --mode server) first
+python run_gradio.py
+```
+
 ### For CLI:
 
 You can also run Jarvis more easily in CLI mode:

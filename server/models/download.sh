@@ -9,7 +9,6 @@ lllyasviel/sd-controlnet-openpose
 lllyasviel/sd-controlnet-scribble
 lllyasviel/sd-controlnet-seg
 runwayml/stable-diffusion-v1-5
-stabilityai/stable-diffusion-2-1
 Salesforce/blip-image-captioning-large
 damo-vilab/text-to-video-ms-1.7b
 microsoft/speecht5_asr
@@ -22,7 +21,6 @@ facebook/detr-resnet-101
 microsoft/speecht5_tts
 microsoft/speecht5_hifigan
 microsoft/speecht5_vc
-runwayml/stable-diffusion-v1-5
 openai/whisper-base
 Intel/dpt-large
 facebook/detr-resnet-50-panoptic

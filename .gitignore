@@ -5,11 +5,17 @@
 server/models/*
 !server/models/download.sh
 server/logs/
-server/public/
 server/models_dev
+server/public/*
+!server/public/examples/
+server/public/examples/*
+!server/public/examples/a.jpg
+!server/public/examples/b.jpg
+!server/public/examples/c.jpg
+!server/public/examples/savanna.jpg
 
 # for gradio
-server/run_gradio.py
+# server/run_gradio.py
 
 # for web
 web/node_modules

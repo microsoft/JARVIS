@@ -129,10 +129,10 @@ def load_pipes(local_deployment):
             #     "model": DiffusionPipeline.from_pretrained(f"{local_fold}/CompVis/stable-diffusion-v1-4"),
             #     "device": "cuda:0"
             # },
-            "stabilityai/stable-diffusion-2-1": {
-                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/stabilityai/stable-diffusion-2-1"),
-                "device": "cuda:0"
-            },
+            # "stabilityai/stable-diffusion-2-1": {
+            #     "model": DiffusionPipeline.from_pretrained(f"{local_fold}/stabilityai/stable-diffusion-2-1"),
+            #     "device": "cuda:0"
+            # },
             "runwayml/stable-diffusion-v1-5": {
                 "model": DiffusionPipeline.from_pretrained(f"{local_fold}/runwayml/stable-diffusion-v1-5"),
                 "device": "cuda:0"
@@ -467,7 +467,7 @@ def models(model_id):
             result = {"generated text": generated_text}
 
         # text to image
-        if model_id == "stabilityai/stable-diffusion-2-1" or model_id == "runwayml/stable-diffusion-v1-5":
+        if model_id == "runwayml/stable-diffusion-v1-5":
             file_name = str(uuid.uuid4())[:4]
             text = request.get_json()["text"]
             out = pipe(prompt=text)
