@@ -38,9 +38,9 @@ The configuration `lite.yaml` does not require any expert models to be downloade
 
 ## Quick Start
 
-First replace `openai.key` and `huggingface.cookie` in `server/config.yaml` with **your personal key** and **your cookies at huggingface.co**. Then run the following commands:
+First replace `openai.key` and `huggingface.token` in `server/config.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**. Then run the following commands:
 
-> The absence of the HuggingFace cookie may result in error message: `Rate limit reached. Please log in or use your apiToken`.
+> The absence of the Hugging Face Token may result in error message: `Rate limit reached. Please log in or use your apiToken`.
 
 
 ### For server:

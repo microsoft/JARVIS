@@ -127,9 +127,9 @@ for model in MODELS:
     METADATAS[model["id"]] = model
 
 HUGGINGFACE_HEADERS = {}
-if config["huggingface"]["cookie"]:
+if config["huggingface"]["token"]:
     HUGGINGFACE_HEADERS = {
-        "cookie": config["huggingface"]["cookie"],
+        "Authorization": f"Bearer {config['huggingface']['token']}",
     }
 
 def convert_chat_to_completion(data):
