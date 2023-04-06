@@ -12,6 +12,7 @@ lllyasviel/sd-controlnet-openpose
 lllyasviel/sd-controlnet-scribble
 lllyasviel/sd-controlnet-seg
 runwayml/stable-diffusion-v1-5
+XpucT/Deliberate
 Salesforce/blip-image-captioning-large
 damo-vilab/text-to-video-ms-1.7b
 microsoft/speecht5_asr
