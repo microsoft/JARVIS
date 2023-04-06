@@ -3,6 +3,7 @@ import gradio as gr
 import re
 from diffusers.utils import load_image
 import requests
+from awesome_chat import chat_huggingface
 
 all_messages = []
 OPENAI_KEY = ""
@@ -74,9 +75,10 @@ def add_text(messages, message):
 def bot(messages):
     if len(OPENAI_KEY) == 0 or not OPENAI_KEY.startswith("sk-"):
         return messages
-    response = requests.post("http://localhost:8004/hugginggpt", json={"messages": all_messages, "openaikey": OPENAI_KEY})
-    message = response.json()["message"]
-    print(message)
+    # response = requests.post("http://localhost:8004/hugginggpt", json={"messages": all_messages, "openaikey": OPENAI_KEY})
+    # message = response.json()["message"]
+    # print(message)
+    message = chat_huggingface(all_messages, OPENAI_KEY)
     image_urls, audio_urls, video_urls = extract_medias(message)
     add_message(message, "assistant")
     messages[-1][1] = message
@@ -89,6 +91,7 @@ def bot(messages):
     return messages
 
 with gr.Blocks() as demo:
+    gr.Markdown("<h2><center>HuggingGPT (Dev)</center></h2>")
     with gr.Row():
         openai_api_key = gr.Textbox(
             show_label=False,
@@ -112,10 +115,12 @@ with gr.Blocks() as demo:
 
     gr.Examples(
         examples=["Given a collection of image A: /examples/a.jpg, B: /examples/b.jpg, C: /examples/c.jpg, please tell me how many zebras in these picture?",
-                    "Please generate a canny image based on /examples/savanna.jpg",
+                    "Please generate a canny image based on /examples/f.jpg",
                     "show me a joke and an image of cat",
-                    "what is in the https://c-ssl.duitang.com/uploads/item/201808/20/20180820222902_eigcc.jpg",
-                    "generate a video and audio about a dog is running on the grass"
+                    "what is in the examples/a.jpg",
+                    "generate a video and audio about a dog is running on the grass",
+                    "based on the /examples/a.jpg, please generate a video and audio",
+                    "based on pose of /examples/d.jpg and content of /examples/e.jpg, please show me a new image",
                     ],
         inputs=txt
     )

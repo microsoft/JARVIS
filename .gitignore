@@ -12,7 +12,10 @@ server/public/examples/*
 !server/public/examples/a.jpg
 !server/public/examples/b.jpg
 !server/public/examples/c.jpg
-!server/public/examples/savanna.jpg
+!server/public/examples/d.jpg
+!server/public/examples/e.jpg
+!server/public/examples/f.jpg
+!server/public/examples/g.jpg
 
 # for gradio
 # server/run_gradio.py
