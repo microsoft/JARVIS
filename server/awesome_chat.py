@@ -816,8 +816,8 @@ def run_task(input, command, results, openaikey = None):
                     ),
                     "likes": model.get("likes"),
                     "description": model.get("description", "")[:config["max_description_length"]],
-                    "language": model.get("language"),
-                    "tags": model.get("tags"),
+                    "language": model.get("meta").get("language"),
+                    "tags": model.get("meta").get("tags"),
                 }
                 for model in candidates
                 if model["id"] in all_avaliable_model_ids
