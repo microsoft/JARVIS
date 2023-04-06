@@ -45,8 +45,8 @@ git push origin branch-name
 
 ```
 git fetch upstream
-git checkout master
-git merge upstream/master
+git checkout main
+git merge upstream/main
 ```
 Finally, delete the branch you created with the following command:
 ```
