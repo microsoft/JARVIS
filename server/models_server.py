@@ -389,7 +389,7 @@ def models(model_id):
             video_frames = pipe(prompt, num_inference_steps=50, num_frames=40).frames
             video_path = export_to_video(video_frames)
             file_name = str(uuid.uuid4())[:4]
-            os.system(f"LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i {video_path} -vcodec libx264 public/videos/{file_name}.mp4")
+            os.system(f"LD_LIBRARY_PATH=/usr/lib /usr/bin/ffmpeg -i {video_path} -vcodec libx264 public/videos/{file_name}.mp4")
             result = {"path": f"/videos/{file_name}.mp4"}
 
         # controlnet

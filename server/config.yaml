@@ -1,7 +1,7 @@
 openai:
-  key: your_personal_openai_key # "gradio" (set when request) or your_personal_key
+  key: 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 # "gradio" (set when request) or your_personal_key
 huggingface:
-  token: # required: huggingface token @ https://huggingface.co/settings/tokens
+  token: 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 # required: huggingface token @ https://huggingface.co/settings/tokens
 local: # ignore: just for development
   endpoint: http://localhost:8003
 dev: false

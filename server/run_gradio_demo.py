@@ -91,7 +91,7 @@ def bot(messages):
     return messages
 
 with gr.Blocks() as demo:
-    gr.Markdown("<h2><center>HuggingGPT (Dev)</center></h2>")
+    gr.Markdown("<h2><center>Glaukopis (Dev)</center></h2>")
     with gr.Row():
         openai_api_key = gr.Textbox(
             show_label=False,
@@ -125,4 +125,4 @@ with gr.Blocks() as demo:
         inputs=txt
     )
 
-demo.launch()
+demo.launch(share=True)
