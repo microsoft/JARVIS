@@ -1,5 +1,5 @@
 # Base image
-FROM nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu16.04
+FROM nvidia/cuda:11.3.1-cudnn8-runtime-ubuntu16.04
 
 # Install system dependencies and NVIDIA drivers
 RUN apt-get update && \
@@ -41,4 +41,4 @@ COPY . .
 EXPOSE 8004
 
 # Start the API server
-CMD ["python3", "models_server.py", "--config", "config.yaml"]
+CMD ["python3", "models_server.py", "--config", "config.yaml", "--mode", "server"]

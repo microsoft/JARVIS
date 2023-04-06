@@ -9,6 +9,6 @@ services:
       - ./server:/app/server
       - ./models:/app/models
       - ./openai.key:/app/server/openai.key
-      - ./huggingface.cookie:/app/server/huggingface.cookie
+      - ./huggingface.token:/app/server/huggingface.token
     ports:
       - "8004:8004"
