@@ -43,7 +43,7 @@ async function sendChatMessage() {
   )
 
   clearMessageContent();
-  var clean_messages: CleanChatMessage[] = []
+  const clean_messages: CleanChatMessage[] = []
   for (let message of messageList.value) {
     if (message.first && message.role != "system") {
       clean_messages.push({role: message.role, content: message.content})
@@ -52,11 +52,9 @@ async function sendChatMessage() {
   messageList.value.push(
     { role: "assistant", content: "", type: "text", first: true},
   )
-  if (isChatgpt.value) {
-    var { status, data, message } = await chatgpt(clean_messages, loadConfig(), dev.value);
-  } else {
-    var { status, data, message: string } = await hugginggpt(clean_messages, loadConfig(), dev.value);
-  }
+  const { status, data, message } = isChatgpt.value 
+    ? await chatgpt(clean_messages, loadConfig(), dev.value) 
+    : await chatgpt(clean_messages, loadConfig(), dev.value);
   
   messageList.value.pop()
   if (status === "success" ) {
@@ -79,15 +77,14 @@ async function sendChatMessage() {
 
 
 const messageListMM = computed(() => {
-  var messageListMM: ChatMessage[] = []
-  for (var i = 0; i < messageList.value.length; i++) {
-    var message = messageList.value[i]
+  const messageListMM: ChatMessage[] = []
+  for (let i = 0; i < messageList.value.length; i++) {
+    const message = messageList.value[i]
     if (message.type != "text") {
       messageListMM.push(message)
       continue
     }
-    var content = message.content
-    var role = message.role
+   const { role, content } = message;
     
     var image_urls = content.match(/(http(s?):|\/)([/|.|\S||\w|:|-])*?\.(?:jpg|jpeg|tiff|gif|png)/g)
     var image_reg = new RegExp(/(http(s?):|\/)([/|.|\S|\w|:|-])*?\.(?:jpg|jpeg|tiff|gif|png)/g)
