@@ -79,9 +79,12 @@ if not config["dev"]:
         raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
     OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
-    HEADER = {
-        "Authorization": f"Bearer {OPENAI_KEY}"
-    }
+    if OPENAI_KEY.startswith("sk-"):
+        HEADER = {
+            "Authorization": f"Bearer {OPENAI_KEY}"
+        }
+    else:
+        HEADER = None
 else:
     endpoint = f"{config['local']['endpoint']}/v1/{api_name}"
     HEADER = None
@@ -163,10 +166,11 @@ def send_request(data):
     openaikey = data.pop("openaikey")
     if use_completion:
         data = convert_chat_to_completion(data)
-    if "openaikey" in data:
+    if openaikey and openaikey.startswith("sk-"):
         HEADER = {
-            "Authorization": f"Bearer {data['openaikey']}"
+            "Authorization": f"Bearer {openaikey}"
         }
+    
     response = requests.post(endpoint, json=data, headers=HEADER, proxies=PROXY)
     logger.debug(response.text.strip())
     if use_completion:
@@ -772,7 +776,7 @@ def run_task(input, command, results, openaikey = None):
         choose = {"id": best_model_id, "reason": reason}
         messages = [{
             "role": "user",
-            "content": f"[ {input} ] contains a task in JSON format {command}, 'task' indicates the task type and 'args' indicates the arguments required for the task. Don't explain the task to me, just help me do it and give me the result. The result can must be in text form."
+            "content": f"[ {input} ] contains a task in JSON format {command}, 'task' indicates the task type and 'args' indicates the arguments required for the task. Don't explain the task to me, just help me do it and give me the result. The result must be in text form without any urls."
         }]
         response = chitchat(messages, openaikey)
         results[id] = collect_result(command, choose, {"response": response})

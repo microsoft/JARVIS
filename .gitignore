@@ -4,6 +4,7 @@
 # for server
 server/models/*
 !server/models/download.sh
+!server/models/download.ps1
 server/logs/
 server/models_dev
 server/public/*

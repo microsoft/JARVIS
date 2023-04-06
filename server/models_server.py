@@ -73,8 +73,8 @@ CORS(app)
 start = time.time()
 
 local_fold = "models"
-if args.config.endswith(".dev"):
-    local_fold = "models_dev"
+# if args.config.endswith(".dev"):
+#     local_fold = "models_dev"
 
 
 def load_pipes(local_deployment):
@@ -89,20 +89,20 @@ def load_pipes(local_deployment):
                 "tokenizer": AutoTokenizer.from_pretrained(f"{local_fold}/nlpconnect/vit-gpt2-image-captioning"),
                 "device": "cuda:0"
             },
-            "Salesforce/blip-image-captioning-large": {
-                "model": BlipForConditionalGeneration.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
-                "processor": BlipProcessor.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
-                "device": "cuda:0"
-            },
+            # "Salesforce/blip-image-captioning-large": {
+            #     "model": BlipForConditionalGeneration.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
+            #     "processor": BlipProcessor.from_pretrained(f"{local_fold}/Salesforce/blip-image-captioning-large"),
+            #     "device": "cuda:0"
+            # },
             "damo-vilab/text-to-video-ms-1.7b": {
                 "model": DiffusionPipeline.from_pretrained(f"{local_fold}/damo-vilab/text-to-video-ms-1.7b", torch_dtype=torch.float16, variant="fp16"),
                 "device": "cuda:0"
             },
-            "facebook/maskformer-swin-large-ade": {
-                "model": MaskFormerForInstanceSegmentation.from_pretrained(f"{local_fold}/facebook/maskformer-swin-large-ade"),
-                "feature_extractor" : AutoFeatureExtractor.from_pretrained("facebook/maskformer-swin-large-ade"),
-                "device": "cuda:0"
-            },
+            # "facebook/maskformer-swin-large-ade": {
+            #     "model": MaskFormerForInstanceSegmentation.from_pretrained(f"{local_fold}/facebook/maskformer-swin-large-ade"),
+            #     "feature_extractor" : AutoFeatureExtractor.from_pretrained("facebook/maskformer-swin-large-ade"),
+            #     "device": "cuda:0"
+            # },
             # "microsoft/trocr-base-printed": {
             #     "processor": TrOCRProcessor.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
             #     "model": VisionEncoderDecoderModel.from_pretrained(f"{local_fold}/microsoft/trocr-base-printed"),
@@ -137,13 +137,13 @@ def load_pipes(local_deployment):
                 "model": DiffusionPipeline.from_pretrained(f"{local_fold}/runwayml/stable-diffusion-v1-5"),
                 "device": "cuda:0"
             },
-            "microsoft/speecht5_tts":{
-                "processor": SpeechT5Processor.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
-                "model": SpeechT5ForTextToSpeech.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
-                "vocoder":  SpeechT5HifiGan.from_pretrained(f"{local_fold}/microsoft/speecht5_hifigan"),
-                "embeddings_dataset": load_dataset(f"{local_fold}/Matthijs/cmu-arctic-xvectors", split="validation"),
-                "device": "cuda:0"
-            },
+            # "microsoft/speecht5_tts":{
+            #     "processor": SpeechT5Processor.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
+            #     "model": SpeechT5ForTextToSpeech.from_pretrained(f"{local_fold}/microsoft/speecht5_tts"),
+            #     "vocoder":  SpeechT5HifiGan.from_pretrained(f"{local_fold}/microsoft/speecht5_hifigan"),
+            #     "embeddings_dataset": load_dataset(f"{local_fold}/Matthijs/cmu-arctic-xvectors", split="validation"),
+            #     "device": "cuda:0"
+            # },
             # "speechbrain/mtl-mimic-voicebank": {
             #     "model": WaveformEnhancement.from_hparams(source="speechbrain/mtl-mimic-voicebank", savedir="models/mtl-mimic-voicebank"),
             #     "device": "cuda:0"
@@ -458,7 +458,7 @@ def models(model_id):
             generated_text = pipes[model_id]["tokenizer"].batch_decode(generated_ids, skip_special_tokens=True)[0]
             result = {"generated text": generated_text}
         # image to text: OCR
-        if model_id == "microsoft/trocr-base-printed" or  model_id == "microsoft/trocr-base-handwritten" :
+        if model_id == "microsoft/trocr-base-printed" or  model_id == "microsoft/trocr-base-handwritten":
             image = load_image(request.get_json()["img_url"]).convert("RGB")
             pixel_values = pipes[model_id]["processor"](image, return_tensors="pt").pixel_values
             pixel_values = pixel_values.to(pipes[model_id]["device"])
