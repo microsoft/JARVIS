@@ -14,13 +14,6 @@ let isConfig = ref<boolean>(true);
 let title = ref<string>();
 let mode = ref<string>("default");
 
-
-if(isChatgpt.value){
-  title.value = "ChatGPT"
-}else{
-  title.value = "HuggingGPT"
-}
-
 title.value = isChatgpt.value? "ChatGPT": "HuggingGPT";
 
 isConfig.value = (!dev.value && isChatgpt.value)? true : false
