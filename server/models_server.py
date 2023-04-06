@@ -270,7 +270,7 @@ def load_pipes(local_deployment):
     if local_deployment in ["full", "standard", "minimal"]:
         controlnet = ControlNetModel.from_pretrained(f"{local_fold}/lllyasviel/sd-controlnet-canny", torch_dtype=torch.float16)
         controlnetpipe = StableDiffusionControlNetPipeline.from_pretrained(
-            f"{local_fold}/runwayml/stable-diffusion-v1-5", controlnet=controlnet, torch_dtype=torch.float16
+            f"{local_fold}/XpucT/Deliberate", controlnet=controlnet, torch_dtype=torch.float16
         )
 
         def mlsd_control_network():
@@ -467,7 +467,7 @@ def models(model_id):
             result = {"generated text": generated_text}
 
         # text to image
-        if model_id == "runwayml/stable-diffusion-v1-5":
+        if model_id == "XpucT/Deliberate":
             file_name = str(uuid.uuid4())[:4]
             text = request.get_json()["text"]
             out = pipe(prompt=text)
