@@ -79,25 +79,23 @@ async function sendChatMessage() {
 const messageListMM = computed(() => {
   const messageListMM: ChatMessage[] = []
   for (let i = 0; i < messageList.value.length; i++) {
-    const message = messageList.value[i]
+    let message = messageList.value[i]
     if (message.type != "text") {
       messageListMM.push(message)
       continue
     }
-   const { role, content } = message;
+   let { role, content } = message;
     
-    var image_urls = content.match(/(http(s?):|\/)([/|.|\S||\w|:|-])*?\.(?:jpg|jpeg|tiff|gif|png)/g)
-    var image_reg = new RegExp(/(http(s?):|\/)([/|.|\S|\w|:|-])*?\.(?:jpg|jpeg|tiff|gif|png)/g)
+    const image_urls = content.match(/(http(s?):|\/)([/|.|\S||\w|:|-])*?\.(?:jpg|jpeg|tiff|gif|png)/g)
+    const image_reg = new RegExp(/(http(s?):|\/)([/|.|\S|\w|:|-])*?\.(?:jpg|jpeg|tiff|gif|png)/g)
     
-    var orig_content = content
-    var seq_added_accum = 0
+    let orig_content = content
+    let image_seq_added_accum = 0
     if (image_urls){
-      for (var j = 0; j < image_urls.length; j++) {
+      for (let j = 0; j < image_urls.length; j++) {
         // @ts-ignore
-        var start = image_reg.exec(orig_content).index
-        var end = start + image_urls[j].length
-        start += seq_added_accum
-        end += seq_added_accum
+        let start = image_reg.exec(orig_content).index + image_seq_added_accum
+        let end = start + image_urls[j].length + image_seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
           <a class="inline-flex text-sky-800 font-bold items-baseline" target="_blank" href="${image_urls[j].startsWith("http")?image_urls[j]:"http://localhost:8004"+image_urls[j]}">
               <img src="${image_urls[j].startsWith("http")?image_urls[j]:"http://localhost:8004"+image_urls[j]}" alt="" class="inline-flex self-center w-5 h-5 rounded-full mx-1" />
@@ -105,7 +103,7 @@ const messageListMM = computed(() => {
           </a>
           </span>`
         const rep_length = replace_str.length
-        seq_added_accum += (rep_length - image_urls[j].length)
+        image_seq_added_accum += (rep_length - image_urls[j].length)
         content = content.slice(0, start) + replace_str + content.slice(end)
         
         if(!image_urls[j].startsWith("http")){
@@ -115,17 +113,15 @@ const messageListMM = computed(() => {
     }
   
     orig_content = content
-    var audio_urls = content.match(/(http(s?):|\/)([/|.|\w|\S|:|-])*?\.(?:flac|wav)/g)
-    var audio_reg = new RegExp(/(http(s?):|\/)([/|.|\w|\S|:|-])*?\.(?:flac|wav)/g)
+    const audio_urls = content.match(/(http(s?):|\/)([/|.|\w|\S|:|-])*?\.(?:flac|wav)/g)
+    const audio_reg = new RegExp(/(http(s?):|\/)([/|.|\w|\S|:|-])*?\.(?:flac|wav)/g)
   
-    var seq_added_accum = 0
-    if (audio_urls){
-      for (var j = 0; j < audio_urls.length; j++) {
+    let audio_seq_added_accum = 0
+    if (audio_urls) {
+      for (let j = 0; j < audio_urls.length; j++) {
         // @ts-ignore
-        var start = audio_reg.exec(orig_content).index
-        var end = start + audio_urls[j].length
-        start += seq_added_accum
-        end += seq_added_accum
+        let start = audio_reg.exec(orig_content).index + audio_seq_added_accum
+        let end = start + audio_urls[j].length + audio_seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
             <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${audio_urls[j].startsWith("http")?audio_urls[j]:"http://localhost:8004"+audio_urls[j]}">
               <img class="inline-flex self-center w-5 h-5 rounded-full mx-1" src="/audio.svg"/>
@@ -133,27 +129,27 @@ const messageListMM = computed(() => {
             </a>
           </span>`
         const rep_length = replace_str.length
-        seq_added_accum += (rep_length - audio_urls[j].length)
+        audio_seq_added_accum += (rep_length - audio_urls[j].length)
         content = content.slice(0, start) + replace_str + content.slice(end)
         
-        if(!audio_urls[j].startsWith("http")){
+        if (!audio_urls[j].startsWith("http")) {
           audio_urls[j] = "http://localhost:8004" + audio_urls[j]
         }
       }
     }
 
     orig_content = content
-    var video_urls = content.match(/(http(s?):|\/)([/|.|\w|\s|:|-])*?\.(?:mp4)/g)
-    var video_reg = new RegExp(/(http(s?):|\/)([/|.|\w|\s|:|-])*?\.(?:mp4)/g)
+    const video_urls = content.match(/(http(s?):|\/)([/|.|\w|\s|:|-])*?\.(?:mp4)/g)
+    const video_reg = new RegExp(/(http(s?):|\/)([/|.|\w|\s|:|-])*?\.(?:mp4)/g)
   
-    var seq_added_accum = 0
+    let video_seq_added_accum = 0
     if (video_urls){
-      for (var j = 0; j < video_urls.length; j++) {
+      for (let j = 0; j < video_urls.length; j++) {
         // @ts-ignore
-        var start = video_reg.exec(orig_content).index
-        var end = start + video_urls[j].length
-        start += seq_added_accum
-        end += seq_added_accum
+        let start = video_reg.exec(orig_content).index
+        let end = start + video_urls[j].length
+        start += video_seq_added_accum
+        end += video_seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
             <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${video_urls[j].startsWith("http")?video_urls[j]:"http://localhost:8004"+video_urls[j]}">
               <img class="inline-flex self-center w-5 h-5 rounded-full mx-1" src="/video.svg"/>
@@ -161,10 +157,10 @@ const messageListMM = computed(() => {
             </a>
           </span>`
         const rep_length = replace_str.length
-        seq_added_accum += (rep_length - video_urls[j].length)
+        video_seq_added_accum += (rep_length - video_urls[j].length)
         content = content.slice(0, start) + replace_str + content.slice(end)
         
-        if(!video_urls[j].startsWith("http")){
+        if (!video_urls[j].startsWith("http")) {
           video_urls[j] = "http://localhost:8004" + video_urls[j]
         }
       }
@@ -180,7 +176,6 @@ const messageListMM = computed(() => {
     // @ts-ignore
     video_urls = [...new Set(video_urls)]
     if (image_urls) {
-      
       for (var j = 0; j < image_urls.length; j++) {
         messageListMM.push({role: role, content: image_urls[j], type: "image", first: false})
       }
