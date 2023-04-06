@@ -4,7 +4,7 @@ import { ref, watch, nextTick, onMounted, computed } from "vue";
 import { RouterLink } from "vue-router";
 import { hugginggpt } from "@/api/hugginggpt";
 import { chatgpt } from "@/api/chatgpt";
-import Loding from "@/components/Loding.vue";
+import Loading from "@/components/Loading.vue";
 import promptCollection from "@/prompt";
 
 let dev = ref(false);
@@ -13,13 +13,6 @@ let isTalking = ref(false);
 let isConfig = ref<boolean>(true);
 let title = ref<string>();
 let mode = ref<string>("default");
-
-
-if(isChatgpt.value){
-  title.value = "ChatGPT"
-}else{
-  title.value = "HuggingGPT"
-}
 
 title.value = isChatgpt.value? "ChatGPT": "HuggingGPT";
 
@@ -51,32 +44,32 @@ async function sendChatMessage() {
 
   clearMessageContent();
   var clean_messages: CleanChatMessage[] = []
-  for(let message of messageList.value){
-    if(message.first && message.role != "system"){
+  for (let message of messageList.value) {
+    if (message.first && message.role != "system") {
       clean_messages.push({role: message.role, content: message.content})
     }
   }
   messageList.value.push(
     { role: "assistant", content: "", type: "text", first: true},
   )
-  if(isChatgpt.value){
+  if (isChatgpt.value) {
     var { status, data, message } = await chatgpt(clean_messages, loadConfig(), dev.value);
-  }else{
+  } else {
     var { status, data, message: string } = await hugginggpt(clean_messages, loadConfig(), dev.value);
   }
   
   messageList.value.pop()
-  if(status === "success" ){
-    if(data){
+  if (status === "success" ) {
+    if (data) {
       messageList.value.push(
         { role: "assistant", content: data, type: "text", first: true }
       );
-    }else{
+    } else {
       messageList.value.push(
         { role: "assistant", content: "Something seems wrong", type: "text", first: true }
       );
     }
-  }else{
+  } else {
     messageList.value.push(
       { role: "system", content: "Something seems seems wrong", type: "text", first: true }
     );
@@ -89,7 +82,7 @@ const messageListMM = computed(() => {
   var messageListMM: ChatMessage[] = []
   for (var i = 0; i < messageList.value.length; i++) {
     var message = messageList.value[i]
-    if(message.type != "text"){
+    if (message.type != "text") {
       messageListMM.push(message)
       continue
     }
@@ -195,12 +188,12 @@ const messageListMM = computed(() => {
         messageListMM.push({role: role, content: image_urls[j], type: "image", first: false})
       }
     }
-    if (audio_urls){
+    if (audio_urls) {
       for (var j = 0; j < audio_urls.length; j++) {
         messageListMM.push({role: role, content: audio_urls[j], type: "audio", first: false})
       }
     }
-    if (video_urls){
+    if (video_urls) {
       for (var j = 0; j < video_urls.length; j++) {
         messageListMM.push({role: role, content: video_urls[j], type: "video", first: false})
       }
@@ -239,10 +232,10 @@ const clickConfig = () => {
 
 const switchChatGPT = () => {
   isChatgpt.value = !isChatgpt.value;
-  if(isChatgpt.value){
+  if (isChatgpt.value) {
     title.value = "ChatGPT"
     roleAlias.value = roleAliasChatGPT
-  }else{
+  } else {
     title.value = "HuggingGPT"
     roleAlias.value = roleAliasChatHuggingGPT
   }
@@ -252,7 +245,7 @@ function saveConfig(apiKey: string) {
   if (apiKey.slice(0, 3) !== "sk-" || apiKey.length !== 51) {
     alert("Illegal API Key");
     return false;
-  }-
+  }
   localStorage.setItem("apiKey", apiKey);
   return true;
 }
@@ -361,7 +354,7 @@ watch(messageListMM, () => nextTick(() => {
             </code>
           </pre>
           
-          <Loding class="mt-2" v-else />
+          <Loading class="mt-2" v-else />
         </div>
 
       </div>
