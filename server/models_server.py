@@ -133,8 +133,8 @@ def load_pipes(local_deployment):
             #     "model": DiffusionPipeline.from_pretrained(f"{local_fold}/stabilityai/stable-diffusion-2-1"),
             #     "device": "cuda:0"
             # },
-            "runwayml/stable-diffusion-v1-5": {
-                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/runwayml/stable-diffusion-v1-5"),
+            "XpucT/Deliberate": {
+                "model": DiffusionPipeline.from_pretrained(f"{local_fold}/XpucT/Deliberate"),
                 "device": "cuda:0"
             },
             # "microsoft/speecht5_tts":{
