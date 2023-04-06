@@ -4,7 +4,7 @@ import { ref, watch, nextTick, onMounted, computed } from "vue";
 import { RouterLink } from "vue-router";
 import { hugginggpt } from "@/api/hugginggpt";
 import { chatgpt } from "@/api/chatgpt";
-import Loding from "@/components/Loding.vue";
+import Loading from "@/components/Loading.vue";
 import promptCollection from "@/prompt";
 
 let dev = ref(false);
@@ -354,7 +354,7 @@ watch(messageListMM, () => nextTick(() => {
             </code>
           </pre>
           
-          <Loding class="mt-2" v-else />
+          <Loading class="mt-2" v-else />
         </div>
 
       </div>
