@@ -3,10 +3,11 @@ To contribute to this GitHub project, you can follow these steps:
 
 1. Fork the repository you want to contribute to by clicking the "Fork" button on the project page.
 
-2. Clone the repository to your local machine using the following command (make sure to insert your Github username in the command)
+2. Clone the repository to your local machine and enter the newly created repo using the following commands:
 
 ```
 git clone https://github.com/YOUR-GITHUB-USERNAME/JARVIS
+cd JARVIS
 ```
 3. Create a new branch for your changes using the following command:
 
@@ -14,7 +15,6 @@ git clone https://github.com/YOUR-GITHUB-USERNAME/JARVIS
 git checkout -b "branch-name"
 ```
 4. Make your changes to the code or documentation.
-- Example: Improve User Interface or Add Documentation.
 
 5. Add the changes to the staging area using the following command:
 ```
