@@ -16,7 +16,7 @@ export async function hugginggpt(messageList: CleanChatMessage[], apiKey: string
       },
       data: {
         model,
-        messages: messageList
+        messages: messageList.slice(1)
       },
       timeout: 180000, // 180 seconds
     });

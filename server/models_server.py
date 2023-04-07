@@ -56,8 +56,8 @@ logger.addHandler(handler)
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
 
-host = config["modelserver"]["host"]
-port = config["modelserver"]["port"]
+# host = config["local_inference_endpoint"]["host"]
+port = config["local_inference_endpoint"]["port"]
 
 local_deployment = config["local_deployment"]
 
@@ -631,4 +631,4 @@ if __name__ == '__main__':
     if not os.path.exists("public/videos"):
         os.makedirs("public/videos")
         
-    waitress.serve(app, host=host, port=port)
+    waitress.serve(app, host="0.0.0.0", port=port)

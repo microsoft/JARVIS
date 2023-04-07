@@ -6,9 +6,10 @@
     <img src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" alt="Open in Spaces">
 </a>
 
+
 ## Updates
 +  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
-   +  The Gradio demo is still in development. We will host it on Hugging Face Space. See <a href="#Gradio">here</a>.
+   +  The Gradio demo is now hosted on Hugging Face Space. [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/raw/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces)
    +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
@@ -19,7 +20,7 @@
 
 Language serves as an interface for LLMs to connect numerous AI models for solving complicated AI tasks!
 
-See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](http://arxiv.org/abs/2303.17580)
+See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](http://arxiv.org/abs/2303.17580), Yongliang Shen, Kaitao Song, Xu Tan, Dongsheng Li, Weiming Lu, Yueting Zhuang
 
 <p align="center"><img src="./assets/overview.jpg"></p>
 
@@ -63,9 +64,9 @@ conda activate jarvis
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 pip install -r requirements.txt
 
-# download models
+# download models. Make sure that `git-lfs` is installed.
 cd models
-sh download.sh # required when `inference_mode` is `local` or `hybrid`
+bash download.sh # required when `inference_mode` is `local` or `hybrid`. 
 
 # run server
 cd ..
@@ -123,11 +124,14 @@ LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx26
 
 ### For Gradio
 
-We now provide a Gradio demo and plan to host it on Hugging Face Space. You can run the following commands to start the demo locally:
+The Gradio demo is now hosted on Hugging Face Space. You can also run the following commands to start the demo locally:
 
 ```bash
 python models_server.py --config config.gradio.yaml
 python run_gradio_demo.py --config config.gradio.yaml
+
+# or run the HF Space as a Docker image
+docker run -it -p 7860:7860 --platform=linux/amd64 registry.hf.space/microsoft-hugginggpt:latest python app.py
 ```
 
 ### For CLI:

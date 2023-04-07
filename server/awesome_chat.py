@@ -97,10 +97,9 @@ if config["proxy"]:
 
 inference_mode = config["inference_mode"]
 
-HTTP_Server = "http://" + config["httpserver"]["host"] + ":" + str(config["httpserver"]["port"])
-Model_Server = "http://" + config["modelserver"]["host"] + ":" + str(config["modelserver"]["port"])
+Model_Server = "http://" + config["local_inference_endpoint"]["host"] + ":" + str(config["local_inference_endpoint"]["port"])
 
-# check the HTTP_Server
+# check the local_inference_endpoint
 if inference_mode!="huggingface":
     message = "The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in config.yaml for a feature-limited experience)"
     try:
@@ -776,7 +775,7 @@ def run_task(input, command, results, openaikey = None):
         choose = {"id": best_model_id, "reason": reason}
         messages = [{
             "role": "user",
-            "content": f"[ {input} ] contains a task in JSON format {command}, 'task' indicates the task type and 'args' indicates the arguments required for the task. Don't explain the task to me, just help me do it and give me the result. The result must be in text form without any urls."
+            "content": f"[ {input} ] contains a task in JSON format {command}. Now you are a {command['task']} system, the arguments are {command['args']}. Just help me do {command['task']} and give me the result. The result must be in text form without any urls."
         }]
         response = chitchat(messages, openaikey)
         results[id] = collect_result(command, choose, {"response": response})
@@ -786,7 +785,7 @@ def run_task(input, command, results, openaikey = None):
             logger.warning(f"no available models on {task} task.")
             record_case(success=False, **{"input": input, "task": command, "reason": f"task not support: {command['task']}", "op":"message"})
             inference_result = {"error": f"{command['task']} not found in available tasks."}
-            results[id] = collect_result(command, choose, inference_result)
+            results[id] = collect_result(command, "", inference_result)
             return False
 
         candidates = MODELS_MAP[task][:10]
@@ -816,8 +815,8 @@ def run_task(input, command, results, openaikey = None):
                     ),
                     "likes": model.get("likes"),
                     "description": model.get("description", "")[:config["max_description_length"]],
-                    "language": model.get("language"),
-                    "tags": model.get("tags"),
+                    # "language": model.get("meta").get("language") if model.get("meta") else None,
+                    "tags": model.get("meta").get("tags") if model.get("meta") else None,
                 }
                 for model in candidates
                 if model["id"] in all_avaliable_model_ids
@@ -958,9 +957,9 @@ def cli():
 
 def server():
     handler.setLevel(logging.CRITICAL)
-    httpserver = config["httpserver"]
-    host = httpserver["host"]
-    port = httpserver["port"]
+    http_listen = config["http_listen"]
+    host = http_listen["host"]
+    port = http_listen["port"]
 
     app = flask.Flask(__name__, static_folder="public", static_url_path="/")
     app.config['DEBUG'] = False
