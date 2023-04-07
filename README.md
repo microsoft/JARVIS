@@ -2,6 +2,10 @@
 
 **This project is under construction and we will have all the code ready soon.**
 
+<a src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" href="https://huggingface.co/spaces/microsoft/HuggingGPT">
+    <img src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" alt="Open in Spaces">
+</a>
+
 ## Updates
 +  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
    +  The Gradio demo is still in development. We will host it on Hugging Face Space. See <a href="#Gradio">here</a>.
