@@ -20,7 +20,8 @@ RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python and other dependencies
-RUN apt-get update && \
+RUN add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && \
     apt-get install -y python3.8 python3-pip python3-dev build-essential && \
     rm -rf /var/lib/apt/lists/*
 
