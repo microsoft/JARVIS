@@ -26,7 +26,7 @@ from huggingface_hub.inference_api import InferenceApi
 from huggingface_hub.inference_api import ALL_TASKS
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", type=str, default="config.yaml.dev")
+parser.add_argument("--config", type=str, default="config.yaml")
 parser.add_argument("--mode", type=str, default="cli")
 args = parser.parse_args()
 
@@ -79,15 +79,8 @@ if not config["dev"]:
         raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
     OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
-    if OPENAI_KEY.startswith("sk-"):
-        HEADER = {
-            "Authorization": f"Bearer {OPENAI_KEY}"
-        }
-    else:
-        HEADER = None
 else:
     endpoint = f"{config['local']['endpoint']}/v1/{api_name}"
-    HEADER = None
 
 PROXY = None
 if config["proxy"]:
@@ -134,10 +127,12 @@ for model in MODELS:
     METADATAS[model["id"]] = model
 
 HUGGINGFACE_HEADERS = {}
-if config["huggingface"]["token"]:
+if config["huggingface"]["token"] and config["huggingface"]["token"].startswith("hf_"):
     HUGGINGFACE_HEADERS = {
         "Authorization": f"Bearer {config['huggingface']['token']}",
     }
+else:
+    raise ValueError("Incrorrect HuggingFace token. Please check your config.yaml file.")
 
 def convert_chat_to_completion(data):
     messages = data.pop('messages', [])
@@ -161,16 +156,15 @@ def convert_chat_to_completion(data):
     return data
 
 def send_request(data):
-    global HEADER
     openaikey = data.pop("openaikey")
     if use_completion:
         data = convert_chat_to_completion(data)
-    if openaikey and openaikey.startswith("sk-"):
-        HEADER = {
-            "Authorization": f"Bearer {openaikey}"
-        }
-    
+    HEADER = {
+        "Authorization": f"Bearer {openaikey}"
+    }    
     response = requests.post(endpoint, json=data, headers=HEADER, proxies=PROXY)
+    if "error" in response.json():
+        return response.json()
     logger.debug(response.text.strip())
     if use_completion:
         return response.json()["choices"][0]["text"].strip()
@@ -852,7 +846,13 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
     logger.info("*"*80)
     logger.info(f"input: {input}")
 
-    task_str = parse_task(context, input, openaikey).strip()
+    task_str = parse_task(context, input, openaikey)
+
+    if "error" in task_str:
+        record_case(success=False, **{"input": input, "task": task_str, "reason": f"task parsing error: {task_str['error']['message']}", "op":"report message"})
+        return {"message": task_str["error"]["message"]}
+
+    task_str = task_str.strip()
     logger.info(task_str)
 
     if task_str == "[]":  # using LLM response for empty task
@@ -884,9 +884,13 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
         while True:
             num_process = len(processes)
             for task in tasks:
-                dep = task["dep"]
                 # logger.debug(f"d.keys(): {d.keys()}, dep: {dep}")
-                if len(list(set(dep).intersection(d.keys()))) == len(dep) or dep[0] == -1:
+                for dep_id in task["dep"]:
+                    if dep_id >= task["id"]:
+                        task["dep"] = [-1]
+                        break
+                dep = task["dep"]
+                if dep[0] == -1 or len(list(set(dep).intersection(d.keys()))) == len(dep):
                     tasks.remove(task)
                     process = multiprocessing.Process(target=run_task, args=(input, task, d, openaikey))
                     process.start()

@@ -9,7 +9,7 @@
 
 ## Updates
 +  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
-   +  The Gradio demo is now hosted on Hugging Face Space. [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/raw/main/open-in-hf-spaces-sm-dark.svg)](https://huggingface.co/spaces)
+   +  The Gradio demo is now hosted on Hugging Face Space. (Build with `inference_mode=hibrid` and `local_deployment=standard`)
    +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
@@ -20,7 +20,7 @@
 
 Language serves as an interface for LLMs to connect numerous AI models for solving complicated AI tasks!
 
-See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](http://arxiv.org/abs/2303.17580), Yongliang Shen, Kaitao Song, Xu Tan, Dongsheng Li, Weiming Lu, Yueting Zhuang
+See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](http://arxiv.org/abs/2303.17580), Yongliang Shen, Kaitao Song, Xu Tan, Dongsheng Li, Weiming Lu and Yueting Zhuang
 
 <p align="center"><img src="./assets/overview.jpg"></p>
 
@@ -49,8 +49,6 @@ The configuration `lite.yaml` does not require any expert models to be downloade
 ## Quick Start
 
 First replace `openai.key` and `huggingface.token` in `server/config.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**. Then run the following commands:
-
-> The absence of the Hugging Face Token may result in error message: `Rate limit reached. Please log in or use your apiToken`.
 
 <span id="Server"></span>
 
