@@ -970,7 +970,7 @@ def server():
     def tasks():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", None)
+        openaikey = data.get("openaikey", OPENAI_KEY)
         response = chat_huggingface(messages, openaikey, return_planning=True)
         return jsonify(response)
 
@@ -978,7 +978,7 @@ def server():
     def results():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", None)
+        openaikey = data.get("openaikey", OPENAI_KEY)
         response = chat_huggingface(messages, openaikey, return_results=True)
         return jsonify(response)
 
@@ -986,7 +986,7 @@ def server():
     def chat():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", None)
+        openaikey = data.get("openaikey", OPENAI_KEY)
         response = chat_huggingface(messages, openaikey)
         return jsonify(response)
     waitress.serve(app, host=host, port=port)
