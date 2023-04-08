@@ -951,7 +951,7 @@ def cli():
         if message == "exit":
             break
         messages.append({"role": "user", "content": message})
-        answer = chat_huggingface(messages)
+        answer = chat_huggingface(messages, openaikey=OPENAI_KEY)
         print("[ Jarvis ]: ", answer["message"])
         messages.append({"role": "assistant", "content": answer["message"]})
 
