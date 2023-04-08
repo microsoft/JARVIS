@@ -76,7 +76,7 @@ else:
 
 if not config["dev"]:
     if not config["openai"]["key"].startswith("sk-") and not config["openai"]["key"]=="gradio":
-        raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
+        raise ValueError(f"Incorrect OpenAI key. Please check your {args.config} file.")
     OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
 else:
@@ -94,7 +94,7 @@ Model_Server = "http://" + config["local_inference_endpoint"]["host"] + ":" + st
 
 # check the local_inference_endpoint
 if inference_mode!="huggingface":
-    message = "The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in config.yaml for a feature-limited experience)"
+    message = f"The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in {args.config} for a feature-limited experience)"
     try:
         r = requests.get(Model_Server + "/running")
         if r.status_code != 200:
@@ -132,7 +132,7 @@ if config["huggingface"]["token"] and config["huggingface"]["token"].startswith(
         "Authorization": f"Bearer {config['huggingface']['token']}",
     }
 else:
-    raise ValueError("Incrorrect HuggingFace token. Please check your config.yaml file.")
+    raise ValueError(f"Incorrect HuggingFace token. Please check your {args.config} file.")
 
 def convert_chat_to_completion(data):
     messages = data.pop('messages', [])
