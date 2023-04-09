@@ -16,7 +16,8 @@ import yaml
 from PIL import Image, ImageDraw
 from diffusers.utils import load_image
 from pydub import AudioSegment
-import multiprocessing
+import threading
+from queue import Queue
 import flask
 from flask import request, jsonify
 import waitress
@@ -45,7 +46,7 @@ handler = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 if not config["debug"]:
-    handler.setLevel(logging.INFO)
+    handler.setLevel(logging.CRITICAL)
 logger.addHandler(handler)
 
 log_file = config["log_file"]
@@ -90,10 +91,10 @@ if config["proxy"]:
 
 inference_mode = config["inference_mode"]
 
-Model_Server = "http://" + config["local_inference_endpoint"]["host"] + ":" + str(config["local_inference_endpoint"]["port"])
-
 # check the local_inference_endpoint
+Model_Server = None
 if inference_mode!="huggingface":
+    Model_Server = "http://" + config["local_inference_endpoint"]["host"] + ":" + str(config["local_inference_endpoint"]["port"])
     message = "The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in config.yaml for a feature-limited experience)"
     try:
         r = requests.get(Model_Server + "/running")
@@ -628,25 +629,25 @@ def get_model_status(model_id, url, headers, queue = None):
 
 def get_avaliable_models(candidates, topk=5):
     all_available_models = {"local": [], "huggingface": []}
-    processes = []
-    result_queue = multiprocessing.Queue()
+    threads = []
+    result_queue = Queue()
 
     for candidate in candidates:
         model_id = candidate["id"]
 
         if inference_mode != "local":
             huggingfaceStatusUrl = f"https://api-inference.huggingface.co/status/{model_id}"
-            process = multiprocessing.Process(target=get_model_status, args=(model_id, huggingfaceStatusUrl, HUGGINGFACE_HEADERS, result_queue))
-            processes.append(process)
-            process.start()
+            thread = threading.Thread(target=get_model_status, args=(model_id, huggingfaceStatusUrl, HUGGINGFACE_HEADERS, result_queue))
+            threads.append(thread)
+            thread.start()
         
         if inference_mode != "huggingface" and config["local_deployment"] != "minimal":
             localStatusUrl = f"{Model_Server}/status/{model_id}"
-            process = multiprocessing.Process(target=get_model_status, args=(model_id, localStatusUrl, {}, result_queue))
-            processes.append(process)
-            process.start()
+            thread = threading.Thread(target=get_model_status, args=(model_id, localStatusUrl, {}, result_queue))
+            threads.append(thread)
+            thread.start()
         
-    result_count = len(processes)
+    result_count = len(threads)
     while result_count:
         model_id, status, endpoint_type = result_queue.get()
         if status and model_id not in all_available_models:
@@ -655,8 +656,8 @@ def get_avaliable_models(candidates, topk=5):
             break
         result_count -= 1
 
-    for process in processes:
-        process.join()
+    for thread in threads:
+        thread.join()
 
     return all_available_models
 
@@ -876,37 +877,36 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
         return tasks
 
     results = {}
-    processes = []
+    threads = []
     tasks = tasks[:]
-    with multiprocessing.Manager() as manager:
-        d = manager.dict()
-        retry = 0
-        while True:
-            num_process = len(processes)
-            for task in tasks:
-                # logger.debug(f"d.keys(): {d.keys()}, dep: {dep}")
-                for dep_id in task["dep"]:
-                    if dep_id >= task["id"]:
-                        task["dep"] = [-1]
-                        break
-                dep = task["dep"]
-                if dep[0] == -1 or len(list(set(dep).intersection(d.keys()))) == len(dep):
-                    tasks.remove(task)
-                    process = multiprocessing.Process(target=run_task, args=(input, task, d, openaikey))
-                    process.start()
-                    processes.append(process)
-            if num_process == len(processes):
-                time.sleep(0.5)
-                retry += 1
-            if retry > 160:
-                logger.debug("User has waited too long, Loop break.")
-                break
-            if len(tasks) == 0:
-                break
-        for process in processes:
-            process.join()
-        
-        results = d.copy()
+    d = dict()
+    retry = 0
+    while True:
+        num_thread = len(threads)
+        for task in tasks:
+            # logger.debug(f"d.keys(): {d.keys()}, dep: {dep}")
+            for dep_id in task["dep"]:
+                if dep_id >= task["id"]:
+                    task["dep"] = [-1]
+                    break
+            dep = task["dep"]
+            if dep[0] == -1 or len(list(set(dep).intersection(d.keys()))) == len(dep):
+                tasks.remove(task)
+                thread = threading.Thread(target=run_task, args=(input, task, d, openaikey))
+                thread.start()
+                threads.append(thread)
+        if num_thread == len(threads):
+            time.sleep(0.5)
+            retry += 1
+        if retry > 160:
+            logger.debug("User has waited too long, Loop break.")
+            break
+        if len(tasks) == 0:
+            break
+    for thread in threads:
+        thread.join()
+    
+    results = d.copy()
 
     logger.debug(results)
     if return_results:
@@ -946,7 +946,6 @@ def test():
     chat_huggingface(messages)
 
 def cli():
-    handler.setLevel(logging.CRITICAL)
     messages = []
     print("Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).")
     while True:
@@ -960,7 +959,6 @@ def cli():
 
 
 def server():
-    handler.setLevel(logging.CRITICAL)
     http_listen = config["http_listen"]
     host = http_listen["host"]
     port = http_listen["port"]

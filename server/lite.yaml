@@ -1,5 +1,5 @@
 openai:
-  key: your_personal_openai_key # "gradio" (set when request) or your_personal_key
+  key: your_personal_openai_key # "gradio" (set when request) or your_personal_openai_key
 huggingface:
   token: # required: huggingface token @ https://huggingface.co/settings/tokens
 dev: false
@@ -11,13 +11,10 @@ inference_mode: huggingface # local, huggingface or hybrid, prefer hybrid
 local_deployment: minimal # minimal, standard or full, prefer full
 num_candidate_models: 5
 max_description_length: 100
-proxy: # optional: your proxy server "http://ip:port"
+proxy:  # optional: your proxy server "http://ip:port"
 http_listen:
-  host: 0.0.0.0
-  port: 8004 # needs to be consistent with endpoint: `http://localhost:8004/`@web/src/api/hugginggpt.ts line 9
-local_inference_endpoint:
-  host: localhost
-  port: 8005
+  host: 0.0.0.0 # if you use web as the client, please set `http://{LAN_ip_of_the_server}:{port}/` to @web/src/api/hugginggpt.ts line 9
+  port: 8004
 logit_bias:
   parse_task: 0.1
   choose_model: 5

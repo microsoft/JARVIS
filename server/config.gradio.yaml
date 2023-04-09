@@ -9,6 +9,7 @@ model: text-davinci-003 # currently only support text-davinci-003, we will suppo
 use_completion: true
 inference_mode: hybrid # local, huggingface or hybrid, prefer hybrid
 local_deployment: full # minimal, standard or full, prefer full
+device: cuda:0 # cuda:id or cpu
 num_candidate_models: 5
 max_description_length: 100
 proxy: # optional: your proxy server "http://ip:port"

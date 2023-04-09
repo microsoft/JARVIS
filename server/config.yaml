@@ -9,12 +9,13 @@ model: text-davinci-003 # currently only support text-davinci-003, we will suppo
 use_completion: true
 inference_mode: hybrid # local, huggingface or hybrid, prefer hybrid
 local_deployment: full # minimal, standard or full, prefer full
+device: cuda:0 # cuda:id or cpu
 num_candidate_models: 5
 max_description_length: 100
 proxy: # optional: your proxy server "http://ip:port"
 http_listen:
-  host: 0.0.0.0
-  port: 8004 # needs to be consistent with endpoint: `http://localhost:8004/`@web/src/api/hugginggpt.ts line 9
+  host: 0.0.0.0 # if you use web as the client, please set `http://{LAN_ip_of_the_server}:{port}/` to @web/src/api/hugginggpt.ts line 9
+  port: 8004
 local_inference_endpoint:
   host: localhost
   port: 8005
