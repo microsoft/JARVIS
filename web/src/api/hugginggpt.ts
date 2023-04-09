@@ -6,7 +6,7 @@ const model = "gpt-3.5-turbo";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export async function hugginggpt(messageList: CleanChatMessage[], apiKey: string, dev: boolean) {
-  var endpoint = "http://10.15.82.10:8004/hugginggpt"  // if you run the server on another machine, change this to the IP address
+  var endpoint = "http://localhost:8004/hugginggpt"  // if you run the server on another machine, change this to the IP address
   try {
     const response = await axios({
       url: endpoint,

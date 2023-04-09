@@ -21,7 +21,7 @@ from queue import Queue
 import flask
 from flask import request, jsonify
 import waitress
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from get_token_ids import get_token_ids_for_task_parsing, get_token_ids_for_choose_model, count_tokens, get_max_context_length
 from huggingface_hub.inference_api import InferenceApi
 from huggingface_hub.inference_api import ALL_TASKS
@@ -75,6 +75,7 @@ if use_completion:
 else:
     api_name = "chat/completions"
 
+OPENAI_KEY = None
 if not config["dev"]:
     if not config["openai"]["key"].startswith("sk-") and not config["openai"]["key"]=="gradio":
         raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
@@ -766,7 +767,7 @@ def run_task(input, command, results, openaikey = None):
             return False
     elif task in ["summarization", "translation", "conversational", "text-generation", "text2text-generation"]: # ChatGPT Can do
         best_model_id = "ChatGPT"
-        reason = "ChatGPT is the best model for this task."
+        reason = "ChatGPT performs well on some NLP tasks as well."
         choose = {"id": best_model_id, "reason": reason}
         messages = [{
             "role": "user",
@@ -856,10 +857,6 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
     task_str = task_str.strip()
     logger.info(task_str)
 
-    if task_str == "[]":  # using LLM response for empty task
-        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
-        response = chitchat(messages, openaikey)
-        return {"message": response}
     try:
         tasks = json.loads(task_str)
     except Exception as e:
@@ -868,6 +865,15 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
     
+    if task_str == "[]":  # using LLM response for empty task
+        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
+        response = chitchat(messages, openaikey)
+        return {"message": response}
+
+    if len(tasks) == 1 and tasks[0]["task"] in ["summarization", "translation", "conversational", "text-generation", "text2text-generation"]:
+        record_case(success=True, **{"input": input, "task": tasks, "reason": "chitchat tasks", "op": "chitchat"})
+        response = chitchat(messages, openaikey)
+        return {"message": response}
 
     tasks = unfold(tasks)
     tasks = fix_dep(tasks)
@@ -966,7 +972,8 @@ def server():
     app = flask.Flask(__name__, static_folder="public", static_url_path="/")
     app.config['DEBUG'] = False
     CORS(app)
-
+    
+    @cross_origin()
     @app.route('/tasks', methods=['POST'])
     def tasks():
         data = request.get_json()
@@ -975,6 +982,7 @@ def server():
         response = chat_huggingface(messages, openaikey, return_planning=True)
         return jsonify(response)
 
+    @cross_origin()
     @app.route('/results', methods=['POST'])
     def results():
         data = request.get_json()
@@ -983,6 +991,7 @@ def server():
         response = chat_huggingface(messages, openaikey, return_results=True)
         return jsonify(response)
 
+    @cross_origin()
     @app.route('/hugginggpt', methods=['POST'])
     def chat():
         data = request.get_json()
