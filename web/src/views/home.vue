@@ -176,22 +176,22 @@ const messageListMM = computed(() => {
     // @ts-ignore
     video_urls = [...new Set(video_urls)]
     if (image_urls) {
-      for (var j = 0; j < image_urls.length; j++) {
+      for (let j = 0; j < image_urls.length; j++) {
         messageListMM.push({role: role, content: image_urls[j], type: "image", first: false})
       }
     }
     if (audio_urls) {
-      for (var j = 0; j < audio_urls.length; j++) {
+      for (let j = 0; j < audio_urls.length; j++) {
         messageListMM.push({role: role, content: audio_urls[j], type: "audio", first: false})
       }
     }
     if (video_urls) {
-      for (var j = 0; j < video_urls.length; j++) {
+      for (let j = 0; j < video_urls.length; j++) {
         messageListMM.push({role: role, content: video_urls[j], type: "video", first: false})
       }
     }
     // if (code_blocks){
-    //   for (var j = 0; j < code_blocks.length; j++) {
+    //   for (let j = 0; j < code_blocks.length; j++) {
     //     messageListMM.push({role: role, content: code_blocks[j], type: "code", first: false})
     //   }
     // }
