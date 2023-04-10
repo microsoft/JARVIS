@@ -16,17 +16,18 @@ import yaml
 from PIL import Image, ImageDraw
 from diffusers.utils import load_image
 from pydub import AudioSegment
-import multiprocessing
+import threading
+from queue import Queue
 import flask
 from flask import request, jsonify
 import waitress
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from get_token_ids import get_token_ids_for_task_parsing, get_token_ids_for_choose_model, count_tokens, get_max_context_length
 from huggingface_hub.inference_api import InferenceApi
 from huggingface_hub.inference_api import ALL_TASKS
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", type=str, default="config.yaml.dev")
+parser.add_argument("--config", type=str, default="config.yaml")
 parser.add_argument("--mode", type=str, default="cli")
 args = parser.parse_args()
 
@@ -45,7 +46,7 @@ handler = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 if not config["debug"]:
-    handler.setLevel(logging.INFO)
+    handler.setLevel(logging.CRITICAL)
 logger.addHandler(handler)
 
 log_file = config["log_file"]
@@ -74,17 +75,14 @@ if use_completion:
 else:
     api_name = "chat/completions"
 
+OPENAI_KEY = None
 if not config["dev"]:
     if not config["openai"]["key"].startswith("sk-") and not config["openai"]["key"]=="gradio":
         raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
     OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
-    HEADER = {
-        "Authorization": f"Bearer {OPENAI_KEY}"
-    }
 else:
     endpoint = f"{config['local']['endpoint']}/v1/{api_name}"
-    HEADER = None
 
 PROXY = None
 if config["proxy"]:
@@ -94,11 +92,10 @@ if config["proxy"]:
 
 inference_mode = config["inference_mode"]
 
-HTTP_Server = "http://" + config["httpserver"]["host"] + ":" + str(config["httpserver"]["port"])
-Model_Server = "http://" + config["modelserver"]["host"] + ":" + str(config["modelserver"]["port"])
-
-# check the HTTP_Server
+# check the local_inference_endpoint
+Model_Server = None
 if inference_mode!="huggingface":
+    Model_Server = "http://" + config["local_inference_endpoint"]["host"] + ":" + str(config["local_inference_endpoint"]["port"])
     message = "The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in config.yaml for a feature-limited experience)"
     try:
         r = requests.get(Model_Server + "/running")
@@ -132,10 +129,12 @@ for model in MODELS:
     METADATAS[model["id"]] = model
 
 HUGGINGFACE_HEADERS = {}
-if config["huggingface"]["token"]:
+if config["huggingface"]["token"] and config["huggingface"]["token"].startswith("hf_"):
     HUGGINGFACE_HEADERS = {
         "Authorization": f"Bearer {config['huggingface']['token']}",
     }
+else:
+    raise ValueError("Incrorrect HuggingFace token. Please check your config.yaml file.")
 
 def convert_chat_to_completion(data):
     messages = data.pop('messages', [])
@@ -159,15 +158,15 @@ def convert_chat_to_completion(data):
     return data
 
 def send_request(data):
-    global HEADER
     openaikey = data.pop("openaikey")
     if use_completion:
         data = convert_chat_to_completion(data)
-    if "openaikey" in data:
-        HEADER = {
-            "Authorization": f"Bearer {data['openaikey']}"
-        }
+    HEADER = {
+        "Authorization": f"Bearer {openaikey}"
+    }    
     response = requests.post(endpoint, json=data, headers=HEADER, proxies=PROXY)
+    if "error" in response.json():
+        return response.json()
     logger.debug(response.text.strip())
     if use_completion:
         return response.json()["choices"][0]["text"].strip()
@@ -631,25 +630,25 @@ def get_model_status(model_id, url, headers, queue = None):
 
 def get_avaliable_models(candidates, topk=5):
     all_available_models = {"local": [], "huggingface": []}
-    processes = []
-    result_queue = multiprocessing.Queue()
+    threads = []
+    result_queue = Queue()
 
     for candidate in candidates:
         model_id = candidate["id"]
 
         if inference_mode != "local":
             huggingfaceStatusUrl = f"https://api-inference.huggingface.co/status/{model_id}"
-            process = multiprocessing.Process(target=get_model_status, args=(model_id, huggingfaceStatusUrl, HUGGINGFACE_HEADERS, result_queue))
-            processes.append(process)
-            process.start()
+            thread = threading.Thread(target=get_model_status, args=(model_id, huggingfaceStatusUrl, HUGGINGFACE_HEADERS, result_queue))
+            threads.append(thread)
+            thread.start()
         
         if inference_mode != "huggingface" and config["local_deployment"] != "minimal":
             localStatusUrl = f"{Model_Server}/status/{model_id}"
-            process = multiprocessing.Process(target=get_model_status, args=(model_id, localStatusUrl, {}, result_queue))
-            processes.append(process)
-            process.start()
+            thread = threading.Thread(target=get_model_status, args=(model_id, localStatusUrl, {}, result_queue))
+            threads.append(thread)
+            thread.start()
         
-    result_count = len(processes)
+    result_count = len(threads)
     while result_count:
         model_id, status, endpoint_type = result_queue.get()
         if status and model_id not in all_available_models:
@@ -658,8 +657,8 @@ def get_avaliable_models(candidates, topk=5):
             break
         result_count -= 1
 
-    for process in processes:
-        process.join()
+    for thread in threads:
+        thread.join()
 
     return all_available_models
 
@@ -768,11 +767,11 @@ def run_task(input, command, results, openaikey = None):
             return False
     elif task in ["summarization", "translation", "conversational", "text-generation", "text2text-generation"]: # ChatGPT Can do
         best_model_id = "ChatGPT"
-        reason = "ChatGPT is the best model for this task."
+        reason = "ChatGPT performs well on some NLP tasks as well."
         choose = {"id": best_model_id, "reason": reason}
         messages = [{
             "role": "user",
-            "content": f"[ {input} ] contains a task in JSON format {command}, 'task' indicates the task type and 'args' indicates the arguments required for the task. Don't explain the task to me, just help me do it and give me the result. The result can must be in text form."
+            "content": f"[ {input} ] contains a task in JSON format {command}. Now you are a {command['task']} system, the arguments are {command['args']}. Just help me do {command['task']} and give me the result. The result must be in text form without any urls."
         }]
         response = chitchat(messages, openaikey)
         results[id] = collect_result(command, choose, {"response": response})
@@ -782,7 +781,7 @@ def run_task(input, command, results, openaikey = None):
             logger.warning(f"no available models on {task} task.")
             record_case(success=False, **{"input": input, "task": command, "reason": f"task not support: {command['task']}", "op":"message"})
             inference_result = {"error": f"{command['task']} not found in available tasks."}
-            results[id] = collect_result(command, choose, inference_result)
+            results[id] = collect_result(command, "", inference_result)
             return False
 
         candidates = MODELS_MAP[task][:10]
@@ -812,8 +811,8 @@ def run_task(input, command, results, openaikey = None):
                     ),
                     "likes": model.get("likes"),
                     "description": model.get("description", "")[:config["max_description_length"]],
-                    "language": model.get("language"),
-                    "tags": model.get("tags"),
+                    # "language": model.get("meta").get("language") if model.get("meta") else None,
+                    "tags": model.get("meta").get("tags") if model.get("meta") else None,
                 }
                 for model in candidates
                 if model["id"] in all_avaliable_model_ids
@@ -849,13 +848,15 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
     logger.info("*"*80)
     logger.info(f"input: {input}")
 
-    task_str = parse_task(context, input, openaikey).strip()
+    task_str = parse_task(context, input, openaikey)
+
+    if "error" in task_str:
+        record_case(success=False, **{"input": input, "task": task_str, "reason": f"task parsing error: {task_str['error']['message']}", "op":"report message"})
+        return {"message": task_str["error"]["message"]}
+
+    task_str = task_str.strip()
     logger.info(task_str)
 
-    if task_str == "[]":  # using LLM response for empty task
-        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
-        response = chitchat(messages, openaikey)
-        return {"message": response}
     try:
         tasks = json.loads(task_str)
     except Exception as e:
@@ -864,6 +865,15 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
     
+    if task_str == "[]":  # using LLM response for empty task
+        record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
+        response = chitchat(messages, openaikey)
+        return {"message": response}
+
+    if len(tasks) == 1 and tasks[0]["task"] in ["summarization", "translation", "conversational", "text-generation", "text2text-generation"]:
+        record_case(success=True, **{"input": input, "task": tasks, "reason": "chitchat tasks", "op": "chitchat"})
+        response = chitchat(messages, openaikey)
+        return {"message": response}
 
     tasks = unfold(tasks)
     tasks = fix_dep(tasks)
@@ -873,33 +883,36 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
         return tasks
 
     results = {}
-    processes = []
+    threads = []
     tasks = tasks[:]
-    with multiprocessing.Manager() as manager:
-        d = manager.dict()
-        retry = 0
-        while True:
-            num_process = len(processes)
-            for task in tasks:
-                dep = task["dep"]
-                # logger.debug(f"d.keys(): {d.keys()}, dep: {dep}")
-                if len(list(set(dep).intersection(d.keys()))) == len(dep) or dep[0] == -1:
-                    tasks.remove(task)
-                    process = multiprocessing.Process(target=run_task, args=(input, task, d, openaikey))
-                    process.start()
-                    processes.append(process)
-            if num_process == len(processes):
-                time.sleep(0.5)
-                retry += 1
-            if retry > 160:
-                logger.debug("User has waited too long, Loop break.")
-                break
-            if len(tasks) == 0:
-                break
-        for process in processes:
-            process.join()
-        
-        results = d.copy()
+    d = dict()
+    retry = 0
+    while True:
+        num_thread = len(threads)
+        for task in tasks:
+            # logger.debug(f"d.keys(): {d.keys()}, dep: {dep}")
+            for dep_id in task["dep"]:
+                if dep_id >= task["id"]:
+                    task["dep"] = [-1]
+                    break
+            dep = task["dep"]
+            if dep[0] == -1 or len(list(set(dep).intersection(d.keys()))) == len(dep):
+                tasks.remove(task)
+                thread = threading.Thread(target=run_task, args=(input, task, d, openaikey))
+                thread.start()
+                threads.append(thread)
+        if num_thread == len(threads):
+            time.sleep(0.5)
+            retry += 1
+        if retry > 160:
+            logger.debug("User has waited too long, Loop break.")
+            break
+        if len(tasks) == 0:
+            break
+    for thread in threads:
+        thread.join()
+    
+    results = d.copy()
 
     logger.debug(results)
     if return_results:
@@ -939,7 +952,6 @@ def test():
     chat_huggingface(messages)
 
 def cli():
-    handler.setLevel(logging.CRITICAL)
     messages = []
     print("Welcome to Jarvis! A collaborative system that consists of an LLM as the controller and numerous expert models as collaborative executors. Jarvis can plan tasks, schedule Hugging Face models, generate friendly responses based on your requests, and help you with many things. Please enter your request (`exit` to exit).")
     while True:
@@ -947,42 +959,44 @@ def cli():
         if message == "exit":
             break
         messages.append({"role": "user", "content": message})
-        answer = chat_huggingface(messages)
+        answer = chat_huggingface(messages, openaikey=OPENAI_KEY)
         print("[ Jarvis ]: ", answer["message"])
         messages.append({"role": "assistant", "content": answer["message"]})
 
 
 def server():
-    handler.setLevel(logging.CRITICAL)
-    httpserver = config["httpserver"]
-    host = httpserver["host"]
-    port = httpserver["port"]
+    http_listen = config["http_listen"]
+    host = http_listen["host"]
+    port = http_listen["port"]
 
     app = flask.Flask(__name__, static_folder="public", static_url_path="/")
     app.config['DEBUG'] = False
     CORS(app)
-
+    
+    @cross_origin()
     @app.route('/tasks', methods=['POST'])
     def tasks():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", None)
+        openaikey = data.get("openaikey", OPENAI_KEY)
         response = chat_huggingface(messages, openaikey, return_planning=True)
         return jsonify(response)
 
+    @cross_origin()
     @app.route('/results', methods=['POST'])
     def results():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", None)
+        openaikey = data.get("openaikey", OPENAI_KEY)
         response = chat_huggingface(messages, openaikey, return_results=True)
         return jsonify(response)
 
+    @cross_origin()
     @app.route('/hugginggpt', methods=['POST'])
     def chat():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", None)
+        openaikey = data.get("openaikey", OPENAI_KEY)
         response = chat_huggingface(messages, openaikey)
         return jsonify(response)
     waitress.serve(app, host=host, port=port)

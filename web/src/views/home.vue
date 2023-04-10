@@ -312,7 +312,7 @@ watch(messageListMM, () => nextTick(() => {
         </div>
         
         <div class="text-sm cursor-pointer w-1/4 flex flex-row justify-end" @click="dev || clickConfig()" @dblclick="switchChatGPT()">
-            <img src="@/assets/setting.svg" class="w-7 block"/>
+            <img src="@/assets/setting.svg" class="w-7 block" title="click to switch to configuration OpenAI key or double click to switch HuggingGPT and ChatGPT"/>
         </div>
       </div>
     </div>

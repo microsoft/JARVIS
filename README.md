@@ -2,9 +2,14 @@
 
 **This project is under construction and we will have all the code ready soon.**
 
+<a src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" href="https://huggingface.co/spaces/microsoft/HuggingGPT">
+    <img src="https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue" alt="Open in Spaces">
+</a>
+
+
 ## Updates
 +  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
-   +  The Gradio demo is still in development. We will host it on Hugging Face Space. See <a href="#Gradio">here</a>.
+   +  The Gradio demo is now hosted on Hugging Face Space. (Build with `inference_mode=hibrid` and `local_deployment=standard`)
    +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
@@ -15,7 +20,7 @@
 
 Language serves as an interface for LLMs to connect numerous AI models for solving complicated AI tasks!
 
-See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](http://arxiv.org/abs/2303.17580)
+See our paper: [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](http://arxiv.org/abs/2303.17580), Yongliang Shen, Kaitao Song, Xu Tan, Dongsheng Li, Weiming Lu and Yueting Zhuang (the first two authors contribute equally)
 
 <p align="center"><img src="./assets/overview.jpg"></p>
 
@@ -27,15 +32,25 @@ We introduce a collaborative system that consists of **an LLM as the controller*
 
 ## System Requirements
 
-### Default
+### Default (Recommended)
+
+For `config.yaml`:
 
 + Ubuntu 16.04 LTS
-+ NVIDIA GeForce RTX 3090 * 1
-+ RAM > 12GB (minimal), 16GB (standard), 42GB (full)
++ VRAM >= 24GB
++ RAM > 12GB (minimal), 16GB (standard), 80GB (full)
++ Disk > 284GB 
+  + 42GB for `damo-vilab/text-to-video-ms-1.7b`
+  + 126GB for `ControlNet`
+  + 66GB for `stable-diffusion-v1-5`
+  + 50GB for others
   
-### Minimum
+### Minimum (Lite)
+
+For `lite.yaml`:
 
 + Ubuntu 16.04 LTS
++ Nothing else
 
 The configuration `lite.yaml` does not require any expert models to be downloaded and deployed locally. However, it means that Jarvis is restricted to models running stably on HuggingFace Inference Endpoints.
 
@@ -43,13 +58,9 @@ The configuration `lite.yaml` does not require any expert models to be downloade
 
 First replace `openai.key` and `huggingface.token` in `server/config.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**. Then run the following commands:
 
-> The absence of the Hugging Face Token may result in error message: `Rate limit reached. Please log in or use your apiToken`.
-
 <span id="Server"></span>
 
 ### For Server:
-
-
 
 ```bash
 # setup env
@@ -59,9 +70,9 @@ conda activate jarvis
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 pip install -r requirements.txt
 
-# download models
+# download models. Make sure that `git-lfs` is installed.
 cd models
-sh download.sh # required when `inference_mode` is `local` or `hybrid`
+bash download.sh # required when `inference_mode` is `local` or `hybrid`. 
 
 # run server
 cd ..
@@ -98,13 +109,17 @@ curl --location 'http://localhost:8004/tasks' \
 ### For Web:
 
 We provide a user-friendly web page. After starting `awesome_chat.py` in a server mode, you can run the commands to communicate with Jarvis in your browser:
+ 
+- you need to install `nodejs` and `npm` first.
+- [ IMPORTANT ] if you are running the web client on another machine, you need set `http://{LAN_ip_of_the_server}:{port}/` to `web/src/api/hugginggpt.ts@Line=9`.
+- if you want to use the video generation feature, you need to compile `ffmpeg` manually with H.264.
+- you can switch to ChatGPT by `double click` on the setting icon!
 
 ```bash
 cd web
 npm install
 npm run dev
 ```
-Note that in order to display the video properly in HTML, you need to compile `ffmpeg` manually with H.264
 
 ```bash
 # Optional: Install ffmpeg
@@ -116,11 +131,14 @@ LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx26
 
 ### For Gradio
 
-We now provide a Gradio demo and plan to host it on Hugging Face Space. You can run the following commands to start the demo locally:
+The Gradio demo is now hosted on Hugging Face Space. You can also run the following commands to start the demo locally:
 
 ```bash
 python models_server.py --config config.gradio.yaml
 python run_gradio_demo.py --config config.gradio.yaml
+
+# or run the HF Space as a Docker image (Build with `inference_mode=hibrid` and `local_deployment=standard`)
+docker run -it -p 7860:7860 --platform=linux/amd64 registry.hf.space/microsoft-hugginggpt:latest python app.py
 ```
 
 ### For CLI:
@@ -149,7 +167,7 @@ Welcome to Jarvis! A collaborative system that consists of an LLM as the control
 
 The server-side configuration file is `server/config.yaml`, and some parameters are presented as follows:
 
-+ `model`: LLM, currently supports `text-davinci-003`
++ `model`: LLM, currently supports `text-davinci-003`. We are working on integrating more open-source LLMs.
 + `inference_mode`: mode of inference endpoints
   + `local`: only use the local inference endpoints
   + `huggingface`: only use the Hugging Face Inference Endpoints **(free of local inference endpoints)**
