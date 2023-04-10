@@ -138,7 +138,7 @@ if config["huggingface"]["token"] and config["huggingface"]["token"].startswith(
     }
 elif "HUGGINGFACE_ACCESS_TOKEN" in os.environ and os.getenv("HUGGINGFACE_ACCESS_TOKEN").startswith("hf_"):  # Check for environment variable HUGGINGFACE_ACCESS_TOKEN
     HUGGINGFACE_HEADERS = {
-        "Authorization": f"Bearer {os.getenv("HUGGINGFACE_ACCESS_TOKEN")}",
+        "Authorization": f"Bearer {os.getenv('HUGGINGFACE_ACCESS_TOKEN')}",
     }
 else:
     raise ValueError("Incrorrect HuggingFace token. Please check your config.yaml file.")
