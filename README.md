@@ -32,14 +32,22 @@ We introduce a collaborative system that consists of **an LLM as the controller*
 
 ## System Requirements
 
-### Default
+### Default (Recommended)
+
+For `config.yaml`:
 
 + Ubuntu 16.04 LTS
-+ VRAM >= 12GB
-+ RAM > 12GB (minimal), 16GB (standard), 42GB (full)
-+ Disk > 78G (with 42G for `damo-vilab/text-to-video-ms-1.7b`)
++ VRAM >= 24GB
++ RAM > 12GB (minimal), 16GB (standard), 80GB (full)
++ Disk > 284GB 
+  + 42GB for `damo-vilab/text-to-video-ms-1.7b`
+  + 126GB for `ControlNet`
+  + 66GB for `stable-diffusion-v1-5`
+  + 50GB for others
   
-### Minimum
+### Minimum (Lite)
+
+For `lite.yaml`:
 
 + Ubuntu 16.04 LTS
 + Nothing else
@@ -103,7 +111,7 @@ curl --location 'http://localhost:8004/tasks' \
 We provide a user-friendly web page. After starting `awesome_chat.py` in a server mode, you can run the commands to communicate with Jarvis in your browser:
  
 - you need to install `nodejs` and `npm` first.
-- if you are running the web client on another machine, you need set `http://{LAN_ip_of_the_server}:{port}/` to `web/src/api/hugginggpt.ts@Line=9`.
+- [ IMPORTANT ] if you are running the web client on another machine, you need set `http://{LAN_ip_of_the_server}:{port}/` to `web/src/api/hugginggpt.ts@Line=9`.
 - if you want to use the video generation feature, you need to compile `ffmpeg` manually with H.264.
 - you can switch to ChatGPT by `double click` on the setting icon!
 
@@ -129,7 +137,7 @@ The Gradio demo is now hosted on Hugging Face Space. You can also run the follow
 python models_server.py --config config.gradio.yaml
 python run_gradio_demo.py --config config.gradio.yaml
 
-# or run the HF Space as a Docker image
+# or run the HF Space as a Docker image (Build with `inference_mode=hibrid` and `local_deployment=standard`)
 docker run -it -p 7860:7860 --platform=linux/amd64 registry.hf.space/microsoft-hugginggpt:latest python app.py
 ```
 
@@ -159,7 +167,7 @@ Welcome to Jarvis! A collaborative system that consists of an LLM as the control
 
 The server-side configuration file is `server/config.yaml`, and some parameters are presented as follows:
 
-+ `model`: LLM, currently supports `text-davinci-003`
++ `model`: LLM, currently supports `text-davinci-003`. We are working on integrating more open-source LLMs.
 + `inference_mode`: mode of inference endpoints
   + `local`: only use the local inference endpoints
   + `huggingface`: only use the Hugging Face Inference Endpoints **(free of local inference endpoints)**
