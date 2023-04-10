@@ -36,8 +36,11 @@ if __name__ != "__main__":
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
 
-if not os.path.exists("logs"):
-    os.mkdir("logs")
+os.makedirs("logs", exist_ok=True)
+os.makedirs("public/images", exist_ok=True)
+os.makedirs("public/audios", exist_ok=True)
+os.makedirs("public/videos", exist_ok=True)
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -449,7 +452,7 @@ def huggingface_model_inference(model_id, data, task):
         img_url = data["image"]
         img_data = image_to_bytes(img_url)
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
-        r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
+        r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data, proxies=PROXY)
         result = {}
         if "generated_text" in r.json()[0]:
             result["generated text"] = r.json()[0].pop("generated_text")

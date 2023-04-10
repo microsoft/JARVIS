@@ -6,6 +6,7 @@ import { hugginggpt } from "@/api/hugginggpt";
 import { chatgpt } from "@/api/chatgpt";
 import Loading from "@/components/Loading.vue";
 import promptCollection from "@/prompt";
+import BASE_URL from "@/config";
 
 let dev = ref(false);
 let isChatgpt = ref(false);
@@ -52,9 +53,10 @@ async function sendChatMessage() {
   messageList.value.push(
     { role: "assistant", content: "", type: "text", first: true},
   )
+
   const { status, data, message } = isChatgpt.value 
     ? await chatgpt(clean_messages, loadConfig(), dev.value) 
-    : await chatgpt(clean_messages, loadConfig(), dev.value);
+    : await hugginggpt(clean_messages, loadConfig(), dev.value);
   
   messageList.value.pop()
   if (status === "success" ) {
@@ -64,12 +66,12 @@ async function sendChatMessage() {
       );
     } else {
       messageList.value.push(
-        { role: "assistant", content: "Something seems wrong", type: "text", first: true }
+        { role: "assistant", content: "empty content", type: "text", first: true }
       );
     }
   } else {
     messageList.value.push(
-      { role: "system", content: "Something seems seems wrong", type: "text", first: true }
+      { role: "system", content: data, type: "text", first: true }
     );
   }
   isTalking.value = false;
@@ -97,8 +99,8 @@ const messageListMM = computed(() => {
         let start = image_reg.exec(orig_content).index + image_seq_added_accum
         let end = start + image_urls[j].length + image_seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
-          <a class="inline-flex text-sky-800 font-bold items-baseline" target="_blank" href="${image_urls[j].startsWith("http")?image_urls[j]:"http://localhost:8004"+image_urls[j]}">
-              <img src="${image_urls[j].startsWith("http")?image_urls[j]:"http://localhost:8004"+image_urls[j]}" alt="" class="inline-flex self-center w-5 h-5 rounded-full mx-1" />
+          <a class="inline-flex text-sky-800 font-bold items-baseline" target="_blank" href="${image_urls[j].startsWith("http")?image_urls[j]:""+image_urls[j]}">
+              <img src="${image_urls[j].startsWith("http")?image_urls[j]:BASE_URL+image_urls[j]}" alt="" class="inline-flex self-center w-5 h-5 rounded-full mx-1" />
               <span class="mx-1">[Image]</span>
           </a>
           </span>`
@@ -107,7 +109,7 @@ const messageListMM = computed(() => {
         content = content.slice(0, start) + replace_str + content.slice(end)
         
         if(!image_urls[j].startsWith("http")){
-          image_urls[j] = "http://localhost:8004" + image_urls[j]
+          image_urls[j] = BASE_URL + image_urls[j]
         }
       }
     }
@@ -123,7 +125,7 @@ const messageListMM = computed(() => {
         let start = audio_reg.exec(orig_content).index + audio_seq_added_accum
         let end = start + audio_urls[j].length + audio_seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
-            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${audio_urls[j].startsWith("http")?audio_urls[j]:"http://localhost:8004"+audio_urls[j]}">
+            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${audio_urls[j].startsWith("http")?audio_urls[j]:BASE_URL+audio_urls[j]}">
               <img class="inline-flex self-center w-5 h-5 rounded-full mx-1" src="/audio.svg"/>
               <span class="mx-1">[Audio]</span>
             </a>
@@ -132,8 +134,8 @@ const messageListMM = computed(() => {
         audio_seq_added_accum += (rep_length - audio_urls[j].length)
         content = content.slice(0, start) + replace_str + content.slice(end)
         
-        if (!audio_urls[j].startsWith("http")) {
-          audio_urls[j] = "http://localhost:8004" + audio_urls[j]
+        if(!audio_urls[j].startsWith("http")){
+          audio_urls[j] = BASE_URL + audio_urls[j]
         }
       }
     }
@@ -151,7 +153,7 @@ const messageListMM = computed(() => {
         start += video_seq_added_accum
         end += video_seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
-            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${video_urls[j].startsWith("http")?video_urls[j]:"http://localhost:8004"+video_urls[j]}">
+            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${video_urls[j].startsWith("http")?video_urls[j]:BASE_URL+video_urls[j]}">
               <img class="inline-flex self-center w-5 h-5 rounded-full mx-1" src="/video.svg"/>
               <span class="mx-1">[video]</span>
             </a>
@@ -160,8 +162,8 @@ const messageListMM = computed(() => {
         video_seq_added_accum += (rep_length - video_urls[j].length)
         content = content.slice(0, start) + replace_str + content.slice(end)
         
-        if (!video_urls[j].startsWith("http")) {
-          video_urls[j] = "http://localhost:8004" + video_urls[j]
+        if(!video_urls[j].startsWith("http")){
+          video_urls[j] = BASE_URL + video_urls[j]
         }
       }
     }

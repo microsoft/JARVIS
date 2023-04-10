@@ -75,9 +75,6 @@ def add_text(messages, message):
 def bot(messages):
     if len(OPENAI_KEY) == 0 or not OPENAI_KEY.startswith("sk-"):
         return messages
-    # response = requests.post("http://localhost:8004/hugginggpt", json={"messages": all_messages, "openaikey": OPENAI_KEY})
-    # message = response.json()["message"]
-    # print(message)
     message = chat_huggingface(all_messages, OPENAI_KEY)["message"]
     image_urls, audio_urls, video_urls = extract_medias(message)
     add_message(message, "assistant")

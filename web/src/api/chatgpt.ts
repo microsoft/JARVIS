@@ -32,7 +32,7 @@ export async function chatgpt(messageList: CleanChatMessage[], apiKey: string, d
   } catch (error: any) {
     return {
       status: "error",
-      message: "Unknown Error, please retry.",
+      data: "Something seems wrong"
     };
   }
 }
