@@ -54,11 +54,11 @@ async function sendChatMessage() {
     { role: "assistant", content: "", type: "text", first: true},
   )
   if (isChatgpt.value) {
-    var { status, data, message } = await chatgpt(clean_messages, loadConfig(), dev.value);
+    var { status, data } = await chatgpt(clean_messages, loadConfig(), dev.value);
   } else {
-    var { status, data, message: string } = await hugginggpt(clean_messages, loadConfig(), dev.value);
+    var { status, data } = await hugginggpt(clean_messages, loadConfig(), dev.value);
   }
-  
+
   messageList.value.pop()
   if (status === "success" ) {
     if (data) {
@@ -67,12 +67,12 @@ async function sendChatMessage() {
       );
     } else {
       messageList.value.push(
-        { role: "assistant", content: "Something seems wrong", type: "text", first: true }
+        { role: "assistant", content: "empty content", type: "text", first: true }
       );
     }
   } else {
     messageList.value.push(
-      { role: "system", content: "Something seems seems wrong", type: "text", first: true }
+      { role: "system", content: data, type: "text", first: true }
     );
   }
   isTalking.value = false;
