@@ -13,7 +13,7 @@ num_candidate_models: 5
 max_description_length: 100
 proxy:  # optional: your proxy server "http://ip:port"
 http_listen:
-  host: 0.0.0.0 # if you use web as the client, please set `http://{LAN_ip_of_the_server}:{port}/` to @web/src/api/hugginggpt.ts line 9
+  host: 0.0.0.0 # if you use web as the client, please set `http://{LAN_IP_of_the_server}:{port}/` to `BASE_URL` of `web/src/config/index.ts`.
   port: 8004
 logit_bias:
   parse_task: 0.1
