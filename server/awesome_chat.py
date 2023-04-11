@@ -81,7 +81,7 @@ else:
 OPENAI_KEY = None
 if not config["dev"]:
     if not config["openai"]["key"].startswith("sk-") and not config["openai"]["key"]=="gradio":
-        raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
+        raise ValueError("Incorrect OpenAI key. Please check your config.yaml file.")
     OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
 else:
@@ -137,7 +137,7 @@ if config["huggingface"]["token"] and config["huggingface"]["token"].startswith(
         "Authorization": f"Bearer {config['huggingface']['token']}",
     }
 else:
-    raise ValueError("Incrorrect HuggingFace token. Please check your config.yaml file.")
+    raise ValueError("Incorrect HuggingFace token. Please check your config.yaml file.")
 
 def convert_chat_to_completion(data):
     messages = data.pop('messages', [])
