@@ -4,6 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        ASPNETCORE_ENVIRONMENT
+
+        ASPNETCORE_ENVIRONMENT
+        Core
+        Development
+        DOTNET_WATCH_RESTART_ON_RUDE_EDIT
+        ASPNETCORE_ENVIRONMENT
     Use
     IntelliSense
     DOTNET_WATCH_RESTART_ON_RUDE_EDIT
