@@ -36,8 +36,11 @@ if __name__ != "__main__":
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
 
-if not os.path.exists("logs"):
-    os.mkdir("logs")
+os.makedirs("logs", exist_ok=True)
+os.makedirs("public/images", exist_ok=True)
+os.makedirs("public/audios", exist_ok=True)
+os.makedirs("public/videos", exist_ok=True)
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -77,9 +80,12 @@ else:
 
 OPENAI_KEY = None
 if not config["dev"]:
-    if not config["openai"]["key"].startswith("sk-") and not config["openai"]["key"]=="gradio":
+    if config["openai"]["key"].startswith("sk-") or config["openai"]["key"]=="gradio":  # Check for valid OpenAI key in config file
+        OPENAI_KEY = config["openai"]["key"]
+    elif "OPENAI_API_KEY" in os.environ and ( os.getenv("OPENAI_API_KEY").startswith("sk-") or os.getenv("OPENAI_API_KEY")=="gradio" ):  # Check for environment variable OPENAI_API_KEY
+        OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+    else:
         raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
-    OPENAI_KEY = config["openai"]["key"]
     endpoint = f"https://api.openai.com/v1/{api_name}"
 else:
     endpoint = f"{config['local']['endpoint']}/v1/{api_name}"
@@ -129,9 +135,13 @@ for model in MODELS:
     METADATAS[model["id"]] = model
 
 HUGGINGFACE_HEADERS = {}
-if config["huggingface"]["token"] and config["huggingface"]["token"].startswith("hf_"):
+if config["huggingface"]["token"] and config["huggingface"]["token"].startswith("hf_"):  # Check for valid huggingface token in config file
     HUGGINGFACE_HEADERS = {
         "Authorization": f"Bearer {config['huggingface']['token']}",
+    }
+elif "HUGGINGFACE_ACCESS_TOKEN" in os.environ and os.getenv("HUGGINGFACE_ACCESS_TOKEN").startswith("hf_"):  # Check for environment variable HUGGINGFACE_ACCESS_TOKEN
+    HUGGINGFACE_HEADERS = {
+        "Authorization": f"Bearer {os.getenv('HUGGINGFACE_ACCESS_TOKEN')}",
     }
 else:
     raise ValueError("Incrorrect HuggingFace token. Please check your config.yaml file.")
@@ -449,7 +459,7 @@ def huggingface_model_inference(model_id, data, task):
         img_url = data["image"]
         img_data = image_to_bytes(img_url)
         HUGGINGFACE_HEADERS["Content-Length"] = str(len(img_data))
-        r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data)
+        r = requests.post(task_url, headers=HUGGINGFACE_HEADERS, data=img_data, proxies=PROXY)
         result = {}
         if "generated_text" in r.json()[0]:
             result["generated text"] = r.json()[0].pop("generated_text")

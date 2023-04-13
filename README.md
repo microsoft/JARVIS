@@ -56,7 +56,7 @@ The configuration `lite.yaml` does not require any expert models to be downloade
 
 ## Quick Start
 
-First replace `openai.key` and `huggingface.token` in `server/config.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**. Then run the following commands:
+First replace `openai.key` and `huggingface.token` in `server/config.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectfully. Then run the following commands:
 
 <span id="Server"></span>
 
@@ -111,7 +111,7 @@ curl --location 'http://localhost:8004/tasks' \
 We provide a user-friendly web page. After starting `awesome_chat.py` in a server mode, you can run the commands to communicate with Jarvis in your browser:
  
 - you need to install `nodejs` and `npm` first.
-- [ IMPORTANT ] if you are running the web client on another machine, you need set `http://{LAN_ip_of_the_server}:{port}/` to `web/src/api/hugginggpt.ts@Line=9`.
+- [ IMPORTANT ] if you are running the web client on another machine, you need set `http://{LAN_IP_of_the_server}:{port}/` to `BASE_URL` of `web/src/config/index.ts`.
 - if you want to use the video generation feature, you need to compile `ffmpeg` manually with H.264.
 - you can switch to ChatGPT by `double click` on the setting icon!
 
