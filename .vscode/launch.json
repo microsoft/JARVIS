@@ -1,21 +1,21 @@
 {
   "version": "0.2.0",
   "configurations": [
+    9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+    9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+    9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+    configurations
+    version
+  breadcrumbs
+  autofetch
+  apiKey
+  aiquickfix
   9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
-  outDebug
+  version
+  configurations
+  version
 
-    version
-    configurations
-    true
-    false
-    Mindy
-    build
-    C
-    args
-    version
-    JARVIS
-    version
-    configurations
+  configurations
     {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
@@ -23,8 +23,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Mindy/OneDrive/.vscode/JARVIS",
-      "program": "c:/Users/Mindy/OneDrive/.vscode/JARVIS/build/Debug/outDebug",
+      "cwd": "c:/Users/Mindy/OneDrive/.vscode/JARVIS/server/models",
+      "program": "c:/Users/Mindy/OneDrive/.vscode/JARVIS/server/models/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

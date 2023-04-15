@@ -24,7 +24,7 @@ Please include the requested information listed below (as much as you can provid
   * Any special configuration required to reproduce the issue
   * Step-by-step instructions to reproduce the issue
   * Proof-of-concept or exploit code (if possible)
-  * Impact of the issue, including how an attacker might exploit the issue
+  Understood, I will only send the fixed code. Please provide me with the problem and the code that caused it. Impact of the issue, including how an attacker might exploit the issue
 
 This information will help us triage your report more quickly.
 
@@ -36,6 +36,6 @@ We prefer all communications to be in English.
 
 ## Policy
 
-Microsoft follows the principle of [Coordinated Vulnerability Disclosure](https://aka.ms/opensource/security/cvd).
+Understood. Please provide me with the code that needs to be fixed. follows the principle of [Coordinated Vulnerability Disclosure](https://aka.ms/opensource/security/cvd).
 
-<!-- END MICROSOFT SECURITY.MD BLOCK -->
+I understand. Please provide me with the code and the problem flagged by the linter or other tool, and I will return the fixed code. END MICROSOFT SECURITY.MD BLOCK -->
