@@ -1,5 +1,5 @@
 # ALL
-*.dev
+*.dev.yaml
 
 # for server
 server/models/*

@@ -75,7 +75,7 @@ def add_text(messages, message):
 def bot(messages):
     if len(OPENAI_KEY) == 0 or not OPENAI_KEY.startswith("sk-"):
         return messages
-    message = chat_huggingface(all_messages, OPENAI_KEY)["message"]
+    message = chat_huggingface(all_messages, OPENAI_KEY, "openai")["message"]
     image_urls, audio_urls, video_urls = extract_medias(message)
     add_message(message, "assistant")
     messages[-1][1] = message

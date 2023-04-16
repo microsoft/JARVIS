@@ -1,16 +1,24 @@
+azure:
+  api_key: REPLACE_WITH_YOUR_AZURE_API_KEY_HERE
+  base_url: REPLACE_WITH_YOUR_ENDPOINT_HERE
+  deployment_name: REPLACE_WITH_YOUR_DEPLOYMENT_NAME_HERE
+  api_version: "2022-12-01"
 huggingface:
   token: REPLACE_WITH_YOUR_HUGGINGFACE_TOKEN_HERE # required: huggingface token @ https://huggingface.co/settings/tokens
 dev: false
 debug: false
 log_file: logs/debug.log
-model: text-davinci-003 # currently only support text-davinci-003, we will support more open-source LLMs in the future
+model: text-davinci-003 # currently only support text-davinci-003, gpt-4, we will support more open-source LLMs in the future
 use_completion: true
-inference_mode: hybrid # local, huggingface or hybrid, prefer hybrid
+inference_mode: huggingface # local, huggingface or hybrid, prefer hybrid
 local_deployment: full # minimal, standard or full, prefer full
 device: cuda:0 # cuda:id or cpu
 num_candidate_models: 5
 max_description_length: 100
 proxy: # optional: your proxy server "http://ip:port"
+http_listen:
+  host: 0.0.0.0 # if you use web as the client, please set `http://{LAN_IP_of_the_server}:{port}/` to `BASE_URL` of `web/src/config/index.ts`.
+  port: 8004
 local_inference_endpoint:
   host: localhost
   port: 8005

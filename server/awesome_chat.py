@@ -33,6 +33,7 @@ args = parser.parse_args()
 
 if __name__ != "__main__":
     args.config = "config.gradio.yaml"
+    args.mode = "gradio"
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
 
@@ -64,7 +65,7 @@ use_completion = config["use_completion"]
 
 # consistent: wrong msra model name 
 LLM_encoding = LLM
-if LLM == "gpt-3.5-turbo":
+if config["dev"] and LLM == "gpt-3.5-turbo":
     LLM_encoding = "text-davinci-003"
 task_parsing_highlight_ids = get_token_ids_for_task_parsing(LLM_encoding)
 choose_model_highlight_ids = get_token_ids_for_choose_model(LLM_encoding)
@@ -78,17 +79,34 @@ if use_completion:
 else:
     api_name = "chat/completions"
 
-OPENAI_KEY = None
-if not config["dev"]:
-    if config["openai"]["key"].startswith("sk-") or config["openai"]["key"]=="gradio":  # Check for valid OpenAI key in config file
-        OPENAI_KEY = config["openai"]["key"]
-    elif "OPENAI_API_KEY" in os.environ and ( os.getenv("OPENAI_API_KEY").startswith("sk-") or os.getenv("OPENAI_API_KEY")=="gradio" ):  # Check for environment variable OPENAI_API_KEY
-        OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+API_TYPE = None
+# priority: local > azure > openai
+if "dev" in config and config["dev"]:
+    API_TYPE = "local"
+elif "azure" in config:
+    API_TYPE = "azure"
+elif "openai" in config:
+    API_TYPE = "openai"
+else:
+    logger.warning("No endpoint specified in config.yaml. The endpoint will be set dynamically according to the client.")
+
+if args.mode in ["test", "cli"]:
+    assert API_TYPE, "Only server mode supports dynamic endpoint."
+
+API_KEY = None
+if API_TYPE == "local":
+    endpoint = f"{config['local']['endpoint']}/v1/{api_name}"
+elif API_TYPE == "azure":
+    endpoint = f"{config['azure']['base_url']}/openai/deployments/{config['azure']['deployment_name']}/{api_name}?api-version={config['azure']['api_version']}"
+    API_KEY = config["azure"]["api_key"]
+elif API_TYPE == "openai":
+    endpoint = f"https://api.openai.com/v1/{api_name}"
+    if config["openai"]["api_key"].startswith("sk-"):  # Check for valid OpenAI key in config file
+        API_KEY = config["openai"]["api_key"]
+    elif "OPENAI_API_KEY" in os.environ and os.getenv("OPENAI_API_KEY").startswith("sk-"):  # Check for environment variable OPENAI_API_KEY
+        API_KEY = os.getenv("OPENAI_API_KEY")
     else:
         raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
-    endpoint = f"https://api.openai.com/v1/{api_name}"
-else:
-    endpoint = f"{config['local']['endpoint']}/v1/{api_name}"
 
 PROXY = None
 if config["proxy"]:
@@ -168,12 +186,21 @@ def convert_chat_to_completion(data):
     return data
 
 def send_request(data):
-    openaikey = data.pop("openaikey")
+    api_key = data.pop("api_key")
+    api_type = data.pop("api_type")
     if use_completion:
         data = convert_chat_to_completion(data)
-    HEADER = {
-        "Authorization": f"Bearer {openaikey}"
-    }    
+    if api_type == "openai":
+        HEADER = {
+            "Authorization": f"Bearer {api_key}"
+        }
+    elif api_type == "azure":
+        HEADER = {
+            "api-key": api_key,
+            "Content-Type": "application/json"
+        }
+    else:
+        HEADER = None
     response = requests.post(endpoint, json=data, headers=HEADER, proxies=PROXY)
     if "error" in response.json():
         return response.json()
@@ -275,15 +302,16 @@ def unfold(tasks):
         
     return tasks
 
-def chitchat(messages, openaikey=None):
+def chitchat(messages, api_key, api_type):
     data = {
         "model": LLM,
         "messages": messages,
-        "openaikey": openaikey
+        "api_key": api_key,
+        "api_type": api_type
     }
     return send_request(data)
 
-def parse_task(context, input, openaikey=None):
+def parse_task(context, input, api_key, api_type):
     demos_or_presteps = parse_task_demos_or_presteps
     messages = json.loads(demos_or_presteps)
     messages.insert(0, {"role": "system", "content": parse_task_tprompt})
@@ -310,11 +338,12 @@ def parse_task(context, input, openaikey=None):
         "messages": messages,
         "temperature": 0,
         "logit_bias": {item: config["logit_bias"]["parse_task"] for item in task_parsing_highlight_ids},
-        "openaikey": openaikey
+        "api_key": api_key,
+        "api_type": api_type
     }
     return send_request(data)
 
-def choose_model(input, task, metas, openaikey = None):
+def choose_model(input, task, metas, api_key, api_type):
     prompt = replace_slot(choose_model_prompt, {
         "input": input,
         "task": task,
@@ -334,12 +363,13 @@ def choose_model(input, task, metas, openaikey = None):
         "messages": messages,
         "temperature": 0,
         "logit_bias": {item: config["logit_bias"]["choose_model"] for item in choose_model_highlight_ids}, # 5
-        "openaikey": openaikey
+        "api_key": api_key,
+        "api_type": api_type
     }
     return send_request(data)
 
 
-def response_results(input, results, openaikey=None):
+def response_results(input, results, api_key, api_type):
     results = [v for k, v in sorted(results.items(), key=lambda item: item[0])]
     prompt = replace_slot(response_results_prompt, {
         "input": input,
@@ -356,7 +386,8 @@ def response_results(input, results, openaikey=None):
         "model": LLM,
         "messages": messages,
         "temperature": 0,
-        "openaikey": openaikey
+        "api_key": api_key,
+        "api_type": api_type
     }
     return send_request(data)
 
@@ -426,7 +457,7 @@ def huggingface_model_inference(model_id, data, task):
         name = str(uuid.uuid4())[:4]
         image.save(f"public/images/{name}.jpg")
         result = {}
-        result["generated image with segmentation mask"] = f"/images/{name}.jpg"
+        result["generated image"] = f"/images/{name}.jpg"
         result["predicted"] = predicted
 
     if task == "object-detection":
@@ -447,7 +478,7 @@ def huggingface_model_inference(model_id, data, task):
         name = str(uuid.uuid4())[:4]
         image.save(f"public/images/{name}.jpg")
         result = {}
-        result["generated image with predicted box"] = f"/images/{name}.jpg"
+        result["generated image"] = f"/images/{name}.jpg"
         result["predicted"] = predicted
 
     if task in ["image-classification"]:
@@ -533,13 +564,13 @@ def local_model_inference(model_id, data, task):
         response = requests.post(task_url, json={"img_url": img_url})
         results = response.json()
         if "path" in results:
-            results["generated depth image"] = results.pop("path")
+            results["generated image"] = results.pop("path")
         return results
     if task == "image-segmentation":
         img_url = data["image"]
         response = requests.post(task_url, json={"img_url": img_url})
         results = response.json()
-        results["generated image with segmentation mask"] = results.pop("path")
+        results["generated image"] = results.pop("path")
         return results
     if task == "image-to-image":
         img_url = data["image"]
@@ -574,7 +605,7 @@ def local_model_inference(model_id, data, task):
         name = str(uuid.uuid4())[:4]
         image.save(f"public/images/{name}.jpg")
         results = {}
-        results["generated image with predicted box"] = f"/images/{name}.jpg"
+        results["generated image"] = f"/images/{name}.jpg"
         results["predicted"] = predicted
         return results
     if task in ["image-classification", "image-to-text", "document-question-answering", "visual-question-answering"]:
@@ -680,7 +711,7 @@ def collect_result(command, choose, inference_result):
     return result
 
 
-def run_task(input, command, results, openaikey = None):
+def run_task(input, command, results, api_key, api_type):
     id = command["id"]
     args = command["args"]
     task = command["task"]
@@ -783,7 +814,7 @@ def run_task(input, command, results, openaikey = None):
             "role": "user",
             "content": f"[ {input} ] contains a task in JSON format {command}. Now you are a {command['task']} system, the arguments are {command['args']}. Just help me do {command['task']} and give me the result. The result must be in text form without any urls."
         }]
-        response = chitchat(messages, openaikey)
+        response = chitchat(messages, api_key, api_type)
         results[id] = collect_result(command, choose, {"response": response})
         return True
     else:
@@ -828,7 +859,7 @@ def run_task(input, command, results, openaikey = None):
                 if model["id"] in all_avaliable_model_ids
             ]
 
-            choose_str = choose_model(input, command, cand_models_info, openaikey)
+            choose_str = choose_model(input, command, cand_models_info, api_key, api_type)
             logger.debug(f"chosen model: {choose_str}")
             try:
                 choose = json.loads(choose_str)
@@ -851,14 +882,14 @@ def run_task(input, command, results, openaikey = None):
     results[id] = collect_result(command, choose, inference_result)
     return True
 
-def chat_huggingface(messages, openaikey = None, return_planning = False, return_results = False):
+def chat_huggingface(messages, api_key, api_type, return_planning = False, return_results = False):
     start = time.time()
     context = messages[:-1]
     input = messages[-1]["content"]
     logger.info("*"*80)
     logger.info(f"input: {input}")
 
-    task_str = parse_task(context, input, openaikey)
+    task_str = parse_task(context, input, api_key, api_type)
 
     if "error" in task_str:
         record_case(success=False, **{"input": input, "task": task_str, "reason": f"task parsing error: {task_str['error']['message']}", "op":"report message"})
@@ -871,18 +902,18 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
         tasks = json.loads(task_str)
     except Exception as e:
         logger.debug(e)
-        response = chitchat(messages, openaikey)
+        response = chitchat(messages, api_key, api_type)
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
     
     if task_str == "[]":  # using LLM response for empty task
         record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
-        response = chitchat(messages, openaikey)
+        response = chitchat(messages, api_key, api_type)
         return {"message": response}
 
     if len(tasks) == 1 and tasks[0]["task"] in ["summarization", "translation", "conversational", "text-generation", "text2text-generation"]:
         record_case(success=True, **{"input": input, "task": tasks, "reason": "chitchat tasks", "op": "chitchat"})
-        response = chitchat(messages, openaikey)
+        response = chitchat(messages, api_key, api_type)
         return {"message": response}
 
     tasks = unfold(tasks)
@@ -908,7 +939,7 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
             dep = task["dep"]
             if dep[0] == -1 or len(list(set(dep).intersection(d.keys()))) == len(dep):
                 tasks.remove(task)
-                thread = threading.Thread(target=run_task, args=(input, task, d, openaikey))
+                thread = threading.Thread(target=run_task, args=(input, task, d, api_key, api_type))
                 thread.start()
                 threads.append(thread)
         if num_thread == len(threads):
@@ -928,7 +959,7 @@ def chat_huggingface(messages, openaikey = None, return_planning = False, return
     if return_results:
         return results
     
-    response = response_results(input, results, openaikey).strip()
+    response = response_results(input, results, api_key, api_type).strip()
 
     end = time.time()
     during = end - start
@@ -951,7 +982,7 @@ def test():
         
     for input in inputs:
         messages = [{"role": "user", "content": input}]
-        chat_huggingface(messages)
+        chat_huggingface(messages, API_KEY, API_TYPE, return_planning = False, return_results = False)
     
     # multi rounds example
     messages = [
@@ -959,7 +990,7 @@ def test():
         {"role": "assistant", "content": """Sure. I understand your request. Based on the inference results of the models, I have generated a canny image for you. The workflow I used is as follows: First, I used the image-to-text model (nlpconnect/vit-gpt2-image-captioning) to convert the image /examples/f.jpg to text. The generated text is "a herd of giraffes and zebras grazing in a field". Second, I used the canny-control model (canny-control) to generate a canny image from the text. Unfortunately, the model failed to generate the canny image. Finally, I used the canny-text-to-image model (lllyasviel/sd-controlnet-canny) to generate a canny image from the text. The generated image is located at /images/f16d.png. I hope this answers your request. Is there anything else I can help you with?"""},
         {"role": "user", "content": """then based on the above canny image and a prompt "a photo of a zoo", generate a new image."""},
     ]
-    chat_huggingface(messages)
+    chat_huggingface(messages, API_KEY, API_TYPE, return_planning = False, return_results = False)
 
 def cli():
     messages = []
@@ -969,7 +1000,7 @@ def cli():
         if message == "exit":
             break
         messages.append({"role": "user", "content": message})
-        answer = chat_huggingface(messages, openaikey=OPENAI_KEY)
+        answer = chat_huggingface(messages, API_KEY, API_TYPE, return_planning=False, return_results=False)
         print("[ Jarvis ]: ", answer["message"])
         messages.append({"role": "assistant", "content": answer["message"]})
 
@@ -988,8 +1019,11 @@ def server():
     def tasks():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", OPENAI_KEY)
-        response = chat_huggingface(messages, openaikey, return_planning=True)
+        api_key = data.get("api_key", API_KEY)
+        api_type = data.get("endpoint", API_TYPE)
+        if api_key is None and api_type is None:
+            return jsonify({"error": "Please provide api_key and api_type"}) 
+        response = chat_huggingface(messages, api_key, api_type, return_planning=True)
         return jsonify(response)
 
     @cross_origin()
@@ -997,8 +1031,11 @@ def server():
     def results():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", OPENAI_KEY)
-        response = chat_huggingface(messages, openaikey, return_results=True)
+        api_key = data.get("api_key", API_KEY)
+        api_type = data.get("endpoint", API_TYPE)
+        if api_key is None and api_type is None:
+            return jsonify({"error": "Please provide api_key and api_type"}) 
+        response = chat_huggingface(messages, api_key, api_type, return_results=True)
         return jsonify(response)
 
     @cross_origin()
@@ -1006,9 +1043,13 @@ def server():
     def chat():
         data = request.get_json()
         messages = data["messages"]
-        openaikey = data.get("openaikey", OPENAI_KEY)
-        response = chat_huggingface(messages, openaikey)
+        api_key = data.get("api_key", API_KEY)
+        api_type = data.get("endpoint", API_TYPE)
+        if api_key is None and api_type is None:
+            return jsonify({"error": "Please provide api_key and api_type"}) 
+        response = chat_huggingface(messages, api_key, api_type)
         return jsonify(response)
+    print("server running...")
     waitress.serve(app, host=host, port=port)
 
 if __name__ == "__main__":
