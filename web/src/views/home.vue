@@ -103,7 +103,7 @@ const messageListMM = computed(() => {
         start += seq_added_accum
         end += seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
-          <a class="inline-flex text-sky-800 font-bold items-baseline" target="_blank" href="${image_urls[j].startsWith("http")?image_urls[j]:""+image_urls[j]}">
+          <a class="inline-flex text-sky-800 font-bold items-baseline" target="_blank" href="${image_urls[j].startsWith("http")?image_urls[j]:BASE_URL+image_urls[j]}">
               <img src="${image_urls[j].startsWith("http")?image_urls[j]:BASE_URL+image_urls[j]}" alt="" class="inline-flex self-center w-5 h-5 rounded-full mx-1" />
               <span class="mx-1">[Image]</span>
           </a>
