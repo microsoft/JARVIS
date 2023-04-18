@@ -14,7 +14,7 @@
    +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
-   +  Just run `python awesome_chat.py --config lite.yaml` to experience it.
+   +  Just run `python awesome_chat.py --config configs/config.lite.yaml` to experience it.
 +  [2023.04.01] We updated a version of code for building.
 
 ## Overview
@@ -35,7 +35,7 @@ We introduce a collaborative system that consists of **an LLM as the controller*
 
 ### Default (Recommended)
 
-For `config.yaml`:
+For `configs/config.default.yaml`:
 
 + Ubuntu 16.04 LTS
 + VRAM >= 24GB
@@ -48,16 +48,16 @@ For `config.yaml`:
   
 ### Minimum (Lite)
 
-For `lite.yaml`:
+For `configs/config.lite.yaml`:
 
 + Ubuntu 16.04 LTS
 + Nothing else
 
-The configuration `lite.yaml` does not require any expert models to be downloaded and deployed locally. However, it means that Jarvis is restricted to models running stably on HuggingFace Inference Endpoints.
+The configuration `configs/config.lite.yaml` does not require any expert models to be downloaded and deployed locally. However, it means that Jarvis is restricted to models running stably on HuggingFace Inference Endpoints.
 
 ## Quick Start
 
-First replace `openai.key` and `huggingface.token` in `server/config.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectfully. Then run the following commands:
+First replace `openai.key` and `huggingface.token` in `server/configs/config.default.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectfully. Then run the following commands:
 
 <span id="Server"></span>
 
@@ -77,8 +77,8 @@ bash download.sh # required when `inference_mode` is `local` or `hybrid`.
 
 # run server
 cd ..
-python models_server.py --config config.yaml # required when `inference_mode` is `local` or `hybrid`
-python awesome_chat.py --config config.yaml --mode server # for text-davinci-003
+python models_server.py --config configs/config.default.yaml # required when `inference_mode` is `local` or `hybrid`
+python awesome_chat.py --config configs/config.default.yaml --mode server # for text-davinci-003
 ```
 
 Now you can access Jarvis' services by the Web API. 
@@ -135,8 +135,8 @@ LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/ffmpeg -i input.mp4 -vcodec libx26
 The Gradio demo is now hosted on Hugging Face Space. You can also run the following commands to start the demo locally:
 
 ```bash
-python models_server.py --config config.gradio.yaml
-python run_gradio_demo.py --config config.gradio.yaml
+python models_server.py --config configs/config.gradio.yaml
+python run_gradio_demo.py --config configs/config.gradio.yaml
 
 # or run the HF Space as a Docker image (Build with `inference_mode=hibrid` and `local_deployment=standard`)
 docker run -it -p 7860:7860 --platform=linux/amd64 registry.hf.space/microsoft-hugginggpt:latest python app.py
@@ -148,7 +148,7 @@ You can also run Jarvis more easily in CLI mode:
 
 ```bash
 cd server
-python awesome_chat.py --config config.yaml --mode cli
+python awesome_chat.py --config configs/config.default.yaml --mode cli
 ```
 
 Examples of CLI mode:
@@ -166,7 +166,7 @@ Welcome to Jarvis! A collaborative system that consists of an LLM as the control
 
 ## Configuration
 
-The server-side configuration file is `server/config.yaml`, and some parameters are presented as follows:
+The server-side configuration file is `server/configs/config.default.yaml`, and some parameters are presented as follows:
 
 + `model`: LLM, currently supports `text-davinci-003`. We are working on integrating more open-source LLMs.
 + `inference_mode`: mode of inference endpoints

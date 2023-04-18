@@ -1,11 +1,11 @@
 huggingface:
   token: REPLACE_WITH_YOUR_HUGGINGFACE_TOKEN_HERE # required: huggingface token @ https://huggingface.co/settings/tokens
 dev: false
-debug: false
+debug: true
 log_file: logs/debug.log
 model: text-davinci-003 # currently only support text-davinci-003, we will support more open-source LLMs in the future
 use_completion: true
-inference_mode: hybrid # local, huggingface or hybrid, prefer hybrid
+inference_mode: huggingface # local, huggingface or hybrid, prefer hybrid
 local_deployment: full # minimal, standard or full, prefer full
 device: cuda:0 # cuda:id or cpu
 num_candidate_models: 5

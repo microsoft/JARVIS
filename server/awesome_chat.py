@@ -27,12 +27,12 @@ from huggingface_hub.inference_api import InferenceApi
 from huggingface_hub.inference_api import ALL_TASKS
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", type=str, default="config.yaml")
+parser.add_argument("--config", type=str, default="configs/config.default.yaml")
 parser.add_argument("--mode", type=str, default="cli")
 args = parser.parse_args()
 
 if __name__ != "__main__":
-    args.config = "config.gradio.yaml"
+    args.config = "configs/config.gradio.yaml"
     args.mode = "gradio"
 
 config = yaml.load(open(args.config, "r"), Loader=yaml.FullLoader)
@@ -88,25 +88,26 @@ elif "azure" in config:
 elif "openai" in config:
     API_TYPE = "openai"
 else:
-    logger.warning("No endpoint specified in config.yaml. The endpoint will be set dynamically according to the client.")
+    logger.warning(f"No endpoint specified in {args.config}. The endpoint will be set dynamically according to the client.")
 
 if args.mode in ["test", "cli"]:
     assert API_TYPE, "Only server mode supports dynamic endpoint."
 
 API_KEY = None
+API_ENDPOINT = None
 if API_TYPE == "local":
-    endpoint = f"{config['local']['endpoint']}/v1/{api_name}"
+    API_ENDPOINT = f"{config['local']['endpoint']}/v1/{api_name}"
 elif API_TYPE == "azure":
-    endpoint = f"{config['azure']['base_url']}/openai/deployments/{config['azure']['deployment_name']}/{api_name}?api-version={config['azure']['api_version']}"
+    API_ENDPOINT = f"{config['azure']['base_url']}/openai/deployments/{config['azure']['deployment_name']}/{api_name}?api-version={config['azure']['api_version']}"
     API_KEY = config["azure"]["api_key"]
 elif API_TYPE == "openai":
-    endpoint = f"https://api.openai.com/v1/{api_name}"
+    API_ENDPOINT = f"https://api.openai.com/v1/{api_name}"
     if config["openai"]["api_key"].startswith("sk-"):  # Check for valid OpenAI key in config file
         API_KEY = config["openai"]["api_key"]
     elif "OPENAI_API_KEY" in os.environ and os.getenv("OPENAI_API_KEY").startswith("sk-"):  # Check for environment variable OPENAI_API_KEY
         API_KEY = os.getenv("OPENAI_API_KEY")
     else:
-        raise ValueError("Incrorrect OpenAI key. Please check your config.yaml file.")
+        raise ValueError(f"Incrorrect OpenAI key. Please check your {args.config} file.")
 
 PROXY = None
 if config["proxy"]:
@@ -120,7 +121,7 @@ inference_mode = config["inference_mode"]
 Model_Server = None
 if inference_mode!="huggingface":
     Model_Server = "http://" + config["local_inference_endpoint"]["host"] + ":" + str(config["local_inference_endpoint"]["port"])
-    message = "The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in config.yaml for a feature-limited experience)"
+    message = f"The server of local inference endpoints is not running, please start it first. (or using `inference_mode: huggingface` in {args.config} for a feature-limited experience)"
     try:
         r = requests.get(Model_Server + "/running")
         if r.status_code != 200:
@@ -162,7 +163,7 @@ elif "HUGGINGFACE_ACCESS_TOKEN" in os.environ and os.getenv("HUGGINGFACE_ACCESS_
         "Authorization": f"Bearer {os.getenv('HUGGINGFACE_ACCESS_TOKEN')}",
     }
 else:
-    raise ValueError("Incrorrect HuggingFace token. Please check your config.yaml file.")
+    raise ValueError(f"Incrorrect HuggingFace token. Please check your {args.config} file.")
 
 def convert_chat_to_completion(data):
     messages = data.pop('messages', [])
@@ -188,6 +189,7 @@ def convert_chat_to_completion(data):
 def send_request(data):
     api_key = data.pop("api_key")
     api_type = data.pop("api_type")
+    api_endpoint = data.pop("api_endpoint")
     if use_completion:
         data = convert_chat_to_completion(data)
     if api_type == "openai":
@@ -201,7 +203,7 @@ def send_request(data):
         }
     else:
         HEADER = None
-    response = requests.post(endpoint, json=data, headers=HEADER, proxies=PROXY)
+    response = requests.post(api_endpoint, json=data, headers=HEADER, proxies=PROXY)
     if "error" in response.json():
         return response.json()
     logger.debug(response.text.strip())
@@ -302,16 +304,17 @@ def unfold(tasks):
         
     return tasks
 
-def chitchat(messages, api_key, api_type):
+def chitchat(messages, api_key, api_type, api_endpoint):
     data = {
         "model": LLM,
         "messages": messages,
         "api_key": api_key,
-        "api_type": api_type
+        "api_type": api_type,
+        "api_endpoint": api_endpoint
     }
     return send_request(data)
 
-def parse_task(context, input, api_key, api_type):
+def parse_task(context, input, api_key, api_type, api_endpoint):
     demos_or_presteps = parse_task_demos_or_presteps
     messages = json.loads(demos_or_presteps)
     messages.insert(0, {"role": "system", "content": parse_task_tprompt})
@@ -339,11 +342,12 @@ def parse_task(context, input, api_key, api_type):
         "temperature": 0,
         "logit_bias": {item: config["logit_bias"]["parse_task"] for item in task_parsing_highlight_ids},
         "api_key": api_key,
-        "api_type": api_type
+        "api_type": api_type,
+        "api_endpoint": api_endpoint
     }
     return send_request(data)
 
-def choose_model(input, task, metas, api_key, api_type):
+def choose_model(input, task, metas, api_key, api_type, api_endpoint):
     prompt = replace_slot(choose_model_prompt, {
         "input": input,
         "task": task,
@@ -364,12 +368,13 @@ def choose_model(input, task, metas, api_key, api_type):
         "temperature": 0,
         "logit_bias": {item: config["logit_bias"]["choose_model"] for item in choose_model_highlight_ids}, # 5
         "api_key": api_key,
-        "api_type": api_type
+        "api_type": api_type,
+        "api_endpoint": api_endpoint
     }
     return send_request(data)
 
 
-def response_results(input, results, api_key, api_type):
+def response_results(input, results, api_key, api_type, api_endpoint):
     results = [v for k, v in sorted(results.items(), key=lambda item: item[0])]
     prompt = replace_slot(response_results_prompt, {
         "input": input,
@@ -387,7 +392,8 @@ def response_results(input, results, api_key, api_type):
         "messages": messages,
         "temperature": 0,
         "api_key": api_key,
-        "api_type": api_type
+        "api_type": api_type,
+        "api_endpoint": api_endpoint
     }
     return send_request(data)
 
@@ -711,7 +717,7 @@ def collect_result(command, choose, inference_result):
     return result
 
 
-def run_task(input, command, results, api_key, api_type):
+def run_task(input, command, results, api_key, api_type, api_endpoint):
     id = command["id"]
     args = command["args"]
     task = command["task"]
@@ -814,7 +820,7 @@ def run_task(input, command, results, api_key, api_type):
             "role": "user",
             "content": f"[ {input} ] contains a task in JSON format {command}. Now you are a {command['task']} system, the arguments are {command['args']}. Just help me do {command['task']} and give me the result. The result must be in text form without any urls."
         }]
-        response = chitchat(messages, api_key, api_type)
+        response = chitchat(messages, api_key, api_type, api_endpoint)
         results[id] = collect_result(command, choose, {"response": response})
         return True
     else:
@@ -859,7 +865,7 @@ def run_task(input, command, results, api_key, api_type):
                 if model["id"] in all_avaliable_model_ids
             ]
 
-            choose_str = choose_model(input, command, cand_models_info, api_key, api_type)
+            choose_str = choose_model(input, command, cand_models_info, api_key, api_type, api_endpoint)
             logger.debug(f"chosen model: {choose_str}")
             try:
                 choose = json.loads(choose_str)
@@ -882,14 +888,14 @@ def run_task(input, command, results, api_key, api_type):
     results[id] = collect_result(command, choose, inference_result)
     return True
 
-def chat_huggingface(messages, api_key, api_type, return_planning = False, return_results = False):
+def chat_huggingface(messages, api_key, api_type, api_endpoint, return_planning = False, return_results = False):
     start = time.time()
     context = messages[:-1]
     input = messages[-1]["content"]
     logger.info("*"*80)
     logger.info(f"input: {input}")
 
-    task_str = parse_task(context, input, api_key, api_type)
+    task_str = parse_task(context, input, api_key, api_type, api_endpoint)
 
     if "error" in task_str:
         record_case(success=False, **{"input": input, "task": task_str, "reason": f"task parsing error: {task_str['error']['message']}", "op":"report message"})
@@ -902,18 +908,18 @@ def chat_huggingface(messages, api_key, api_type, return_planning = False, retur
         tasks = json.loads(task_str)
     except Exception as e:
         logger.debug(e)
-        response = chitchat(messages, api_key, api_type)
+        response = chitchat(messages, api_key, api_type, api_endpoint)
         record_case(success=False, **{"input": input, "task": task_str, "reason": "task parsing fail", "op":"chitchat"})
         return {"message": response}
     
     if task_str == "[]":  # using LLM response for empty task
         record_case(success=False, **{"input": input, "task": [], "reason": "task parsing fail: empty", "op": "chitchat"})
-        response = chitchat(messages, api_key, api_type)
+        response = chitchat(messages, api_key, api_type, api_endpoint)
         return {"message": response}
 
     if len(tasks) == 1 and tasks[0]["task"] in ["summarization", "translation", "conversational", "text-generation", "text2text-generation"]:
         record_case(success=True, **{"input": input, "task": tasks, "reason": "chitchat tasks", "op": "chitchat"})
-        response = chitchat(messages, api_key, api_type)
+        response = chitchat(messages, api_key, api_type, api_endpoint)
         return {"message": response}
 
     tasks = unfold(tasks)
@@ -939,7 +945,7 @@ def chat_huggingface(messages, api_key, api_type, return_planning = False, retur
             dep = task["dep"]
             if dep[0] == -1 or len(list(set(dep).intersection(d.keys()))) == len(dep):
                 tasks.remove(task)
-                thread = threading.Thread(target=run_task, args=(input, task, d, api_key, api_type))
+                thread = threading.Thread(target=run_task, args=(input, task, d, api_key, api_type, api_endpoint))
                 thread.start()
                 threads.append(thread)
         if num_thread == len(threads):
@@ -959,7 +965,7 @@ def chat_huggingface(messages, api_key, api_type, return_planning = False, retur
     if return_results:
         return results
     
-    response = response_results(input, results, api_key, api_type).strip()
+    response = response_results(input, results, api_key, api_type, api_endpoint).strip()
 
     end = time.time()
     during = end - start
@@ -1020,10 +1026,11 @@ def server():
         data = request.get_json()
         messages = data["messages"]
         api_key = data.get("api_key", API_KEY)
-        api_type = data.get("endpoint", API_TYPE)
-        if api_key is None and api_type is None:
-            return jsonify({"error": "Please provide api_key and api_type"}) 
-        response = chat_huggingface(messages, api_key, api_type, return_planning=True)
+        api_endpoint = data.get("api_endpoint", API_ENDPOINT)
+        api_type = data.get("api_type", API_TYPE)
+        if api_key is None or api_type is None or api_endpoint is None:
+            return jsonify({"error": "Please provide api_key, api_type and api_endpoint"}) 
+        response = chat_huggingface(messages, api_key, api_type, api_endpoint, return_planning=True)
         return jsonify(response)
 
     @cross_origin()
@@ -1032,10 +1039,11 @@ def server():
         data = request.get_json()
         messages = data["messages"]
         api_key = data.get("api_key", API_KEY)
-        api_type = data.get("endpoint", API_TYPE)
-        if api_key is None and api_type is None:
-            return jsonify({"error": "Please provide api_key and api_type"}) 
-        response = chat_huggingface(messages, api_key, api_type, return_results=True)
+        api_endpoint = data.get("api_endpoint", API_ENDPOINT)
+        api_type = data.get("api_type", API_TYPE)
+        if api_key is None or api_type is None or api_endpoint is None:
+            return jsonify({"error": "Please provide api_key, api_type and api_endpoint"}) 
+        response = chat_huggingface(messages, api_key, api_type, api_endpoint, return_results=True)
         return jsonify(response)
 
     @cross_origin()
@@ -1044,10 +1052,11 @@ def server():
         data = request.get_json()
         messages = data["messages"]
         api_key = data.get("api_key", API_KEY)
-        api_type = data.get("endpoint", API_TYPE)
-        if api_key is None and api_type is None:
-            return jsonify({"error": "Please provide api_key and api_type"}) 
-        response = chat_huggingface(messages, api_key, api_type)
+        api_endpoint = data.get("api_endpoint", API_ENDPOINT)
+        api_type = data.get("api_type", API_TYPE)
+        if api_key is None or api_type is None or api_endpoint is None:
+            return jsonify({"error": "Please provide api_key, api_type and api_endpoint"}) 
+        response = chat_huggingface(messages, api_key, api_type, api_endpoint)
         return jsonify(response)
     print("server running...")
     waitress.serve(app, host=host, port=port)

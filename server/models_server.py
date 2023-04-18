@@ -43,7 +43,7 @@ import yaml
 warnings.filterwarnings("ignore")
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", type=str, default="config.yaml")
+parser.add_argument("--config", type=str, default="configs/config.default.yaml")
 args = parser.parse_args()
 
 logger = logging.getLogger(__name__)
