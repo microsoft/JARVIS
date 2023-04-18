@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you find this work useful in your method, you can cite the paper as below."
+authors:
+  - family-names: Shen
+    given-names: Yongliang
+  - family-names: Song
+    given-names: Kaitao
+  - family-names: Tan
+    given-names: Xu
+  - family-names: Li
+    given-names: Dongsheng
+  - family-names: Lu
+    given-names: Weiming
+  - family-names: Zhuang
+    given-names: Yueting
+title: "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace"
+version: 2.0.4
+license: MIT
+status: preprint
+date-released: 2023-03-30
+url: https://github.com/microsoft/JARVIS
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Shen
+      given-names: Yongliang
+    - family-names: Song
+      given-names: Kaitao
+    - family-names: Tan
+      given-names: Xu
+    - family-names: Li
+      given-names: Dongsheng
+    - family-names: Lu
+      given-names: Weiming
+    - family-names: Zhuang
+      given-names: Yueting
+  journal: "arXiv preprint arXiv:2303.17580"
+  title: "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace"
+  year: 2023
+  url: https://arxiv.org/abs/2303.17580

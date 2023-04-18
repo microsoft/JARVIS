@@ -1,3 +1,37 @@
+# ALL
+*.dev.yaml
+
+# for server
+server/models/*
+!server/models/download.sh
+!server/models/download.ps1
+server/logs/
+server/models_dev
+server/public/*
+!server/public/examples/
+server/public/examples/*
+!server/public/examples/a.jpg
+!server/public/examples/b.jpg
+!server/public/examples/c.jpg
+!server/public/examples/d.jpg
+!server/public/examples/e.jpg
+!server/public/examples/f.jpg
+!server/public/examples/g.jpg
+
+# docker
+Dockerfile
+docker-compose.yml
+
+# for gradio
+# server/run_gradio.py
+
+# for web
+web/node_modules
+web/package-lock.json
+web/dist
+web/electron-dist
+web/yarn.lock
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +161,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

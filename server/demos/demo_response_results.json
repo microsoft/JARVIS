@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "{{input}}"
+    },
+    {
+        "role": "assistant",
+        "content": "Before give you a response, I want to introduce my workflow for your request, which is shown in the following JSON data: {{processes}}. Do you have any demands regarding my response?"
+    }
+]

@@ -1,0 +1,46 @@
+openai: 
+  api_key: REPLACE_WITH_YOUR_OPENAI_API_KEY_HERE
+# azure:
+#   api_key: REPLACE_WITH_YOUR_AZURE_API_KEY_HERE
+#   base_url: REPLACE_WITH_YOUR_ENDPOINT_HERE
+#   deployment_name: REPLACE_WITH_YOUR_DEPLOYMENT_NAME_HERE
+#   api_version: "2022-12-01"
+huggingface:
+  token: REPLACE_WITH_YOUR_HUGGINGFACE_TOKEN_HERE # required: huggingface token @ https://huggingface.co/settings/tokens
+dev: false
+debug: false
+log_file: logs/debug.log
+model: text-davinci-003 # currently only support text-davinci-003, gpt-4, we will support more open-source LLMs in the future
+use_completion: true
+inference_mode: hybrid # local, huggingface or hybrid, prefer hybrid
+local_deployment: full # minimal, standard or full, prefer full
+device: cuda:0 # cuda:id or cpu
+num_candidate_models: 5
+max_description_length: 100
+proxy: # optional: your proxy server "http://ip:port"
+http_listen:
+  host: 0.0.0.0 # if you use web as the client, please set `http://{LAN_IP_of_the_server}:{port}/` to `BASE_URL` of `web/src/config/index.ts`.
+  port: 8004
+local_inference_endpoint:
+  host: localhost
+  port: 8005
+logit_bias:
+  parse_task: 0.1
+  choose_model: 5
+tprompt:
+  parse_task: >-
+    #1 Task Planning Stage: The AI assistant can parse user input to several tasks: [{"task": task, "id": task_id, "dep": dependency_task_id, "args": {"text": text or <GENERATED>-dep_id, "image": image_url or <GENERATED>-dep_id, "audio": audio_url or <GENERATED>-dep_id}}]. The special tag "<GENERATED>-dep_id" refer to the one generated text/image/audio in the dependency task (Please consider whether the dependency task generates resources of this type.) and "dep_id" must be in "dep" list. The "dep" field denotes the ids of the previous prerequisite tasks which generate a new resource that the current task relies on. The "args" field must in ["text", "image", "audio"], nothing else. The task MUST be selected from the following options: "token-classification", "text2text-generation", "summarization", "translation", "question-answering", "conversational", "text-generation", "sentence-similarity", "tabular-classification", "object-detection", "image-classification", "image-to-image", "image-to-text", "text-to-image", "text-to-video", "visual-question-answering", "document-question-answering", "image-segmentation", "depth-estimation", "text-to-speech", "automatic-speech-recognition", "audio-to-audio", "audio-classification", "canny-control", "hed-control", "mlsd-control", "normal-control", "openpose-control", "canny-text-to-image", "depth-text-to-image", "hed-text-to-image", "mlsd-text-to-image", "normal-text-to-image", "openpose-text-to-image", "seg-text-to-image". There may be multiple tasks of the same type. Think step by step about all the tasks needed to resolve the user's request. Parse out as few tasks as possible while ensuring that the user request can be resolved. Pay attention to the dependencies and order among tasks. If the user input can't be parsed, you need to reply empty JSON []. 
+  choose_model: >-
+    #2 Model Selection Stage: Given the user request and the parsed tasks, the AI assistant helps the user to select a suitable model from a list of models to process the user request. The assistant should focus more on the description of the model and find the model that has the most potential to solve requests and tasks. Also, prefer models with local inference endpoints for speed and stability.
+  response_results: >-
+    #4 Response Generation Stage: With the task execution logs, the AI assistant needs to describe the process and inference results.
+demos_or_presteps:
+  parse_task: demos/demo_parse_task.json
+  choose_model: demos/demo_choose_model.json
+  response_results: demos/demo_response_results.json 
+prompt:
+  parse_task: The chat log [ {{context}} ] may contain the resources I mentioned. Now I input { {{input}} }. Pay attention to the input and output types of tasks and the dependencies between tasks.
+  choose_model: >-
+    Please choose the most suitable model from {{metas}} for the task {{task}}. The output must be in a strict JSON format: {"id": "id", "reason": "your detail reasons for the choice"}.
+  response_results: >-
+    Yes. Please first think carefully and directly answer my request based on the inference results. Some of the inferences may not always turn out to be correct and require you to make careful consideration in making decisions. Then please detail your workflow including the used models and inference results for my request in your friendly tone. Please filter out information that is not relevant to my request. Tell me the complete path or urls of files in inference results. If there is nothing in the results, please tell me you can't make it. }
