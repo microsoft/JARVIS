@@ -1,20 +1,17 @@
 import type { CleanChatMessage } from "@/types";
 import axios, { AxiosError } from "axios";
-import BASE_URL from "@/config";
+import { HUGGINGGPT_BASE_URL } from "@/config";
 
 const model = "gpt-3.5-turbo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export async function hugginggpt(messageList: CleanChatMessage[], apiKey: string, dev: boolean) {
-  var endpoint = `${BASE_URL}/hugginggpt`
+export async function hugginggpt(messageList: CleanChatMessage[]) {
+  var endpoint = `${HUGGINGGPT_BASE_URL}/hugginggpt`
   try {
     const response = await axios({
       url: endpoint,
       method: "post",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
       data: {
         model,
         messages: messageList.slice(1)
@@ -28,7 +25,7 @@ export async function hugginggpt(messageList: CleanChatMessage[], apiKey: string
   } catch (error: any) {
     return {
       status: "error",
-      message: "Unknown Error, please retry.",
+      message: error.message
     };
   }
 }

@@ -6,9 +6,8 @@ import { hugginggpt } from "@/api/hugginggpt";
 import { chatgpt } from "@/api/chatgpt";
 import Loading from "@/components/Loading.vue";
 import promptCollection from "@/prompt";
-import BASE_URL from "@/config";
+import { HUGGINGGPT_BASE_URL } from "@/config";
 
-let dev = ref(false);
 let isChatgpt = ref(false);
 let isTalking = ref(false);
 let isConfig = ref<boolean>(true);
@@ -17,7 +16,7 @@ let mode = ref<string>("default");
 
 title.value = isChatgpt.value? "ChatGPT": "HuggingGPT";
 
-isConfig.value = (!dev.value && isChatgpt.value)? true : false
+isConfig.value = (isChatgpt.value)? true : false
 
 const chatListDom = ref<HTMLDivElement>();
 // const pdf = ref<HTMLDivElement>();
@@ -54,9 +53,9 @@ async function sendChatMessage() {
     { role: "assistant", content: "", type: "text", first: true},
   )
   if (isChatgpt.value) {
-    var { status, data } = await chatgpt(clean_messages, loadConfig(), dev.value);
+    var { status, data, message } = await chatgpt(clean_messages, loadConfig());
   } else {
-    var { status, data } = await hugginggpt(clean_messages, loadConfig(), dev.value);
+    var { status, data, message } = await hugginggpt(clean_messages);
   }
 
   messageList.value.pop()
@@ -72,7 +71,7 @@ async function sendChatMessage() {
     }
   } else {
     messageList.value.push(
-      { role: "system", content: data, type: "text", first: true }
+      { role: "system", content: message, type: "text", first: true }
     );
   }
   isTalking.value = false;
@@ -103,8 +102,8 @@ const messageListMM = computed(() => {
         start += seq_added_accum
         end += seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
-          <a class="inline-flex text-sky-800 font-bold items-baseline" target="_blank" href="${image_urls[j].startsWith("http")?image_urls[j]:BASE_URL+image_urls[j]}">
-              <img src="${image_urls[j].startsWith("http")?image_urls[j]:BASE_URL+image_urls[j]}" alt="" class="inline-flex self-center w-5 h-5 rounded-full mx-1" />
+          <a class="inline-flex text-sky-800 font-bold items-baseline" target="_blank" href="${image_urls[j].startsWith("http")?image_urls[j]:HUGGINGGPT_BASE_URL+image_urls[j]}">
+              <img src="${image_urls[j].startsWith("http")?image_urls[j]:HUGGINGGPT_BASE_URL+image_urls[j]}" alt="" class="inline-flex self-center w-5 h-5 rounded-full mx-1" />
               <span class="mx-1">[Image]</span>
           </a>
           </span>`
@@ -113,7 +112,7 @@ const messageListMM = computed(() => {
         content = content.slice(0, start) + replace_str + content.slice(end)
         
         if(!image_urls[j].startsWith("http")){
-          image_urls[j] = BASE_URL + image_urls[j]
+          image_urls[j] = HUGGINGGPT_BASE_URL + image_urls[j]
         }
       }
     }
@@ -131,7 +130,7 @@ const messageListMM = computed(() => {
         start += seq_added_accum
         end += seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
-            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${audio_urls[j].startsWith("http")?audio_urls[j]:BASE_URL+audio_urls[j]}">
+            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${audio_urls[j].startsWith("http")?audio_urls[j]:HUGGINGGPT_BASE_URL+audio_urls[j]}">
               <img class="inline-flex self-center w-5 h-5 rounded-full mx-1" src="/audio.svg"/>
               <span class="mx-1">[Audio]</span>
             </a>
@@ -141,7 +140,7 @@ const messageListMM = computed(() => {
         content = content.slice(0, start) + replace_str + content.slice(end)
         
         if(!audio_urls[j].startsWith("http")){
-          audio_urls[j] = BASE_URL + audio_urls[j]
+          audio_urls[j] = HUGGINGGPT_BASE_URL + audio_urls[j]
         }
       }
     }
@@ -159,7 +158,7 @@ const messageListMM = computed(() => {
         start += seq_added_accum
         end += seq_added_accum
         const replace_str = `<span class="inline-flex items-baseline">
-            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${video_urls[j].startsWith("http")?video_urls[j]:BASE_URL+video_urls[j]}">
+            <a class="text-sky-800 inline-flex font-bold items-baseline" target="_blank" href="${video_urls[j].startsWith("http")?video_urls[j]:HUGGINGGPT_BASE_URL+video_urls[j]}">
               <img class="inline-flex self-center w-5 h-5 rounded-full mx-1" src="/video.svg"/>
               <span class="mx-1">[video]</span>
             </a>
@@ -169,7 +168,7 @@ const messageListMM = computed(() => {
         content = content.slice(0, start) + replace_str + content.slice(end)
         
         if(!video_urls[j].startsWith("http")){
-          video_urls[j] = BASE_URL + video_urls[j]
+          video_urls[j] = HUGGINGGPT_BASE_URL + video_urls[j]
         }
       }
     }
@@ -236,7 +235,12 @@ const switchChatGPT = () => {
   if (isChatgpt.value) {
     title.value = "ChatGPT"
     roleAlias.value = roleAliasChatGPT
+    const apiKey = loadConfig();
+    if (!apiKey) {
+      isConfig.value = true;
+    }
   } else {
+    isConfig.value = false;
     title.value = "HuggingGPT"
     roleAlias.value = roleAliasChatHuggingGPT
   }
@@ -320,7 +324,7 @@ watch(messageListMM, () => nextTick(() => {
           <RouterLink to="/">{{title}}</RouterLink>
         </div>
         
-        <div class="text-sm cursor-pointer w-1/4 flex flex-row justify-end" @click="dev || clickConfig()" @dblclick="switchChatGPT()">
+        <div class="text-sm cursor-pointer w-1/4 flex flex-row justify-end" @click="!isChatgpt || clickConfig()" @dblclick="switchChatGPT()">
             <img src="@/assets/setting.svg" class="w-7 block" title="click to switch to configuration OpenAI key or double click to switch HuggingGPT and ChatGPT"/>
         </div>
       </div>

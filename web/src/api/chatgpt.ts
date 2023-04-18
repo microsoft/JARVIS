@@ -1,17 +1,11 @@
 import type { CleanChatMessage } from "@/types";
 import axios, { AxiosError } from "axios";
-
-const model = "gpt-3.5-turbo";
-// const model = "text-davinci-003"
+import { CHAT_GPT_URL, CHAT_GPT_LLM } from "@/config";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export async function chatgpt(messageList: CleanChatMessage[], apiKey: string, dev: boolean) {
-  if (dev) {
-    var endpoint = "http://localhost:8003/v1/chat/completions"
-  } else {
-    var endpoint = "https://api.openai.com/v1/chat/completions"
-  }
+export async function chatgpt(messageList: CleanChatMessage[], apiKey: string) {
+  var endpoint = `${CHAT_GPT_URL}/v1/chat/completions`
 
   try {
     const completion = await axios({
@@ -21,9 +15,10 @@ export async function chatgpt(messageList: CleanChatMessage[], apiKey: string, d
         Authorization: `Bearer ${apiKey}`,
       },
       data: {
-        model,
+        model: CHAT_GPT_LLM,
         messages: messageList
       },
+      timeout: 60000, // 180 seconds
     });
     return {
       status: "success",
@@ -32,7 +27,7 @@ export async function chatgpt(messageList: CleanChatMessage[], apiKey: string, d
   } catch (error: any) {
     return {
       status: "error",
-      data: "Something seems wrong"
+      message: error.message
     };
   }
 }
