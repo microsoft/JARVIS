@@ -10,7 +10,7 @@
 ## Updates
 +  [2023.04.16] Jarvis now supports the OpenAI service on the Azure platform and the GPT-4 model.
 +  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
-   +  The Gradio demo is now hosted on Hugging Face Space. (Build with `inference_mode=hibrid` and `local_deployment=standard`)
+   +  The Gradio demo is now hosted on Hugging Face Space. (Build with `inference_mode=hybrid` and `local_deployment=standard`)
    +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
 +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
