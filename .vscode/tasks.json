@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cmake",
+			"label": "CMake: clean",
+			"command": "clean",
+			"problemMatcher": [],
+			"detail": "CMake template clean task",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
