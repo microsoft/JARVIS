@@ -988,7 +988,7 @@ def test():
         
     for input in inputs:
         messages = [{"role": "user", "content": input}]
-        chat_huggingface(messages, API_KEY, API_TYPE, return_planning = False, return_results = False)
+        chat_huggingface(messages, API_KEY, API_TYPE, API_ENDPOINT, return_planning = False, return_results = False)
     
     # multi rounds example
     messages = [
@@ -996,7 +996,7 @@ def test():
         {"role": "assistant", "content": """Sure. I understand your request. Based on the inference results of the models, I have generated a canny image for you. The workflow I used is as follows: First, I used the image-to-text model (nlpconnect/vit-gpt2-image-captioning) to convert the image /examples/f.jpg to text. The generated text is "a herd of giraffes and zebras grazing in a field". Second, I used the canny-control model (canny-control) to generate a canny image from the text. Unfortunately, the model failed to generate the canny image. Finally, I used the canny-text-to-image model (lllyasviel/sd-controlnet-canny) to generate a canny image from the text. The generated image is located at /images/f16d.png. I hope this answers your request. Is there anything else I can help you with?"""},
         {"role": "user", "content": """then based on the above canny image and a prompt "a photo of a zoo", generate a new image."""},
     ]
-    chat_huggingface(messages, API_KEY, API_TYPE, return_planning = False, return_results = False)
+    chat_huggingface(messages, API_KEY, API_TYPE, API_ENDPOINT, return_planning = False, return_results = False)
 
 def cli():
     messages = []
@@ -1006,7 +1006,7 @@ def cli():
         if message == "exit":
             break
         messages.append({"role": "user", "content": message})
-        answer = chat_huggingface(messages, API_KEY, API_TYPE, return_planning=False, return_results=False)
+        answer = chat_huggingface(messages, API_KEY, API_TYPE, API_ENDPOINT, return_planning=False, return_results=False)
         print("[ Jarvis ]: ", answer["message"])
         messages.append({"role": "assistant", "content": answer["message"]})
 
