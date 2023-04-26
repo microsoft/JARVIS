@@ -2,6 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+<<<<<<< HEAD
 			"type": "npm",
 			"script": "install",
 			"path": "web/electron",
@@ -12,6 +13,17 @@
 			"problemMatcher": [],
 			"label": "npm: install - web/electron",
 			"detail": "install dependencies from package"
+=======
+			"type": "cmake",
+			"label": "CMake: clean",
+			"command": "clean",
+			"problemMatcher": [],
+			"detail": "CMake template clean task",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+>>>>>>> 634bc949eeb82f4602e9313dbebca3b7efc8c5d5
 		}
 	]
 }

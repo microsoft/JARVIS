@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "version": "0.2.0",
   "configurations": [
@@ -84,4 +85,26 @@
       ]
     }
   ]
+=======
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        configurations
+        version
+        aiquickfix
+        9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+        {
+            "type": "bmasm",
+            "request": "launch",
+            "name": "Debug Application",
+            "program": "${workspaceFolder}/${command:AskForProgramName}",
+            "stopOnEntry": true,
+            "debugArgs": [],
+            "cwd": "${workspaceRoot}"
+        }
+    ]
+>>>>>>> 634bc949eeb82f4602e9313dbebca3b7efc8c5d5
 }
