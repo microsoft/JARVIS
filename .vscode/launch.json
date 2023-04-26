@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+<<<<<<< HEAD
     breadcrumbs
     apiKey
     ::#region
@@ -16,6 +17,8 @@
     autofetch
     aiquickfix
     9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+=======
+>>>>>>> 38a1842a2d69b937ad0a0f819e00d661c3f6c133
     9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
     9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
     9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
