@@ -1,48 +1,54 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        ASPNETCORE_ENVIRONMENT
-
-        ASPNETCORE_ENVIRONMENT
-        Core
-        Development
-        DOTNET_WATCH_RESTART_ON_RUDE_EDIT
-        ASPNETCORE_ENVIRONMENT
-    Use
-    IntelliSense
-    DOTNET_WATCH_RESTART_ON_RUDE_EDIT
-    
-
-
-
-
-
-
-
-
-    type
-    Core
-    DOTNET_WATCH_RESTART_ON_RUDE_EDIT
-    about
-    ?linkid
+  "version": "0.2.0",
+  "configurations": [
+    breadcrumbs
+    apiKey
+    ::#region
+    ::#endregion
+    MIMode
+    Debug
+    vscode
+    miDebuggerPath
+    JARVIS
+    externalConsole
     configurations
-    request
-    IntelliSense
-    information
-    descriptions
-    Development
+    C
+    autofetch
+    aiquickfix
+    9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+    9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+    9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+    9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
     configurations
+    version
+  breadcrumbs
+  autofetch
+  apiKey
+  aiquickfix
+  9yDfO4XT9GIEG6MlGGviT3BlbkFJgUscuenOlN8oaC5eRgDu
+  version
+  configurations
+  version
+
+  configurations
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/Mindy/OneDrive/.vscode/JARVIS/server/models",
+      "program": "c:/Users/Mindy/OneDrive/.vscode/JARVIS/server/models/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
         {
-            "type": "DotNetWatch",
-            "request": "launch",
-            "name": ".NET Core Watch",
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-                "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "true"
-            }
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
         }
-    ]
+      ]
+    }
+  ]
 }
