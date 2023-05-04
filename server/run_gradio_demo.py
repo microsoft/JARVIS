@@ -80,11 +80,17 @@ def bot(messages):
     add_message(message, "assistant")
     messages[-1][1] = message
     for image_url in image_urls:
-        messages = messages + [((None, (f"public/{image_url}",)))]
+        if not image_url.startswith("http"):
+            image_url = image_url.replace("public/", "")
+            messages = messages + [((None, (f"public/{image_url}",)))]
     for audio_url in audio_urls:
-        messages = messages + [((None, (f"public/{audio_url}",)))]
+        if not audio_url.startswith("http"):
+            audio_url = audio_url.replace("public/", "")
+            messages = messages + [((None, (f"public/{audio_url}",)))]
     for video_url in video_urls:
-        messages = messages + [((None, (f"public/{video_url}",)))]
+        if not video_url.startswith("http"):
+            video_url = video_url.replace("public/", "")
+            messages = messages + [((None, (f"public/{video_url}",)))]
     return messages
 
 with gr.Blocks() as demo:
@@ -114,7 +120,7 @@ with gr.Blocks() as demo:
         examples=["Given a collection of image A: /examples/a.jpg, B: /examples/b.jpg, C: /examples/c.jpg, please tell me how many zebras in these picture?",
                     "Please generate a canny image based on /examples/f.jpg",
                     "show me a joke and an image of cat",
-                    "what is in the examples/a.jpg",
+                    "what is in the /examples/a.jpg",
                     "generate a video and audio about a dog is running on the grass",
                     "based on the /examples/a.jpg, please generate a video and audio",
                     "based on pose of /examples/d.jpg and content of /examples/e.jpg, please show me a new image",
