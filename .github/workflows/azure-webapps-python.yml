@@ -68,8 +68,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      name: 'ASP-Jarvis1group-9f7f'
+      url: ${{ jarvis1.azurewebsites.net }}
 
     steps:
       - name: Download artifact from build job
@@ -82,5 +82,5 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-name: ${{ env.Jarvis1 }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
