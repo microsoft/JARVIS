@@ -1,0 +1,4 @@
+.git
+server/models/*
+!server/models/download.sh
+!server/models/download.ps1

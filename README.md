@@ -180,6 +180,35 @@ The server-side configuration file is `server/configs/config.default.yaml`, and 
 
 On a personal laptop, we recommend the configuration of `inference_mode: hybrid `and `local_deployment: minimal`. But the available models under this setting may be limited due to the instability of remote Hugging Face Inference Endpoints.
 
+## NVIDIA Jetson Embedded Device Support
+A [Dockerfile](./Dockerfile.jetson) is included that provides experimental support for [NVIDIA Jetson embedded devices](https://developer.nvidia.com/embedded-computing).  This image provides accelerated ffmpeg, pytorch, torchaudio, and torchvision dependencies.  To build the docker image, [ensure that the default docker runtime is set to 'nvidia'](https://github.com/NVIDIA/nvidia-docker/wiki/Advanced-topics#default-runtime).  A pre-built image is provided at https://hub.docker.com/r/toolboc/nv-jarvis.
+
+```bash
+#Build the docker image
+docker build --pull --rm -f "Dockerfile.jetson" -t toolboc/nv-jarvis:r35.2.1 
+```
+
+Due to to memory requirements, JARVIS is required to run on Jetson AGX Orin family devices (64G on-board RAM device preferred) with config options set to:
+* `inference_mode: local` 
+* `local_deployment: standard`  
+
+Models and configs are recommended to be provided through a volume mount from the host to the container as shown in the `docker run` step below.  It is possible to uncomment the `# Download local models` section of the [Dockerfile](./Dockerfile.jetson) to build a container with models included.
+
+### Start the model server, awesomechat, and web app on Jetson Orin AGX
+
+```bash
+# run the container which will automatically start the model server
+docker run --name jarvis --net=host --gpus all -v ~/jarvis/configs:/app/server/configs -v ~/src/JARVIS/server/models:/app/server/models toolboc/nv-jarvis:r35.2.1
+
+# (wait for model server to complete initialization)
+
+# start awesome_chat.py 
+docker exec jarvis python3 awesome_chat.py --config configs/config.default.yaml --mode server
+
+#start the web application (application will be acessible at http://localhost:9999)
+docker exec jarvis npm run dev --prefix=/app/web
+```
+
 ## Screenshots
 
 <p align="center"><img src="./assets/screenshot_q.jpg"><img src="./assets/screenshot_a.jpg"></p>
