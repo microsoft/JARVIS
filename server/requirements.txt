@@ -15,4 +15,4 @@ timm==0.6.13
 typeguard==2.13.3
 accelerate==0.18.0
 pytesseract==0.3.10
-gradio==3.24.1
+gradio==3.34.0
