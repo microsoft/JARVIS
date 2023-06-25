@@ -107,7 +107,7 @@ elif API_TYPE == "openai":
     elif "OPENAI_API_KEY" in os.environ and os.getenv("OPENAI_API_KEY").startswith("sk-"):  # Check for environment variable OPENAI_API_KEY
         API_KEY = os.getenv("OPENAI_API_KEY")
     else:
-        raise ValueError(f"Incrorrect OpenAI key. Please check your {args.config} file.")
+        raise ValueError(f"Incorrect OpenAI key. Please check your {args.config} file.")
 
 PROXY = None
 if config["proxy"]:
@@ -163,7 +163,7 @@ elif "HUGGINGFACE_ACCESS_TOKEN" in os.environ and os.getenv("HUGGINGFACE_ACCESS_
         "Authorization": f"Bearer {os.getenv('HUGGINGFACE_ACCESS_TOKEN')}",
     }
 else:
-    raise ValueError(f"Incrorrect HuggingFace token. Please check your {args.config} file.")
+    raise ValueError(f"Incorrect HuggingFace token. Please check your {args.config} file.")
 
 def convert_chat_to_completion(data):
     messages = data.pop('messages', [])
