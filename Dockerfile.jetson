@@ -4,7 +4,7 @@
 FROM nvcr.io/nvidia/l4t-jetpack:r35.2.1 AS build
 
 RUN apt update && apt install -y --no-install-recommends \
-    build-essential git libass-dev cmake && \
+    build-essential git libass-dev libx264-dev cmake && \
     rm -rf /var/lib/apt/lists/*
 
 # Build ffmpeg dependency libraries
@@ -21,7 +21,7 @@ RUN git clone https://github.com/jocover/jetson-ffmpeg.git  && \
     cd ffmpeg && \
     wget https://github.com/jocover/jetson-ffmpeg/raw/master/ffmpeg_nvmpi.patch && \
     git apply ffmpeg_nvmpi.patch && \
-    ./configure --enable-nvmpi --enable-libass&& \
+    ./configure --enable-nvmpi --enable-libass --enable-libx264 --enable-gpl && \
     make -j$(nproc)
 
 # Base image: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch/tags
