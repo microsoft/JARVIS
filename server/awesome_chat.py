@@ -1055,7 +1055,7 @@ def server():
         api_endpoint = data.get("api_endpoint", API_ENDPOINT)
         api_type = data.get("api_type", API_TYPE)
         if api_key is None or api_type is None or api_endpoint is None:
-            return jsonify({"error": "Please provide api_key, api_type and api_endpoint"}) 
+            return jsonify({"error": "Please provide an api_key, api_type, and api_endpoint"}) 
         response = chat_huggingface(messages, api_key, api_type, api_endpoint)
         return jsonify(response)
     print("server running...")
