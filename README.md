@@ -1,12 +1,12 @@
 # JARVIS
 
-**This project is under construction and we will have all the code ready soon.**
-
 [![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2303.17580)
 [![Open in Spaces](https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue)](https://huggingface.co/spaces/microsoft/HuggingGPT)
 
 
 ## Updates
++  [2023.07.28] We are now in the process of planning evaluation and project rebuilding. We will release a new version of Jarvis in the near future.
++  [2023.07.24] We released a light langchain version of Jarvis. See <a href="https://github.com/langchain-ai/langchain/tree/master/libs/experimental/langchain_experimental/autonomous_agents/hugginggpt">here</a>.
 +  [2023.04.16] Jarvis now supports the OpenAI service on the Azure platform and the GPT-4 model.
 +  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
    +  The Gradio demo is now hosted on Hugging Face Space. (Build with `inference_mode=hybrid` and `local_deployment=standard`)
@@ -56,7 +56,7 @@ The configuration `configs/config.lite.yaml` does not require any expert models 
 
 ## Quick Start
 
-First replace `openai.key` and `huggingface.token` in `server/configs/config.default.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectfully. Then run the following commands:
+First replace `openai.key` and `huggingface.token` in `server/configs/config.default.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectively. Then run the following commands:
 
 <span id="Server"></span>
 

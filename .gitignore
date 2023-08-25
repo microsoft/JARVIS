@@ -1,6 +1,8 @@
 # ALL
 *.dev.yaml
 
+legacy/
+
 # for server
 server/models/*
 !server/models/download.sh
