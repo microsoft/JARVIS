@@ -1,6 +1,6 @@
 # JARVIS
 
-The mission of JARVIS is to explore possibilities to build artificial general intelligent. Our vision is to discover and deliver cutting-edge research to the whole community.
+The mission of JARVIS is to explore artificial general intelligence (AGI) and deliver cutting-edge research to the whole community.
 
 ## What's New
 
