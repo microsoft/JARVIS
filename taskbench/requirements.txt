@@ -1,7 +1,12 @@
 requests==2.28.1
 click==8.0.4
 emoji==2.8.0
-networkx
-aiohttp
-matplotlib
-pandas
+networkx==2.8.4
+aiohttp==3.8.1
+matplotlib==3.7.1
+pandas==1.2.4
+numpy==1.23.5
+scikit-learn==1.0.2
+Levenshtein==0.21.1
+scipy==1.10.0
+datasets==2.14.5

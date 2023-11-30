@@ -31,9 +31,10 @@ class ContentFormatError(Exception):
 @click.option("--reformat", type=bool, default=False)
 @click.option("--reformat_by", type=str, default="self")
 @click.option("--tag", type=bool, default=False)
-@click.option("--ignore_tool_type", type=bool, default=False)
+@click.option("--dependency_type", type=str, default="resource")
 @click.option("--log_first_detail", type=bool, default=False)
-def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use_demos, reformat, reformat_by, tag, ignore_tool_type, log_first_detail):
+def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use_demos, reformat, reformat_by, tag, dependency_type, log_first_detail):
+    assert dependency_type in ["resource", "temporal"], "Dependency type not supported"
     arguments = locals()
     url = f"http://{api_addr}:{api_port}/v1/chat/completions"
 
@@ -63,8 +64,8 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
     
     tool_list = json.load(open(f"{data_dir}/tool_desc.json", "r"))["nodes"]
     if "input-type" not in tool_list[0]:
-        assert ignore_tool_type, "Tool type is not ignored, but the tool list does not contain input-type and output-type"
-    if ignore_tool_type:
+        assert dependency_type == "temporal", "Tool type is not ignored, but the tool list does not contain input-type and output-type"
+    if dependency_type == "temporal":
         for tool in tool_list:
             parameter_list = []
             for parameter in tool["parameters"]:
@@ -88,7 +89,7 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
 
     demos = []
     if use_demos:
-        if ignore_tool_type:
+        if dependency_type == "temporal":
             demos_id = [ "38563456", "27267145", "91005535"]
         else:
             if "huggingface" in data_dir: 
@@ -101,7 +102,7 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
         for line in demos_rf:
             data = json.loads(line)
             if data["id"] in demos_id:
-                if ignore_tool_type:
+                if dependency_type == "temporal":
                     demo = {
                         "user_request": data["user_request"],
                         "result":{
@@ -127,9 +128,9 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
     
     sem = asyncio.Semaphore(multiworker)
 
-    async def inference_wrapper(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, ignore_tool_type, log_detail = False):
+    async def inference_wrapper(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail = False):
         async with sem:
-            await inference(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, ignore_tool_type, log_detail)
+            await inference(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail)
 
     if len(inputs) == 0:
         logger.info("All Completed!")
@@ -141,13 +142,13 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
     loop = asyncio.get_event_loop()
 
     if log_first_detail:
-        tasks = [inference_wrapper(inputs[0], url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, ignore_tool_type, log_detail=True)]
+        tasks = [inference_wrapper(inputs[0], url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail=True)]
         results = loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
         inputs = inputs[1:]
 
     tasks = []
     for input in inputs:
-        tasks.append(inference_wrapper(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, ignore_tool_type))
+        tasks.append(inference_wrapper(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type))
 
     results += loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
     failed = []
@@ -161,9 +162,9 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
     logger.info(f"Failed: {len(failed)}")
     loop.close()
 
-async def inference(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, ignore_tool_type, log_detail = False):
+async def inference(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail = False):
     user_request = input["user_request"]
-    if not ignore_tool_type:
+    if dependency_type == "resource":
         prompt = """\n# GOAL #: Based on the above tools, I want you generate task steps and task nodes to solve the # USER REQUEST #. The format must in a strict JSON format, like: {"task_steps": [ step description of one or more steps ], "task_nodes": [{"task": "tool name must be from # TOOL LIST #", "arguments": [ a concise list of arguments for the tool. Either original text, or user-mentioned filename, or tag '<node-j>' (start from 0) to refer to the output of the j-th node. ]}]} """
         prompt += """\n\n# REQUIREMENTS #: \n1. the generated task steps and task nodes can resolve the given user request # USER REQUEST # perfectly. Task name must be selected from # TASK LIST #; \n2. the task steps should strictly aligned with the task nodes, and the number of task steps should be same with the task nodes; \n3. the dependencies among task steps should align with the argument dependencies of the task nodes; \n4. the tool arguments should be align with the input-type field of # TASK LIST #;"""
     else:
@@ -195,7 +196,7 @@ async def inference(input, url, temperature, top_p, tool_string, wf, llm, demos,
         "stop": None
     })
     try:
-        result = await get_response(url, payload, input['id'], reformat, reformat_by, ignore_tool_type, log_detail)
+        result = await get_response(url, payload, input['id'], reformat, reformat_by, dependency_type, log_detail)
     except Exception as e:
         logger.info(f"Failed #id {input['id']}: {type(e)} {e}")
         raise e
@@ -204,7 +205,7 @@ async def inference(input, url, temperature, top_p, tool_string, wf, llm, demos,
     wf.write(json.dumps(input) + "\n")
     wf.flush()
 
-async def get_response(url, payload, id, reformat, reformat_by, ignore_tool_type, log_detail=False):
+async def get_response(url, payload, id, reformat, reformat_by, dependency_type, log_detail=False):
     headers = {
     'Content-Type': 'application/json'
     }
@@ -239,7 +240,7 @@ async def get_response(url, payload, id, reformat, reformat_by, ignore_tool_type
         return content
     except json.JSONDecodeError as e:
         if reformat:
-            if not ignore_tool_type:
+            if dependency_type == "resource":
                 prompt = """Please format the result # RESULT # to a strict JSON format # STRICT JSON FORMAT #. \nRequirements:\n1. Do not change the meaning of task steps and task nodes;\n2. Don't tolerate any possible irregular formatting to ensure that the generated content can be converted by json.loads();\n3. You must output the result in this schema: {"task_steps": [ step description of one or more steps ], "task_nodes": [{"task": "tool name must be from # TOOL LIST #", "arguments": [ a concise list of arguments for the tool. Either original text, or user-mentioned filename, or tag '<node-j>' (start from 0) to refer to the output of the j-th node. ]}]}\n# RESULT #:{{illegal_result}}\n# STRICT JSON FORMAT #:"""
             else:
                 prompt = """Please format the result # RESULT # to a strict JSON format # STRICT JSON FORMAT #. \nRequirements:\n1. Do not change the meaning of task steps, task nodes and task links;\n2. Don't tolerate any possible irregular formatting to ensure that the generated content can be converted by json.loads();\n3. Pay attention to the matching of brackets. Write in a compact format and avoid using too many space formatting controls;\n4. You must output the result in this schema: {"task_steps": [ "concrete steps, format as Step x: Call xxx tool with xxx: 'xxx' and xxx: 'xxx'" ], "task_nodes": [{"task": "task name must be from # TASK LIST #", "arguments": [ {"name": "parameter name", "value": "parameter value, either user-specified text or the specific name of the tool whose result is required by this node"} ]}], "task_links": [{"source": "task name i", "target": "task name j"}]}\n# RESULT #:{{illegal_result}}\n# STRICT JSON FORMAT #:"""

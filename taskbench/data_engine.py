@@ -43,8 +43,8 @@ logger.addHandler(console_handler)
 @click.option("--multiworker", type=int, default=1)
 @click.option("--llm", type=str, default="gpt-4")
 @click.option("--use_async", type=bool, default=False)
-@click.option("--ignore_tool_type", type=bool, default=False)
-def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, play, method, tool_number, number_of_samples, seed, data_dir, save_figure, multiworker, llm, use_async, ignore_tool_type):
+@click.option("--dependency_type", type=str, default="resource")
+def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, play, method, tool_number, number_of_samples, seed, data_dir, save_figure, multiworker, llm, use_async, dependency_type):
     args = locals()
     url = f"http://{api_addr}:{api_port}/v1/chat/completions"
     now = datetime.now()
@@ -65,21 +65,23 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
     
     tool_list = json.load(open(tool_desc, "r"))["nodes"]
     tools = {}
-    if not ignore_tool_type:
+    if dependency_type == "resource":
         assert "input-type" in tool_list[0] and "output-type" in tool_list[0], "Input and output types are not defined"
         for tool in tool_list:
             tools[tool["id"]] = {"id": tool["id"], "desc": tool["desc"], "input-type": tool["input-type"], "output-type": tool["output-type"]}
-    else:
+    elif dependency_type == "temporal":
         assert "parameters" in tool_list[0], "Parameters are not defined"
         for tool in tool_list:
             tools[tool["id"]] = {"id": tool["id"], "desc": tool["desc"], "parameters": tool["parameters"]}
+    else:
+        raise ValueError(f"Unsupported dependency type: {dependency_type}")
 
     sampler = GraphSampler(file_name=graph_desc)
 
     if play:
         assert method is not None
         assert tool_number is not None
-        result = asyncio.run(sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, "./", None, ignore_tool_type))
+        result = asyncio.run(sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, "./", None, dependency_type))
         logger.info(json.dumps(result, indent=2))
         return
 
@@ -132,13 +134,13 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
     if use_async:
         # coroutine with Semaphore
         sem = asyncio.Semaphore(multiworker)
-        async def sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, ignore_tool_type):
+        async def sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type):
             async with sem:  # semaphore limits num of simultaneous sampling
                 if statistics["total"] % 100 == 0 and statistics["total"] != 0:
                     logger.info(json.dumps(statistics, indent=2))
                     statistics_wf.write(json.dumps(statistics) + "\n")
                 try:
-                    await sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, ignore_tool_type)
+                    await sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type)
                 except Exception as e:
                     statistics["total"] += 1
                     statistics["fail"] += 1
@@ -150,7 +152,7 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
                 statistics["success"] += 1
                 statistics["avg_time_per_sample"] = str((datetime.now() - now) / statistics["success"])
 
-        async def run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, ignore_tool_type):
+        async def run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type):
             method = random.choices(list(method_weights.keys()), weights=list(method_weights.values()))[0]
             if method == "single":
                 tool_number = 1
@@ -158,11 +160,11 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
                 tool_number = random.choices(list(number_weights.keys()), weights=list(number_weights.values()))[0]
                 if method == "dag":
                     tool_number = max(tool_number, 3)
-            await sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, ignore_tool_type)
+            await sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type)
 
         tasks = []
         for _ in range(number_of_samples):
-            tasks.append(run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, ignore_tool_type))
+            tasks.append(run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type))
 
         loop = asyncio.get_event_loop()
         results = loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
@@ -175,12 +177,12 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
     else:
         # multi-thread with ThreadPoolExecutor
         executor = ThreadPoolExecutor(max_workers=multiworker)
-        def sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, ignore_tool_type):
+        def sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type):
             if statistics["total"] % 100 == 0 and statistics["total"] != 0:
                 logger.info(json.dumps(statistics, indent=2))
                 statistics_wf.write(json.dumps(statistics) + "\n")
             try:
-                asyncio.run(sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, ignore_tool_type))
+                asyncio.run(sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type))
             except Exception as e:
                 statistics["total"] += 1
                 statistics["fail"] += 1
@@ -192,7 +194,7 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
             statistics["success"] += 1
             statistics["avg_time_per_sample"] = str((datetime.now() - now) / statistics["success"])
 
-        def run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, ignore_tool_type):
+        def run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type):
             method = random.choices(list(method_weights.keys()), weights=list(method_weights.values()))[0]
             if method == "single":
                 tool_number = 1
@@ -200,11 +202,11 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
                 tool_number = random.choices(list(number_weights.keys()), weights=list(number_weights.values()))[0]
                 if method == "dag":
                     tool_number = max(tool_number, 3)
-            sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, ignore_tool_type)
+            sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type)
 
         tasks = []
         for _ in range(number_of_samples):
-            tasks.append(executor.submit(run, url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, ignore_tool_type))
+            tasks.append(executor.submit(run, url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type))
         for future in as_completed(tasks):
             try:
                 future.result()
@@ -223,7 +225,7 @@ class ContentFormatError(Exception):
     def __init__(self, message):
         super().__init__(message)
 
-async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, ignore_tool_type):
+async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type):
     start_time = datetime.now()
     sample_id = str(uuid.uuid4().int)[:8]
     sub_G = sampler.sample_subgraph(tool_number, sample_method=method)
@@ -242,7 +244,7 @@ async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tool
     for k, edge in enumerate(tool_edge):
         sampled_links_string += f"Edge: " + edge[0] + " -> " + edge[1] + "\n"
     prompt = """\nBased on the above tool graph, please be skillful to generate the according task steps, user request and tool invoking graph. \nRequirements: \n1. the generated user request should be somewhat clear, self-contained (user-specified text, image, video, audio, content should be contained in the request) and practical (help users solve a practical problem); \n2. the task steps must be strictly aligned with the tool graph (nodes and edges) and reasonable, the tool invoking graph must align with task steps, also with the given tool graph; \n3. the user request just can be decomposed into task steps solved by the tool invoking graph; \n4. each task step corresponds to a tool node in the tool graph and tool invoking graph, and the number of task steps must be same with the nodes. Each tool node can only be used once; \n5. if need image/audio/video resources in user request, please use files 'example.[jpg/mp4/wav/png]'; \n6. the dependencies among task steps must align with the edges of tool graph and tool invoking graph; \n7. the number and types of tool parameters in the generated tool invoking graph need to be consistent with the pre-defined input/outputs types of the tools. \nNow please generate your result (with random seed {""" + f"{seed}"+ """}) in a compact JSON format"""
-    if not ignore_tool_type:
+    if dependency_type == "resource":
         prompt += """{"task_steps": [ step description of one or more steps ], "user_request": "your high-quality and self-contained synthesized request", "invoking_graph": {"nodes": [{"id": "tool name", "input": [ either user-specified text or resource file 'example.[jpg/mp4/wav/png' ] in the above user request, or the dependent tool name whose output is required by this node ]}], "links": [{"source": "tool name i", "target": "tool name j"}]}"""
     else:
         prompt += """{"task_steps": [ "concrete steps, format as Step x: Call xxx tool with xxx: 'xxx' and xxx: 'xxx'" ], "user_request": "your high-quality, concrete and self-contained synthesized request, with explicit parameter values", "invoking_graph": {"nodes": [{"id": "tool name", "arguments": [ {"name": "parameter name", "value": "parameter value, either user-specified text or the specific name of the tool whose result is required by this node"} ]}], "links": [{"source": "tool name i", "target": "tool name j"}]}"""
@@ -252,7 +254,7 @@ async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tool
 
     final_prompt = sampled_tools_string + sampled_links_string + prompt
 
-    if ignore_tool_type:
+    if dependency_type == "temporal":
         final_prompt = final_prompt.replace("tool", "API")
 
     payload = json.dumps({
@@ -289,7 +291,7 @@ async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tool
         except json.JSONDecodeError as e:
             raise ContentFormatError(f"{content}")
 
-        if not ignore_tool_type:
+        if dependency_type == "resource":
             sampled_nodes = [{"id": tool, "input-type": tools[tool]["input-type"], "output-type": tools[tool]["output-type"]} for tool in tool_list]
         else:
             sampled_nodes = [{"id": tool, "parameters": tools[tool]["parameters"]} for tool in tool_list]

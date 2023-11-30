@@ -8,7 +8,7 @@
   <a href="https://opensource.org/licenses/Apache-2.0">
     <img alt="License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-4E94CE.svg">
   </a>
-  <a href="#">
+  <a href="https://arxiv.org/abs/taskbench">
     <img alt="License: Apache 2.0" src="https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg">
   </a>
 </div>
@@ -22,8 +22,9 @@
 
 ## What's New
 
-+  [2023.11.30] We release the code and dataset of TaskBench.
-
++  [2023.11.30] We release TaskBench for evaluating task automation capability of LLMs.
+   + The code and datasets are avaliable at [TaskBench](#).
+   + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/taskbench).
 
 ## Table of Contents
 
@@ -88,11 +89,11 @@ We provide the statistics of the dataset processing in the following tables:
 + **LLM-based and Rule-based Critics**: we provide the number of samples checked by LLM-based critics, rule-based critics and both critics.
 + **Human Verification**: Human verification is built on the samples checked by critics, which includes three parts: syntax checking, instruction checking, and tool invocation graph checking. We provide the number of samples in each part, and along with the number of samples that are discarded or fixed.
 
-| Dataset | #Samples | #Samples Checked by Critics (%) | #Samples Verified by Humans (%) | DAG  | Chain | Node |
+| Dataset | #Samples | #Samples Checked by Critics (%) | #Samples Verified by Humans (%) | Node | Chain | DAG |
 | :-----: | :------: | :----------------: | :--------------: | :------: | :------: | :------: |
-| Hugging Face Models | 12,217 | 8,457 (69.22%) | 7,546 (61.76%)  | 571  | 4343  | 3189   |
-| Multimedia Tools | 8,904 | 6,281 (70.54%) | 5,584 (62.71%)  | 482  | 3346  | 2059   |
-| Dailylife APIs | 7,150 | 5,432 (75.97%) | 4,320 (60.42%) | 263  | 2614  | 1181   |
+| Hugging Face Models | 12,217 | 8,457 (69.22%) | 7,546 (61.76%)  | 3,067  | 3,642  | 837   |
+| Multimedia Tools | 8,904 | 6,281 (70.54%) | 5,584 (62.71%)  | 2,037  | 2,982  | 565   |
+| Dailylife APIs | 7,150 | 5,432 (75.97%) | 4,320 (60.42%) | 1,258  | 2,787  | 275   |
 
 <div id="LLM-based-and-Rule-based-Critics">
 
@@ -123,6 +124,8 @@ To evaluate the task automation performance of LLMs on TaskBench we provide the 
 ### Setup
 
 ```bash
+conda create -n taskbench python=3.8
+conda activate taskbench
 pip install -r requirements.txt
 ```
 
@@ -215,12 +218,12 @@ First, you need to build your own tool library. The tool library is a JSON file 
 }
 ```
 
-Then based on the tool library, you can use the script `generate_graph.py` to generate the tool graph. Now we support two type of tool graph: resource dependency graph and temporal dependency graph. For type-specific parameters, we use the resource dependency graph. For API with request parameters, we use the temporal dependency graph.  You can specify the tool graph type by the parameter `--graph_type`. In the future, we will support more types of tool graphs. 
+Then based on the tool library, you can use the script `generate_graph.py` to generate the tool graph. Now we support two type of tool graph: resource dependency graph and temporal dependency graph. For type-specific parameters, we use the resource dependency graph. For API with request parameters, we use the temporal dependency graph. You can specify the tool graph type by the parameter `--dependency_type`. In the future, we will support more types of tool graphs. 
 
 ```bash
 python generate_graph.py \
     --tool_desc tool_desc.json \
-    --graph_type resource \
+    --dependency_type resource \
     --data_dir data_multimedia
 ```
 
@@ -317,15 +320,15 @@ Based on the evaluation framework and the TaskBench dataset, we provide a leader
 | llama-2-7b-chat           | 37.06 | 16.49 | 86.31 | 30.17 | 4.27 | 14.94 | 9.34 |
 | mpt-7b-chat               | 44.54 | 20.98 | 87.17 | 15.95 | 1.69 | 5.34 | 3.45 |
 
-More details can be found in our paper: [TaskBench: Benchmarking Large Language Models for Task Automation](http://arxiv.org/abs/2303.17580).
+More details can be found in our paper: [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/taskbench).
 
 ## Citation
 
 If you find this work useful in your method, you can cite the paper as below:
 
-    @inproceedings{shen2023taskbench,
-      author = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Zhang, Wenqi and Ren, Kan and Yuan, Siyu and Lu, Weiming and Li, Dongsheng and Zhuang, Yueting},
-      booktitle = {arXiv},
-      title = {TaskBench: Benchmarking Large Language Models for Task Automation},
-      year = {2023}
+    @article{shen2023taskbench,
+      title   = {TaskBench: Benchmarking Large Language Models for Task Automation},
+      author  = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Zhang, Wenqi and Ren, Kan and Yuan, Siyu and Lu, Weiming and Li, Dongsheng and Zhuang, Yueting},
+      journal = {arXiv preprint arXiv:2303.17580},
+      year    = {2023}
     }

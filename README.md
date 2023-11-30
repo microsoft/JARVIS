@@ -8,19 +8,19 @@ The mission of JARVIS is to explore artificial general intelligence (AGI) and de
 
 ## What's New
 
-  +  [2023.11.30] We release the code and dataset of TaskBench for evaluating task automation capability of LLMs. See <a href="/taskbench">here</a>.
-  +  [2023.07.28] We are now in the process of planning evaluation and project rebuilding. We will release a new version of Jarvis in the near future.
-  +  [2023.07.24] We released a light langchain version of Jarvis. See <a href="https://github.com/langchain-ai/langchain/tree/master/libs/experimental/langchain_experimental/autonomous_agents/hugginggpt">here</a>.
-  +  [2023.04.16] Jarvis now supports the OpenAI service on the Azure platform and the GPT-4 model.
-  +  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
-    +  The Gradio demo is now hosted on Hugging Face Space. (Build with `inference_mode=hybrid` and `local_deployment=standard`)
-    +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
-  +  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
-    +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
-    +  Just run `python awesome_chat.py --config configs/config.lite.yaml` to experience it.
-  +  [2023.04.01] We updated a version of code for building.
-
-
++  [2023.11.30] We release TaskBench for evaluating task automation capability of LLMs.
+   + The code and datasets are avaliable at [TaskBench](/taskbench).
+   + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/taskbench).
++  [2023.07.28] We are now in the process of planning evaluation and project rebuilding. We will release a new version of Jarvis in the near future.
++  [2023.07.24] We released a light langchain version of Jarvis. See <a href="https://github.com/langchain-ai/langchain/tree/master/libs/experimental/langchain_experimental/autonomous_agents/hugginggpt">here</a>.
++  [2023.04.16] Jarvis now supports the OpenAI service on the Azure platform and the GPT-4 model.
++  [2023.04.06] We added the Gradio demo and built the web API for `/tasks` and `/results` in `server` mode.
+   +  The Gradio demo is now hosted on Hugging Face Space. (Build with `inference_mode=hybrid` and `local_deployment=standard`)
+   +  The Web API `/tasks` and `/results` access intermediate results for `Stage #1`: task planning and `Stage #1-3`: model selection with execution results. See <a href="#Server">here</a>.
++  [2023.04.03] We added the CLI mode and provided parameters for configuring the scale of local endpoints.
+   +  You can enjoy a lightweight experience with Jarvis without deploying the models locally. See <a href="#Configuration">here</a>.
+   +  Just run `python awesome_chat.py --config configs/config.lite.yaml` to experience it.
++  [2023.04.01] We updated a version of code for building.
 
 
 ### Overview
@@ -230,11 +230,11 @@ docker exec jarvis npm run dev --prefix=/app/web
 ## Citation
 If you find this work useful in your method, you can cite the paper as below:
 
-    @inproceedings{shen2023taskbench,
-      author = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Zhang, Wenqi and Ren, Kan and Yuan, Siyu and Lu, Weiming and Li, Dongsheng and Zhuang, Yueting},
-      booktitle = {arXiv},
-      title = {TaskBench: Benchmarking Large Language Models for Task Automation},
-      year = {2023}
+    @article{shen2023taskbench,
+      title   = {TaskBench: Benchmarking Large Language Models for Task Automation},
+      author  = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Zhang, Wenqi and Ren, Kan and Yuan, Siyu and Lu, Weiming and Li, Dongsheng and Zhuang, Yueting},
+      journal = {arXiv preprint arXiv:2303.17580},
+      year    = {2023}
     }
 
 >

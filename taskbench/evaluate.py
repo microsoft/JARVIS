@@ -173,9 +173,10 @@ def get_content_type(content):
 @click.option("--mode", default="add")
 @click.option("--metric", "-m", multiple=True, default=["all"])
 @click.option("--llm", default="gpt-3.5-turbo")
-@click.option("--ignore_tool_type", default=False)
+@click.option("--dependency_type", type=str, default="resource")
 @click.option("--prompting", default="cot")
-def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm, ignore_tool_type, alignment, prompting):
+def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm, dependency_type, alignment, prompting):
+    assert dependency_type in ["resource", "temporal"], "Dependency type not supported"
     args = locals()
     
     if save_dir is None:
@@ -202,7 +203,6 @@ def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm,
     logger.addHandler(stream_handler)
 
     if "all" in metric:
-        
         metric = ["f1", "ed", "link", "argument", "rouge", "bertscore"]
         if prompting != "cot":
             metric = ["f1", "ed", "link", "argument"]
@@ -216,7 +216,7 @@ def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm,
     tool_map["<PAD>"] = -1
 
     tool_output_type_map = None
-    if not ignore_tool_type:
+    if dependency_type == "resource":
         tool_output_type_map = {tool["id"]: tool["output-type"][0] if len(tool["output-type"]) else "none" for tool in tool_desc["nodes"]}
 
     splits = list(splits)
@@ -247,12 +247,12 @@ def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm,
     for s, n in group:
         logger.info("-"*15)
         logger.info(f"Tools Number: {n}, Task Split: {s}")
-        evaluate(data_dir, prediction_dir, llm, s, n, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, ignore_tool_type=ignore_tool_type, alignment=alignment)
+        evaluate(data_dir, prediction_dir, llm, s, n, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, dependency_type=dependency_type, alignment=alignment)
 
     metric_json = open(metric_file, "w")
     metric_json.write(json.dumps(all_metric_dict, indent=2))
 
-def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, ignore_tool_type=False, alignment = None):
+def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, dependency_type, alignment = None):
     if f"{split}_{n_tool}" in all_metric_dict:
         metric_dict = all_metric_dict[f"{split}_{n_tool}"]
     else:
@@ -353,7 +353,7 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
             label_task_arg_name_value = []
             predcition_task_arg_name_value = []
                 
-            if not ignore_tool_type:
+            if dependency_type == "resource":
                 predcition_node_name = [name.replace("_", " ") for name in predcition_node_name]
                 label_node_name = [name.replace("_", " ") for name in label_node_name]
                 label_link = []

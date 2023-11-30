@@ -19,13 +19,9 @@ def visialize_graph(data_dir):
         G.add_edge(link["source"], link["target"])
 
     pos = nx.spring_layout(G)
-    pos = nx.random_layout(G)
-    # pos = nx.nx_pydot.pydot_layout(G)
-    
+    pos = nx.random_layout(G)    
     pos = nx.kamada_kawai_layout(G)
     
-
-
     # Show the visualization
     plt.figure(figsize=(60, 60), dpi=80)
     plt.tight_layout()
@@ -34,15 +30,8 @@ def visialize_graph(data_dir):
 
     nx.draw_networkx_nodes(G, pos, node_color="skyblue", node_size=1200)
     nx.draw_networkx_edges(G, pos, arrows=True, arrowsize=40)
-    for i in pos:
-        if i == "Sentence Similarity":
-            pos[i][1] += 1.02
-        # if i == "Depth Estimation":
-        #     pos[i][1] -= 0.02
     nx.draw_networkx_labels(G, pos, font_size=50, font_color="green", font_weight="bold")
-
     plt.savefig(graph_file.replace(".json", ".pdf"))
-    plt.savefig(graph_file.replace(".json", ".png"))
 
 if __name__ == "__main__":
     visialize_graph()

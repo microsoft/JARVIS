@@ -45,15 +45,15 @@ def generate_graph_resource(tool_file):
 @click.command()
 @click.option('--data_dir')
 @click.option('--tool_desc', default=None, help='Path to the tool description file')
-@click.option('--graph_type', default='type', help='Type of graph to generate')
-def generate_graph(tool_desc, data_dir, graph_type):
+@click.option('--dependency_type', default='resource', help='Type of graph to generate')
+def generate_graph(tool_desc, data_dir, dependency_type):
     if tool_desc:
         tool_file = tool_desc
     else:
         tool_file = f"{data_dir}/graph_desc.json"
-    if graph_type == "temporal":
+    if dependency_type == "temporal":
         generate_graph_temporal(tool_file)
-    elif graph_type == "resource":
+    elif dependency_type == "resource":
         generate_graph_resource(tool_file)
     else:
         print("Type not supported")
