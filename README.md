@@ -1,15 +1,10 @@
 # JARVIS
 
-Introduction of JARVIS.
+Towards Artificial General Intelligence. 
 
 ## What's New
 
-+ TaskBench
-
   +  [2023.11.30] We release the code and dataset of TaskBench for evaluating task automation capability of LLMs. See <a href="#TaskBench">here</a>.
-
-+ HuggingGPT
-
   +  [2023.07.28] We are now in the process of planning evaluation and project rebuilding. We will release a new version of Jarvis in the near future.
   +  [2023.07.24] We released a light langchain version of Jarvis. See <a href="https://github.com/langchain-ai/langchain/tree/master/libs/experimental/langchain_experimental/autonomous_agents/hugginggpt">here</a>.
   +  [2023.04.16] Jarvis now supports the OpenAI service on the Azure platform and the GPT-4 model.
