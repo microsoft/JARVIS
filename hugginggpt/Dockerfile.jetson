@@ -1,0 +1,103 @@
+# NVIDIA Jetson embedded device support with GPU accelerated local model execution for https://github.com/microsoft/JARVIS
+
+# Base image for ffmpeg build env: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-jetpack/tags
+FROM nvcr.io/nvidia/l4t-jetpack:r35.2.1 AS build
+
+RUN apt update && apt install -y --no-install-recommends \
+    build-essential git libass-dev libx264-dev cmake && \
+    rm -rf /var/lib/apt/lists/*
+
+# Build ffmpeg dependency libraries
+RUN git clone https://github.com/jocover/jetson-ffmpeg.git  && \
+    cd jetson-ffmpeg && \
+    sed -i 's=Libs: -L${libdir} -lnvmpi=Libs: -L${libdir} -lnvmpi -L/usr/lib/aarch64-linux-gnu/tegra -lnvbufsurface=g' nvmpi.pc.in && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j$(nproc) && \
+    sudo make install && \
+    sudo ldconfig && \ 
+    git clone git://source.ffmpeg.org/ffmpeg.git -b release/4.2 --depth=1 && \
+    cd ffmpeg && \
+    wget https://github.com/jocover/jetson-ffmpeg/raw/master/ffmpeg_nvmpi.patch && \
+    git apply ffmpeg_nvmpi.patch && \
+    ./configure --enable-nvmpi --enable-libass --enable-libx264 --enable-gpl && \
+    make -j$(nproc)
+
+# Base image: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-pytorch/tags
+# For running JARVIS application layer
+from nvcr.io/nvidia/l4t-pytorch:r35.2.1-pth2.0-py3
+
+ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+COPY --from=build /usr/local/lib/libnvmpi.a /usr/local/lib
+COPY --from=build /usr/local/lib/libnvmpi.so.1.0.0 /usr/local/lib
+COPY --from=build jetson-ffmpeg/build/ffmpeg/ffmpeg /usr/local/bin
+COPY --from=build jetson-ffmpeg/build/ffmpeg/ffprobe /usr/local/bin
+RUN ln /usr/local/lib/libnvmpi.so.1.0.0 /usr/local/lib/libnvmpi.so
+ENV MAKEFLAGS="-j$(nproc)"
+
+COPY ./server/requirements.txt .
+
+# Install model server dependencies
+RUN apt update && apt remove -y \
+    opencv-dev opencv-libs opencv-licenses opencv-main opencv-python opencv-scripts python3-numpy && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m pip install importlib-metadata==4.13.0 && \
+    python3 -m pip install -r requirements.txt && \
+    rm -rf requirements.txt
+
+# Update torch deps via reinstall
+RUN python3 -m pip install torch==2.0.0a0+ec3941ad.nv23.2 torchaudio==0.13.1+b90d798 torchvision==0.14.1a0+5e8e2f1
+
+# Downgrade opencv-python to v4.5
+RUN python3 -m pip install opencv-python==4.5.5.64 
+
+# Install nvidia-opencv-dev
+RUN apt update && apt install -y --no-install-recommends \
+    nvidia-opencv-dev && \
+    rm -rf /var/lib/apt/lists/* 
+
+# Fix loading of scikit dep at runtime
+ENV LD_PRELOAD='/usr/local/lib/python3.8/dist-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0'
+
+# Install nodejs npm from nodesource
+ENV NVM_DIR /root/.nvm
+ENV NODE_VERSION v18.16.0
+RUN wget -q -O - https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash  && \
+    . "$NVM_DIR/nvm.sh" && \
+    nvm install $NODE_VERSION && \
+    nvm alias default $NODE_VERSION && \
+    nvm use default 
+ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+
+WORKDIR /app
+
+# Copy source files
+COPY . .
+
+# Install web server dependencies
+RUN apt update && apt install -y --no-install-recommends \
+    xdg-utils && \
+    rm -rf /var/lib/apt/lists/* && \
+    cd web && \
+    npm install
+
+# Download local models
+# RUN apt update && apt install -y --no-install-recommends \
+#    git-lfs && \
+#    rm -rf /var/lib/apt/lists/* && \
+#    cd server/models && \
+#    bash download.sh
+
+# Expose the model server ports
+EXPOSE 8004
+EXPOSE 8005
+# Expose the web server port
+EXPOSE 9999
+
+WORKDIR /app/server
+
+# Start the model and web server
+CMD python3 models_server.py --config configs/config.default.yaml;

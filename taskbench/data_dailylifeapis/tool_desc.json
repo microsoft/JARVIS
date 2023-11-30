@@ -1,0 +1,565 @@
+{
+  "nodes": [
+    {
+      "id": "get_weather",
+      "desc": "Get the weather for a specific city and a specific day",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to get the weather for"
+        },
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to get the weather for"
+        }
+      ]
+    },
+    {
+      "id": "get_news_for_topic",
+      "desc": "Get the news for a specific topic",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "desc": "The topic to get the news for"
+        }
+      ]
+    },
+    {
+      "id": "stock_operation",
+      "desc": "Do a specific operation on a specific stock",
+      "parameters": [
+        {
+          "name": "stock",
+          "type": "string",
+          "desc": "The stock to do the operation on"
+        },
+        {
+          "name": "operation",
+          "type": "string",
+          "desc": "The operation to do, eg. buy, sell, short, cover etc."
+        }
+      ]
+    },
+    {
+      "id": "book_flight",
+      "desc": "Book a flight for a specific date, from a specific location to a specific destination",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the flight for"
+        },
+        {
+          "name": "from",
+          "type": "string",
+          "desc": "The location to book the flight from"
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "desc": "The location to book the flight to"
+        }
+      ]
+    },
+    {
+      "id": "book_hotel",
+      "desc": "Book a specific hotel for a specific date",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the hotel for"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "desc": "The name of the hotel to book"
+        }
+      ]
+    },
+    {
+      "id": "book_restaurant",
+      "desc": "Book a specific restaurant for a specific date",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the restaurant for"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "desc": "The name of the restaurant to book"
+        }
+
+      ]
+    },
+    {
+      "id": "book_car",
+      "desc": "Book a car for a specific date, in a specific location",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the car for"
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to book the car in"
+        }
+      ]
+    },
+    {
+      "id": "online_shopping",
+      "desc": "Buy a product from a specific website",
+      "parameters": [
+        {
+          "name": "website",
+          "type": "string",
+          "desc": "The website to buy the product from, eg. Amazon, Ebay, Taobao etc."
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "desc": "The product to buy"
+        }
+      ]
+    },
+    {
+      "id": "send_email",
+      "desc": "Send an email to a specific email address",
+      "parameters": [
+        {
+          "name": "email_address",
+          "type": "string",
+          "desc": "The email address to send the email to"
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the email"
+        }
+      ]
+    },
+    {
+      "id": "send_sms",
+      "desc": "Send an sms to a specific phone number",
+      "parameters": [
+        {
+          "name": "phone_number",
+          "type": "string",
+          "desc": "The phone number to send the sms to"
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the sms"
+        }
+      ]
+    },
+    {
+      "id": "share_by_social_network",
+      "desc": "Share a specific content by a specific social network",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content to share"
+        },
+        {
+          "name": "social_network",
+          "type": "string",
+          "desc": "The social network to share the content by, eg. Wechat, Facebook, Twitter, Weibo etc."
+        }
+      ]
+    },
+    {
+      "id": "search_by_engine",
+      "desc": "Search a specific query by a specific search engine",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "desc": "The content to search"
+        },
+        {
+          "name": "engine",
+          "type": "string",
+          "desc": "The search engine to use, eg. Google, Bing, Baidu etc."
+        }
+      ]
+    },
+    {
+      "id": "apply_for_job",
+      "desc": "Apply for a specific job",
+      "parameters": [
+        {
+          "name": "job",
+          "type": "string",
+          "desc": "The job to apply for"
+        }
+      ]
+    },
+    {
+      "id": "see_doctor_online",
+      "desc": "See a specific doctor for a specific disease",
+      "parameters": [
+        {
+          "name": "disease",
+          "type": "string",
+          "desc": "The disease to see the doctor for"
+        },
+        {
+          "name": "doctor",
+          "type": "string",
+          "desc": "The doctor to see"
+        }
+      ]
+    },
+    {
+      "id": "consult_lawyer_online",
+      "desc": "Consult a specific lawyer for a specific legal issue",
+      "parameters": [
+        {
+          "name": "issue",
+          "type": "string",
+          "desc": "The legal issue to consult the lawyer for"
+        },
+        {
+          "name": "lawyer",
+          "type": "string",
+          "desc": "The lawyer to consult"
+        }
+      ]
+    },
+    {
+      "id": "enroll_in_course",
+      "desc": "Enroll in a specific course at a specific university",
+      "parameters": [
+        {
+          "name": "course",
+          "type": "string",
+          "desc": "The course to enroll in"
+        },
+        {
+          "name": "university",
+          "type": "string",
+          "desc": "The university to enroll in the course at"
+        }
+      ]
+    },
+    {
+      "id": "buy_insurance",
+      "desc": "Buy a specific insurance from a specific insurance company",
+      "parameters": [
+        {
+          "name": "insurance",
+          "type": "string",
+          "desc": "The insurance to buy"
+        },
+        {
+          "name": "company",
+          "type": "string",
+          "desc": "The insurance company to buy the insurance from"
+        }
+      ]
+    },
+    {
+      "id": "online_banking",
+      "desc": "Do a specific banking operation online at a specific bank",
+      "parameters": [
+        {
+          "name": "instruction",
+          "type": "string",
+          "desc": "The banking instruction to do, eg. transfer, deposit, withdraw etc."
+        },
+        {
+          "name": "bank",
+          "type": "string",
+          "desc": "The bank to do the banking operation at"
+        }
+      ]
+    },
+    {
+      "id": "daily_bill_payment",
+      "desc": "Pay a specific bill",
+      "parameters": [
+        {
+          "name": "bill",
+          "type": "string",
+          "desc": "The bill to pay, eg. electricity, water, gas, phone, internet etc."
+        }
+      ]
+    },
+    {
+      "id": "sell_item_online",
+      "desc": "Sell a specific item at a specific online store",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "string",
+          "desc": "The item to sell"
+        },
+        {
+          "name": "store",
+          "type": "string",
+          "desc": "The online store to sell the item at, eg. Amazon, Ebay, Taobao etc."
+        }
+      ]
+    },
+    {
+      "id": "do_tax_return",
+      "desc": "Do the tax return for a specific year",
+      "parameters": [
+        {
+          "name": "year",
+          "type": "string",
+          "desc": "The year to do the tax return for"
+        }
+      ]
+    },
+    {
+      "id": "apply_for_passport",
+      "desc": "Apply for a passport",
+      "parameters": [
+        {
+          "name": "country",
+          "type": "string",
+          "desc": "The country to apply for the passport for"
+        }
+      ]
+    },
+    {
+      "id": "pay_for_credit_card",
+      "desc": "Pay for a specific credit card",
+      "parameters": [
+        {
+          "name": "credit_card",
+          "type": "string",
+          "desc": "The credit card to pay for"
+        }
+      ]
+    },
+    {
+      "id": "auto_housework_by_robot",
+      "desc": "Let a robot do a housework by following a specific instruction",
+      "parameters": [
+        {
+          "name": "instruction",
+          "type": "string",
+          "desc": "The instruction to let the robot follow, eg. clean the floor, wash the dishes, do the laundry etc."
+        }
+      ]
+    },
+    {
+      "id": "auto_driving_to_destination",
+      "desc": "Let a car drive to a specific destination",
+      "parameters": [
+        {
+          "name": "destination",
+          "type": "string",
+          "desc": "The destination to drive to"
+        }
+      ]
+    },
+    {
+      "id": "deliver_package",
+      "desc": "Deliver a specific package to a specific destination",
+      "parameters": [
+        {
+          "name": "package",
+          "type": "string",
+          "desc": "The package to deliver"
+        },
+        {
+          "name": "destination",
+          "type": "string",
+          "desc": "The destination to deliver the package to"
+        }
+      ]
+    },
+    {
+      "id": "order_food_delivery",
+      "desc": "Order a specific food to be delivered to a specific location at a specific platform",
+      "parameters": [
+        {
+          "name": "food",
+          "type": "string",
+          "desc": "The food to order"
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to deliver the food to"
+        },
+        {
+          "name": "platform",
+          "type": "string",
+          "desc": "The platform to order the food at, eg. Uber Eats, Meituan Waimai etc."
+        }
+      ]
+    },
+    {
+      "id": "order_taxi",
+      "desc": "Order a taxi to a specific location at a specific platform",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to order the taxi to"
+        },
+        {
+          "name": "platform",
+          "type": "string",
+          "desc": "The platform to order the taxi at, eg. Uber, Didi etc."
+        }
+      ]
+    },
+    {
+      "id": "play_music_by_title",
+      "desc": "Play a specific music by a specific title",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "desc": "The title of the music to play"
+        }
+      ]
+    },
+    {
+      "id": "play_movie_by_title",
+      "desc": "Play a specific movie by a specific title",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "desc": "The title of the movie to play"
+        }
+      ]
+    },
+    {
+      "id": "take_note",
+      "desc": "Take a note",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the note"
+        }
+      ]
+    },
+    {
+      "id": "borrow_book_online",
+      "desc": "Borrow a specific book from a specific library",
+      "parameters": [
+        {
+          "name": "book",
+          "type": "string",
+          "desc": "The book to borrow"
+        },
+        {
+          "name": "library",
+          "type": "string",
+          "desc": "The library to borrow the book from"
+        }
+      ]
+    },
+    {
+      "id": "recording_audio",
+      "desc": "Record an audio",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the audio"
+        }
+      ]
+    },
+    {
+      "id": "make_video_call",
+      "desc": "Make a video call to a specific phone number",
+      "parameters": [
+        {
+          "name": "phone_number",
+          "type": "string",
+          "desc": "The phone number to make the video call to"
+        }
+      ]
+    },
+    {
+      "id": "make_voice_call",
+      "desc": "Make a voice call to a specific phone number",
+      "parameters": [
+        {
+          "name": "phone_number",
+          "type": "string",
+          "desc": "The phone number to make the voice call to"
+        }
+      ]
+    },
+    {
+      "id": "organize_meeting_online",
+      "desc": "Organize a meeting online about a specific topic",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "desc": "The topic of the meeting"
+        }
+      ]
+    },
+    {
+      "id": "attend_meeting_online",
+      "desc": "Attend a meeting online about a specific topic",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "desc": "The topic of the meeting"
+        }
+      ]
+    },
+    {
+      "id": "software_management",
+      "desc": "Manage a specific software by a specific instruction",
+      "parameters": [
+        {
+          "name": "software",
+          "type": "string",
+          "desc": "The software to manage"
+        },
+        {
+          "name": "instruction",
+          "type": "string",
+          "desc": "The instruction to manage the software by, eg. install, uninstall, update etc."
+        }
+      ]
+    },
+    {
+      "id": "print_document",
+      "desc": "Print a specific document",
+      "parameters": [
+        {
+          "name": "document",
+          "type": "string",
+          "desc": "The document to print"
+        }
+      ]
+    },
+    {
+      "id": "set_alarm",
+      "desc": "Set an alarm for a specific time",
+      "parameters": [
+        {
+          "name": "time",
+          "type": "string",
+          "desc": "The time to set the alarm for"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1364 @@
+{
+  "nodes": [
+    {
+      "id": "Token Classification",
+      "desc": "Token classification is a natural language understanding task in which a label is assigned to some tokens in a text. Some popular token classification subtasks are Named Entity Recognition (NER) and Part-of-Speech (PoS) tagging. NER models could be trained to identify specific entities in a text, such as dates, individuals and places; and PoS tagging would identify, for example, which words in a text are verbs, nouns, and punctuation marks.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Translation",
+      "desc": "Translation is the task of converting text from one language to another.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Summarization",
+      "desc": "Summarization is the task of producing a shorter version of a document while preserving its important information. Some models can extract text from the original input, while other models can generate entirely new text.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Question Answering",
+      "desc": "Question Answering models can retrieve the answer to a question from a given text, which is useful for searching for an answer in a document.",
+      "input-type": [
+        "text",
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Conversational",
+      "desc": "Conversational response modelling is the task of generating conversational text that is relevant, coherent and knowledgable given a prompt. These models have applications in chatbots, and as a part of voice assistants",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Generation",
+      "desc": "Generating text is the task of producing new text. These models can, for example, fill in incomplete text or paraphrase.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Sentence Similarity",
+      "desc": "Sentence Similarity is the task of determining how similar two texts are. This task is particularly useful for information retrieval and clustering/grouping.",
+      "input-type": [
+        "text",
+        "text"
+      ],
+      "output-type": []
+    },
+    {
+      "id": "Tabular Classification",
+      "desc": "Tabular classification is the task of classifying a table (in Image format).",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Object Detection",
+      "desc": "Object Detection models allow users to identify objects of certain defined classes. Object detection models receive an image as input and output the images with bounding boxes and labels on detected objects.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Image Classification",
+      "desc": "Image classification is the task of assigning a label or class to an entire image. Images are expected to have only one class for each image. Image classification models take an image as input and return a prediction about which class the image belongs to.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Image-to-Image",
+      "desc": "Image-to-image is the task of transforming a source image to match the characteristics of a target image or a target image domain. Any image manipulation and enhancement is possible with image to image models.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image-to-Text",
+      "desc": "Image to text models output a text from a given image. Image captioning or optical character recognition can be considered as the most common applications of image to text.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text-to-Image",
+      "desc": "Generates images from input text. These models can be used to generate images based on text prompts.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Text-to-Video",
+      "desc": "Generates videos from input text. These models can be used to generate videos based on text prompts.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Visual Question Answering",
+      "desc": "Visual Question Answering is the task of answering questions based on an image.",
+      "input-type": [
+        "image",
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Document Question Answering",
+      "desc": "Document Question Answering (also known as Document Visual Question Answering) is the task of answering questions on document images. Document question answering models take a (document, question) pair as input and return an answer in natural language. Models usually rely on multi-modal features, combining text, position of words (bounding-boxes) and image.",
+      "input-type": [
+        "image",
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Image Segmentation",
+      "desc": "Image Segmentation divides an image into segments where each pixel in the image is mapped to an object. This task has multiple variants such as instance segmentation, panoptic segmentation and semantic segmentation.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Depth Estimation",
+      "desc": "Depth estimation is the task of predicting depth of the objects present in an image.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Text-to-Speech",
+      "desc": "Text-to-Speech (TTS) is the task of generating natural sounding speech given text input. TTS models can be extended to have a single model that generates speech for multiple speakers and multiple languages.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Automatic Speech Recognition",
+      "desc": "Automatic Speech Recognition (ASR), also known as Speech to Text (STT), is the task of transcribing a given audio to text. It has many applications, such as voice user interfaces.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Audio-to-Audio",
+      "desc": "Audio-to-Audio is a family of tasks in which the input is an audio and the output is one or multiple generated audios. Some example tasks are speech enhancement and source separation.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Audio Classification",
+      "desc": "Audio classification is the task of assigning a label or class to a given audio. It can be used for recognizing which command a user is giving or the emotion of a statement, as well as identifying a speaker.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Image Editing",
+      "desc": "Image editing is the task of modifying an image to match a given text description. It can be used to modify the attributes of an image, such as the color of an object or the background.",
+      "input-type": [
+        "text",
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "Token Classification",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Token Classification",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Translation",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Summarization",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Question Answering",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Conversational",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Text Generation",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Tabular Classification",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Object Detection",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Image Classification",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Tabular Classification",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Object Detection",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Image Classification",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Visual Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Document Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Image Segmentation",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Depth Estimation",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Image",
+      "target": "Image Editing",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Tabular Classification",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Object Detection",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image Classification",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image-to-Image",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Visual Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Document Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image Segmentation",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Depth Estimation",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image Editing",
+      "type": "image"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Visual Question Answering",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Document Question Answering",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Tabular Classification",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Object Detection",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Image Classification",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Image-to-Image",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Visual Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Document Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Depth Estimation",
+      "type": "image"
+    },
+    {
+      "source": "Image Segmentation",
+      "target": "Image Editing",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Tabular Classification",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Object Detection",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Image Classification",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Image-to-Image",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Visual Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Document Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Image Segmentation",
+      "type": "image"
+    },
+    {
+      "source": "Depth Estimation",
+      "target": "Image Editing",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Speech",
+      "target": "Automatic Speech Recognition",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Speech",
+      "target": "Audio-to-Audio",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Speech",
+      "target": "Audio Classification",
+      "type": "audio"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Automatic Speech Recognition",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Audio",
+      "target": "Automatic Speech Recognition",
+      "type": "audio"
+    },
+    {
+      "source": "Audio-to-Audio",
+      "target": "Audio Classification",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Token Classification",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Translation",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Summarization",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Conversational",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Text Generation",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Sentence Similarity",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Visual Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Document Question Answering",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Text-to-Speech",
+      "type": "text"
+    },
+    {
+      "source": "Audio Classification",
+      "target": "Image Editing",
+      "type": "text"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Tabular Classification",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Object Detection",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Image Classification",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Image-to-Image",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Visual Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Document Question Answering",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Image Segmentation",
+      "type": "image"
+    },
+    {
+      "source": "Image Editing",
+      "target": "Depth Estimation",
+      "type": "image"
+    }
+  ]
+}

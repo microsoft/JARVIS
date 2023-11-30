@@ -1,0 +1,2660 @@
+{
+  "nodes": [
+    {
+      "id": "Image Downloader",
+      "desc": "Downloads an image from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Video Downloader",
+      "desc": "Downloads a video from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Audio Downloader",
+      "desc": "Downloads an audio file from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Text Downloader",
+      "desc": "Downloads the text content from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Search",
+      "desc": "Searches for a specific text or keyword on the internet.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Image Search",
+      "desc": "Searches for images on the internet based on a given query.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "Image"
+      ]
+    },
+    {
+      "id": "Image Search (by Image)",
+      "desc": "Performs a similar image search using an input image.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "URL Extractor",
+      "desc": "Extracts URL from text",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "url"
+      ]
+    },
+    {
+      "id": "Video Search",
+      "desc": "Searches for videos on the internet based on a given query.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Text-to-Image",
+      "desc": "Generates an image based on a given text description.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Text-to-Video",
+      "desc": "Generates a video based on a given text description.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Text-to-Audio",
+      "desc": "Generates an audio file based on a given text description.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Image-to-Text",
+      "desc": "Extracts text from an input image using Optical Character Recognition (OCR).",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Audio-to-Text",
+      "desc": "Transcribes speech from an audio file into text.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Video-to-Text",
+      "desc": "Transcribes speech from a video file into text.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Audio Noise Reduction",
+      "desc": "Reduces background noise or unwanted sounds from a given audio file.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Audio Effects",
+      "desc": "Applies various audio effects to a given audio file according to human instruction, such as reverb, chorus, or equalization.",
+      "input-type": [
+        "audio",
+        "text"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Audio Splicer",
+      "desc": "Combines two audio files into a single output file.",
+      "input-type": [
+        "audio",
+        "audio"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Voice Changer",
+      "desc": "Modifies the characteristics of a recorded voice according to human instruction, such as tone, pitch, or gender.",
+      "input-type": [
+        "audio",
+        "text"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Text Summarizer",
+      "desc": "Summarizes a given text into a shorter version while retaining the main points.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Translator",
+      "desc": "Translates a given text from one language to english.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Sentiment Analysis",
+      "desc": "Analyzes the sentiment of a given text, identifying if it is positive, negative, or neutral.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Grammar Checker",
+      "desc": "Checks a given text for grammatical errors and suggests corrections.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Simplifier",
+      "desc": "Rewrites a given text in a simpler and more understandable manner.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Expander",
+      "desc": "Expands a given short text into a more detailed and descriptive version.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Keyword Extractor",
+      "desc": "Extracts the most important keywords and phrases from a given text.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Paraphraser",
+      "desc": "Rewrites a given text using different words while maintaining its original meaning.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Article Spinner",
+      "desc": "Rewrites a given article using synonyms and syntax changes to create a new, unique version.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Topic Generator",
+      "desc": "Generates a list of relevant topics or ideas based on a given input.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Audio-to-Image",
+      "desc": "Generates an image that visually represents a given audio, such as a waveform or spectrogram.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image-to-Video",
+      "desc": "Creates a slideshow video using two input images.",
+      "input-type": [
+        "image",
+        "image"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video-to-Audio",
+      "desc": "Extracts the audio track from a given video file.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Video-to-Image",
+      "desc": "Extracts a still image from a given video.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image Stitcher",
+      "desc": "Stitches together two input images to create a panorama or collage.",
+      "input-type": [
+        "image",
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image Colorizer",
+      "desc": "Adds color to a black and white input image using deep learning techniques.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image Style Transfer",
+      "desc": "Applies the visual style of one image (style) to the content of another image (content) using neural style transfer techniques.",
+      "input-type": [
+        "image",
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Video Stabilizer",
+      "desc": "Stabilizes a shaky input video to produce a smoother output video.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video Speed Changer",
+      "desc": "Adjusts the playback speed of a given video according to human instruction, either speeding it up or slowing it down.",
+      "input-type": [
+        "video",
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video Synchronization",
+      "desc": "Synchronizes the timing of an existing voiceover or audio file with the visuals of a given video.",
+      "input-type": [
+        "video",
+        "audio"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video Voiceover",
+      "desc": "Adds a voiceover to a given video using a provided script or text.",
+      "input-type": [
+        "video",
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "Image Downloader",
+      "target": "Image Search (by Image)",
+      "type": "image"
+    },
+    {
+      "source": "Image Downloader",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image Downloader",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Image Downloader",
+      "target": "Image Stitcher",
+      "type": "image"
+    },
+    {
+      "source": "Image Downloader",
+      "target": "Image Colorizer",
+      "type": "image"
+    },
+    {
+      "source": "Image Downloader",
+      "target": "Image Style Transfer",
+      "type": "image"
+    },
+    {
+      "source": "Video Downloader",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Video Downloader",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Video Downloader",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Video Downloader",
+      "target": "Video Stabilizer",
+      "type": "video"
+    },
+    {
+      "source": "Video Downloader",
+      "target": "Video Speed Changer",
+      "type": "video"
+    },
+    {
+      "source": "Video Downloader",
+      "target": "Video Synchronization",
+      "type": "video"
+    },
+    {
+      "source": "Video Downloader",
+      "target": "Video Voiceover",
+      "type": "video"
+    },
+    {
+      "source": "Audio Downloader",
+      "target": "Audio-to-Text",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Downloader",
+      "target": "Audio Noise Reduction",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Downloader",
+      "target": "Audio Effects",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Downloader",
+      "target": "Audio Splicer",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Downloader",
+      "target": "Voice Changer",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Downloader",
+      "target": "Audio-to-Image",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Downloader",
+      "target": "Video Synchronization",
+      "type": "audio"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Downloader",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Search",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Image Search (by Image)",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image Search (by Image)",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Image Search (by Image)",
+      "target": "Image Stitcher",
+      "type": "image"
+    },
+    {
+      "source": "Image Search (by Image)",
+      "target": "Image Colorizer",
+      "type": "image"
+    },
+    {
+      "source": "Image Search (by Image)",
+      "target": "Image Style Transfer",
+      "type": "image"
+    },
+    {
+      "source": "URL Extractor",
+      "target": "Image Downloader",
+      "type": "url"
+    },
+    {
+      "source": "URL Extractor",
+      "target": "Video Downloader",
+      "type": "url"
+    },
+    {
+      "source": "URL Extractor",
+      "target": "Audio Downloader",
+      "type": "url"
+    },
+    {
+      "source": "URL Extractor",
+      "target": "Text Downloader",
+      "type": "url"
+    },
+    {
+      "source": "Video Search",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Video Search",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Video Search",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Video Search",
+      "target": "Video Stabilizer",
+      "type": "video"
+    },
+    {
+      "source": "Video Search",
+      "target": "Video Speed Changer",
+      "type": "video"
+    },
+    {
+      "source": "Video Search",
+      "target": "Video Synchronization",
+      "type": "video"
+    },
+    {
+      "source": "Video Search",
+      "target": "Video Voiceover",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image Search (by Image)",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image Stitcher",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image Colorizer",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Image",
+      "target": "Image Style Transfer",
+      "type": "image"
+    },
+    {
+      "source": "Text-to-Video",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Video",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Video",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Video",
+      "target": "Video Stabilizer",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Video",
+      "target": "Video Speed Changer",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Video",
+      "target": "Video Synchronization",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Video",
+      "target": "Video Voiceover",
+      "type": "video"
+    },
+    {
+      "source": "Text-to-Audio",
+      "target": "Audio-to-Text",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Audio",
+      "target": "Audio Noise Reduction",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Audio",
+      "target": "Audio Effects",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Audio",
+      "target": "Audio Splicer",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Audio",
+      "target": "Voice Changer",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Audio",
+      "target": "Audio-to-Image",
+      "type": "audio"
+    },
+    {
+      "source": "Text-to-Audio",
+      "target": "Video Synchronization",
+      "type": "audio"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Image-to-Text",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Text",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Video-to-Text",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Audio Noise Reduction",
+      "target": "Audio-to-Text",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Noise Reduction",
+      "target": "Audio Effects",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Noise Reduction",
+      "target": "Audio Splicer",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Noise Reduction",
+      "target": "Voice Changer",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Noise Reduction",
+      "target": "Audio-to-Image",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Noise Reduction",
+      "target": "Video Synchronization",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Effects",
+      "target": "Audio-to-Text",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Effects",
+      "target": "Audio Noise Reduction",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Effects",
+      "target": "Audio Splicer",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Effects",
+      "target": "Voice Changer",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Effects",
+      "target": "Audio-to-Image",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Effects",
+      "target": "Video Synchronization",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Splicer",
+      "target": "Audio-to-Text",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Splicer",
+      "target": "Audio Noise Reduction",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Splicer",
+      "target": "Audio Effects",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Splicer",
+      "target": "Voice Changer",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Splicer",
+      "target": "Audio-to-Image",
+      "type": "audio"
+    },
+    {
+      "source": "Audio Splicer",
+      "target": "Video Synchronization",
+      "type": "audio"
+    },
+    {
+      "source": "Voice Changer",
+      "target": "Audio-to-Text",
+      "type": "audio"
+    },
+    {
+      "source": "Voice Changer",
+      "target": "Audio Noise Reduction",
+      "type": "audio"
+    },
+    {
+      "source": "Voice Changer",
+      "target": "Audio Effects",
+      "type": "audio"
+    },
+    {
+      "source": "Voice Changer",
+      "target": "Audio Splicer",
+      "type": "audio"
+    },
+    {
+      "source": "Voice Changer",
+      "target": "Audio-to-Image",
+      "type": "audio"
+    },
+    {
+      "source": "Voice Changer",
+      "target": "Video Synchronization",
+      "type": "audio"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Summarizer",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Translator",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Sentiment Analysis",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Grammar Checker",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Simplifier",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Expander",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Keyword Extractor",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Text Paraphraser",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Topic Generator",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Article Spinner",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Search",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Image Search",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "URL Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Video Search",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text-to-Image",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text-to-Video",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text-to-Audio",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Audio Effects",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Voice Changer",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Summarizer",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Translator",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Sentiment Analysis",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Grammar Checker",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Simplifier",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Expander",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Keyword Extractor",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Text Paraphraser",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Article Spinner",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Video Speed Changer",
+      "type": "text"
+    },
+    {
+      "source": "Topic Generator",
+      "target": "Video Voiceover",
+      "type": "text"
+    },
+    {
+      "source": "Audio-to-Image",
+      "target": "Image Search (by Image)",
+      "type": "image"
+    },
+    {
+      "source": "Audio-to-Image",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Audio-to-Image",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Audio-to-Image",
+      "target": "Image Stitcher",
+      "type": "image"
+    },
+    {
+      "source": "Audio-to-Image",
+      "target": "Image Colorizer",
+      "type": "image"
+    },
+    {
+      "source": "Audio-to-Image",
+      "target": "Image Style Transfer",
+      "type": "image"
+    },
+    {
+      "source": "Image-to-Video",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Image-to-Video",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Image-to-Video",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Image-to-Video",
+      "target": "Video Stabilizer",
+      "type": "video"
+    },
+    {
+      "source": "Image-to-Video",
+      "target": "Video Speed Changer",
+      "type": "video"
+    },
+    {
+      "source": "Image-to-Video",
+      "target": "Video Synchronization",
+      "type": "video"
+    },
+    {
+      "source": "Image-to-Video",
+      "target": "Video Voiceover",
+      "type": "video"
+    },
+    {
+      "source": "Video-to-Audio",
+      "target": "Audio-to-Text",
+      "type": "audio"
+    },
+    {
+      "source": "Video-to-Audio",
+      "target": "Audio Noise Reduction",
+      "type": "audio"
+    },
+    {
+      "source": "Video-to-Audio",
+      "target": "Audio Effects",
+      "type": "audio"
+    },
+    {
+      "source": "Video-to-Audio",
+      "target": "Audio Splicer",
+      "type": "audio"
+    },
+    {
+      "source": "Video-to-Audio",
+      "target": "Voice Changer",
+      "type": "audio"
+    },
+    {
+      "source": "Video-to-Audio",
+      "target": "Audio-to-Image",
+      "type": "audio"
+    },
+    {
+      "source": "Video-to-Audio",
+      "target": "Video Synchronization",
+      "type": "audio"
+    },
+    {
+      "source": "Video-to-Image",
+      "target": "Image Search (by Image)",
+      "type": "image"
+    },
+    {
+      "source": "Video-to-Image",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Video-to-Image",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Video-to-Image",
+      "target": "Image Stitcher",
+      "type": "image"
+    },
+    {
+      "source": "Video-to-Image",
+      "target": "Image Colorizer",
+      "type": "image"
+    },
+    {
+      "source": "Video-to-Image",
+      "target": "Image Style Transfer",
+      "type": "image"
+    },
+    {
+      "source": "Image Stitcher",
+      "target": "Image Search (by Image)",
+      "type": "image"
+    },
+    {
+      "source": "Image Stitcher",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image Stitcher",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Image Stitcher",
+      "target": "Image Colorizer",
+      "type": "image"
+    },
+    {
+      "source": "Image Stitcher",
+      "target": "Image Style Transfer",
+      "type": "image"
+    },
+    {
+      "source": "Image Colorizer",
+      "target": "Image Search (by Image)",
+      "type": "image"
+    },
+    {
+      "source": "Image Colorizer",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image Colorizer",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Image Colorizer",
+      "target": "Image Stitcher",
+      "type": "image"
+    },
+    {
+      "source": "Image Colorizer",
+      "target": "Image Style Transfer",
+      "type": "image"
+    },
+    {
+      "source": "Image Style Transfer",
+      "target": "Image Search (by Image)",
+      "type": "image"
+    },
+    {
+      "source": "Image Style Transfer",
+      "target": "Image-to-Text",
+      "type": "image"
+    },
+    {
+      "source": "Image Style Transfer",
+      "target": "Image-to-Video",
+      "type": "image"
+    },
+    {
+      "source": "Image Style Transfer",
+      "target": "Image Stitcher",
+      "type": "image"
+    },
+    {
+      "source": "Image Style Transfer",
+      "target": "Image Colorizer",
+      "type": "image"
+    },
+    {
+      "source": "Video Stabilizer",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Video Stabilizer",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Video Stabilizer",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Video Stabilizer",
+      "target": "Video Speed Changer",
+      "type": "video"
+    },
+    {
+      "source": "Video Stabilizer",
+      "target": "Video Synchronization",
+      "type": "video"
+    },
+    {
+      "source": "Video Stabilizer",
+      "target": "Video Voiceover",
+      "type": "video"
+    },
+    {
+      "source": "Video Speed Changer",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Video Speed Changer",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Video Speed Changer",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Video Speed Changer",
+      "target": "Video Stabilizer",
+      "type": "video"
+    },
+    {
+      "source": "Video Speed Changer",
+      "target": "Video Synchronization",
+      "type": "video"
+    },
+    {
+      "source": "Video Speed Changer",
+      "target": "Video Voiceover",
+      "type": "video"
+    },
+    {
+      "source": "Video Synchronization",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Video Synchronization",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Video Synchronization",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Video Synchronization",
+      "target": "Video Stabilizer",
+      "type": "video"
+    },
+    {
+      "source": "Video Synchronization",
+      "target": "Video Speed Changer",
+      "type": "video"
+    },
+    {
+      "source": "Video Synchronization",
+      "target": "Video Voiceover",
+      "type": "video"
+    },
+    {
+      "source": "Video Voiceover",
+      "target": "Video-to-Text",
+      "type": "video"
+    },
+    {
+      "source": "Video Voiceover",
+      "target": "Video-to-Audio",
+      "type": "video"
+    },
+    {
+      "source": "Video Voiceover",
+      "target": "Video-to-Image",
+      "type": "video"
+    },
+    {
+      "source": "Video Voiceover",
+      "target": "Video Stabilizer",
+      "type": "video"
+    },
+    {
+      "source": "Video Voiceover",
+      "target": "Video Speed Changer",
+      "type": "video"
+    },
+    {
+      "source": "Video Voiceover",
+      "target": "Video Synchronization",
+      "type": "video"
+    }
+  ]
+}

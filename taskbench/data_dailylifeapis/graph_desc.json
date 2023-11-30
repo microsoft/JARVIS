@@ -1,0 +1,8366 @@
+{
+  "nodes": [
+    {
+      "id": "get_weather",
+      "desc": "Get the weather for a specific city and a specific day",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to get the weather for"
+        },
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to get the weather for"
+        }
+      ]
+    },
+    {
+      "id": "get_news_for_topic",
+      "desc": "Get the news for a specific topic",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "desc": "The topic to get the news for"
+        }
+      ]
+    },
+    {
+      "id": "stock_operation",
+      "desc": "Do a specific operation on a specific stock",
+      "parameters": [
+        {
+          "name": "stock",
+          "type": "string",
+          "desc": "The stock to do the operation on"
+        },
+        {
+          "name": "operation",
+          "type": "string",
+          "desc": "The operation to do, eg. buy, sell, short, cover etc."
+        }
+      ]
+    },
+    {
+      "id": "book_flight",
+      "desc": "Book a flight for a specific date, from a specific location to a specific destination",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the flight for"
+        },
+        {
+          "name": "from",
+          "type": "string",
+          "desc": "The location to book the flight from"
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "desc": "The location to book the flight to"
+        }
+      ]
+    },
+    {
+      "id": "book_hotel",
+      "desc": "Book a specific hotel for a specific date",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the hotel for"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "desc": "The name of the hotel to book"
+        }
+      ]
+    },
+    {
+      "id": "book_restaurant",
+      "desc": "Book a specific restaurant for a specific date",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the restaurant for"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "desc": "The name of the restaurant to book"
+        }
+      ]
+    },
+    {
+      "id": "book_car",
+      "desc": "Book a car for a specific date, in a specific location",
+      "parameters": [
+        {
+          "name": "date",
+          "type": "date",
+          "desc": "The date to book the car for"
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to book the car in"
+        }
+      ]
+    },
+    {
+      "id": "online_shopping",
+      "desc": "Buy a product from a specific website",
+      "parameters": [
+        {
+          "name": "website",
+          "type": "string",
+          "desc": "The website to buy the product from, eg. Amazon, Ebay, Taobao etc."
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "desc": "The product to buy"
+        }
+      ]
+    },
+    {
+      "id": "send_email",
+      "desc": "Send an email to a specific email address",
+      "parameters": [
+        {
+          "name": "email_address",
+          "type": "string",
+          "desc": "The email address to send the email to"
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the email"
+        }
+      ]
+    },
+    {
+      "id": "send_sms",
+      "desc": "Send an sms to a specific phone number",
+      "parameters": [
+        {
+          "name": "phone_number",
+          "type": "string",
+          "desc": "The phone number to send the sms to"
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the sms"
+        }
+      ]
+    },
+    {
+      "id": "share_by_social_network",
+      "desc": "Share a specific content by a specific social network",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content to share"
+        },
+        {
+          "name": "social_network",
+          "type": "string",
+          "desc": "The social network to share the content by, eg. Wechat, Facebook, Twitter, Weibo etc."
+        }
+      ]
+    },
+    {
+      "id": "search_by_engine",
+      "desc": "Search a specific query by a specific search engine",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "desc": "The content to search"
+        },
+        {
+          "name": "engine",
+          "type": "string",
+          "desc": "The search engine to use, eg. Google, Bing, Baidu etc."
+        }
+      ]
+    },
+    {
+      "id": "apply_for_job",
+      "desc": "Apply for a specific job",
+      "parameters": [
+        {
+          "name": "job",
+          "type": "string",
+          "desc": "The job to apply for"
+        }
+      ]
+    },
+    {
+      "id": "see_doctor_online",
+      "desc": "See a specific doctor for a specific disease",
+      "parameters": [
+        {
+          "name": "disease",
+          "type": "string",
+          "desc": "The disease to see the doctor for"
+        },
+        {
+          "name": "doctor",
+          "type": "string",
+          "desc": "The doctor to see"
+        }
+      ]
+    },
+    {
+      "id": "consult_lawyer_online",
+      "desc": "Consult a specific lawyer for a specific legal issue",
+      "parameters": [
+        {
+          "name": "issue",
+          "type": "string",
+          "desc": "The legal issue to consult the lawyer for"
+        },
+        {
+          "name": "lawyer",
+          "type": "string",
+          "desc": "The lawyer to consult"
+        }
+      ]
+    },
+    {
+      "id": "enroll_in_course",
+      "desc": "Enroll in a specific course at a specific university",
+      "parameters": [
+        {
+          "name": "course",
+          "type": "string",
+          "desc": "The course to enroll in"
+        },
+        {
+          "name": "university",
+          "type": "string",
+          "desc": "The university to enroll in the course at"
+        }
+      ]
+    },
+    {
+      "id": "buy_insurance",
+      "desc": "Buy a specific insurance from a specific insurance company",
+      "parameters": [
+        {
+          "name": "insurance",
+          "type": "string",
+          "desc": "The insurance to buy"
+        },
+        {
+          "name": "company",
+          "type": "string",
+          "desc": "The insurance company to buy the insurance from"
+        }
+      ]
+    },
+    {
+      "id": "online_banking",
+      "desc": "Do a specific banking operation online at a specific bank",
+      "parameters": [
+        {
+          "name": "instruction",
+          "type": "string",
+          "desc": "The banking instruction to do, eg. transfer, deposit, withdraw etc."
+        },
+        {
+          "name": "bank",
+          "type": "string",
+          "desc": "The bank to do the banking operation at"
+        }
+      ]
+    },
+    {
+      "id": "daily_bill_payment",
+      "desc": "Pay a specific bill",
+      "parameters": [
+        {
+          "name": "bill",
+          "type": "string",
+          "desc": "The bill to pay, eg. electricity, water, gas, phone, internet etc."
+        }
+      ]
+    },
+    {
+      "id": "sell_item_online",
+      "desc": "Sell a specific item at a specific online store",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "string",
+          "desc": "The item to sell"
+        },
+        {
+          "name": "store",
+          "type": "string",
+          "desc": "The online store to sell the item at, eg. Amazon, Ebay, Taobao etc."
+        }
+      ]
+    },
+    {
+      "id": "do_tax_return",
+      "desc": "Do the tax return for a specific year",
+      "parameters": [
+        {
+          "name": "year",
+          "type": "string",
+          "desc": "The year to do the tax return for"
+        }
+      ]
+    },
+    {
+      "id": "apply_for_passport",
+      "desc": "Apply for a passport",
+      "parameters": [
+        {
+          "name": "country",
+          "type": "string",
+          "desc": "The country to apply for the passport for"
+        }
+      ]
+    },
+    {
+      "id": "pay_for_credit_card",
+      "desc": "Pay for a specific credit card",
+      "parameters": [
+        {
+          "name": "credit_card",
+          "type": "string",
+          "desc": "The credit card to pay for"
+        }
+      ]
+    },
+    {
+      "id": "auto_housework_by_robot",
+      "desc": "Let a robot do a housework by following a specific instruction",
+      "parameters": [
+        {
+          "name": "instruction",
+          "type": "string",
+          "desc": "The instruction to let the robot follow, eg. clean the floor, wash the dishes, do the laundry etc."
+        }
+      ]
+    },
+    {
+      "id": "auto_driving_to_destination",
+      "desc": "Let a car drive to a specific destination",
+      "parameters": [
+        {
+          "name": "destination",
+          "type": "string",
+          "desc": "The destination to drive to"
+        }
+      ]
+    },
+    {
+      "id": "deliver_package",
+      "desc": "Deliver a specific package to a specific destination",
+      "parameters": [
+        {
+          "name": "package",
+          "type": "string",
+          "desc": "The package to deliver"
+        },
+        {
+          "name": "destination",
+          "type": "string",
+          "desc": "The destination to deliver the package to"
+        }
+      ]
+    },
+    {
+      "id": "order_food_delivery",
+      "desc": "Order a specific food to be delivered to a specific location at a specific platform",
+      "parameters": [
+        {
+          "name": "food",
+          "type": "string",
+          "desc": "The food to order"
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to deliver the food to"
+        },
+        {
+          "name": "platform",
+          "type": "string",
+          "desc": "The platform to order the food at, eg. Uber Eats, Meituan Waimai etc."
+        }
+      ]
+    },
+    {
+      "id": "order_taxi",
+      "desc": "Order a taxi to a specific location at a specific platform",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "string",
+          "desc": "The location to order the taxi to"
+        },
+        {
+          "name": "platform",
+          "type": "string",
+          "desc": "The platform to order the taxi at, eg. Uber, Didi etc."
+        }
+      ]
+    },
+    {
+      "id": "play_music_by_title",
+      "desc": "Play a specific music by a specific title",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "desc": "The title of the music to play"
+        }
+      ]
+    },
+    {
+      "id": "play_movie_by_title",
+      "desc": "Play a specific movie by a specific title",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "desc": "The title of the movie to play"
+        }
+      ]
+    },
+    {
+      "id": "take_note",
+      "desc": "Take a note",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the note"
+        }
+      ]
+    },
+    {
+      "id": "borrow_book_online",
+      "desc": "Borrow a specific book from a specific library",
+      "parameters": [
+        {
+          "name": "book",
+          "type": "string",
+          "desc": "The book to borrow"
+        },
+        {
+          "name": "library",
+          "type": "string",
+          "desc": "The library to borrow the book from"
+        }
+      ]
+    },
+    {
+      "id": "recording_audio",
+      "desc": "Record an audio",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "desc": "The content of the audio"
+        }
+      ]
+    },
+    {
+      "id": "make_video_call",
+      "desc": "Make a video call to a specific phone number",
+      "parameters": [
+        {
+          "name": "phone_number",
+          "type": "string",
+          "desc": "The phone number to make the video call to"
+        }
+      ]
+    },
+    {
+      "id": "make_voice_call",
+      "desc": "Make a voice call to a specific phone number",
+      "parameters": [
+        {
+          "name": "phone_number",
+          "type": "string",
+          "desc": "The phone number to make the voice call to"
+        }
+      ]
+    },
+    {
+      "id": "organize_meeting_online",
+      "desc": "Organize a meeting online about a specific topic",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "desc": "The topic of the meeting"
+        }
+      ]
+    },
+    {
+      "id": "attend_meeting_online",
+      "desc": "Attend a meeting online about a specific topic",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "desc": "The topic of the meeting"
+        }
+      ]
+    },
+    {
+      "id": "software_management",
+      "desc": "Manage a specific software by a specific instruction",
+      "parameters": [
+        {
+          "name": "software",
+          "type": "string",
+          "desc": "The software to manage"
+        },
+        {
+          "name": "instruction",
+          "type": "string",
+          "desc": "The instruction to manage the software by, eg. install, uninstall, update etc."
+        }
+      ]
+    },
+    {
+      "id": "print_document",
+      "desc": "Print a specific document",
+      "parameters": [
+        {
+          "name": "document",
+          "type": "string",
+          "desc": "The document to print"
+        }
+      ]
+    },
+    {
+      "id": "set_alarm",
+      "desc": "Set an alarm for a specific time",
+      "parameters": [
+        {
+          "name": "time",
+          "type": "string",
+          "desc": "The time to set the alarm for"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "get_weather",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "get_weather",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "get_news_for_topic",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "stock_operation",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "book_flight",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "book_hotel",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "book_restaurant",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "book_car",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "online_shopping",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "send_email",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "send_sms",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "share_by_social_network",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "search_by_engine",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_job",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "see_doctor_online",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "consult_lawyer_online",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "enroll_in_course",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "buy_insurance",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "online_banking",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "daily_bill_payment",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "sell_item_online",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "do_tax_return",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "apply_for_passport",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "pay_for_credit_card",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "auto_housework_by_robot",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "auto_driving_to_destination",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "deliver_package",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "order_food_delivery",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "order_taxi",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "play_music_by_title",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "play_movie_by_title",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "take_note",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "borrow_book_online",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "recording_audio",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "make_video_call",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "make_voice_call",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "organize_meeting_online",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "attend_meeting_online",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "print_document",
+      "type": "complete"
+    },
+    {
+      "source": "software_management",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "print_document",
+      "target": "set_alarm",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "get_weather",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "get_news_for_topic",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "stock_operation",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "book_flight",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "book_hotel",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "book_restaurant",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "book_car",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "online_shopping",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "send_email",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "send_sms",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "share_by_social_network",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "search_by_engine",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "apply_for_job",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "see_doctor_online",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "consult_lawyer_online",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "enroll_in_course",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "buy_insurance",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "online_banking",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "daily_bill_payment",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "sell_item_online",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "do_tax_return",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "apply_for_passport",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "pay_for_credit_card",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "auto_housework_by_robot",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "auto_driving_to_destination",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "deliver_package",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "order_food_delivery",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "order_taxi",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "play_music_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "play_movie_by_title",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "take_note",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "borrow_book_online",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "recording_audio",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "make_video_call",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "make_voice_call",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "organize_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "attend_meeting_online",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "software_management",
+      "type": "complete"
+    },
+    {
+      "source": "set_alarm",
+      "target": "print_document",
+      "type": "complete"
+    }
+  ]
+}

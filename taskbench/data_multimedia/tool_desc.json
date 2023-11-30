@@ -1,0 +1,411 @@
+{
+  "nodes": [
+    {
+      "id": "Image Downloader",
+      "desc": "Downloads an image from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Video Downloader",
+      "desc": "Downloads a video from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Audio Downloader",
+      "desc": "Downloads an audio file from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Text Downloader",
+      "desc": "Downloads the text content from a given URL.",
+      "input-type": [
+        "url"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Search",
+      "desc": "Searches for a specific text or keyword on the internet.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Image Search",
+      "desc": "Searches for images on the internet based on a given query.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "Image"
+      ]
+    },
+    {
+      "id": "Image Search (by Image)",
+      "desc": "Performs a similar image search using an input image.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "URL Extractor",
+      "desc": "Extracts URL from text",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "url"
+      ]
+    },
+    {
+      "id": "Video Search",
+      "desc": "Searches for videos on the internet based on a given query.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Text-to-Image",
+      "desc": "Generates an image based on a given text description.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Text-to-Video",
+      "desc": "Generates a video based on a given text description.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Text-to-Audio",
+      "desc": "Generates an audio file based on a given text description.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Image-to-Text",
+      "desc": "Extracts text from an input image using Optical Character Recognition (OCR).",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Audio-to-Text",
+      "desc": "Transcribes speech from an audio file into text.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Video-to-Text",
+      "desc": "Transcribes speech from a video file into text.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Audio Noise Reduction",
+      "desc": "Reduces background noise or unwanted sounds from a given audio file.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Audio Effects",
+      "desc": "Applies various audio effects to a given audio file according to human instruction, such as reverb, chorus, or equalization.",
+      "input-type": [
+        "audio",
+        "text"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Audio Splicer",
+      "desc": "Combines two audio files into a single output file.",
+      "input-type": [
+        "audio",
+        "audio"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Voice Changer",
+      "desc": "Modifies the characteristics of a recorded voice according to human instruction, such as tone, pitch, or gender.",
+      "input-type": [
+        "audio",
+        "text"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Text Summarizer",
+      "desc": "Summarizes a given text into a shorter version while retaining the main points.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Translator",
+      "desc": "Translates a given text from one language to english.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Sentiment Analysis",
+      "desc": "Analyzes the sentiment of a given text, identifying if it is positive, negative, or neutral.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Grammar Checker",
+      "desc": "Checks a given text for grammatical errors and suggests corrections.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Simplifier",
+      "desc": "Rewrites a given text in a simpler and more understandable manner.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Expander",
+      "desc": "Expands a given short text into a more detailed and descriptive version.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Keyword Extractor",
+      "desc": "Extracts the most important keywords and phrases from a given text.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Text Paraphraser",
+      "desc": "Rewrites a given text using different words while maintaining its original meaning.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Article Spinner",
+      "desc": "Rewrites a given article using synonyms and syntax changes to create a new, unique version.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Topic Generator",
+      "desc": "Generates a list of relevant topics or ideas based on a given input.",
+      "input-type": [
+        "text"
+      ],
+      "output-type": [
+        "text"
+      ]
+    },
+    {
+      "id": "Audio-to-Image",
+      "desc": "Generates an image that visually represents a given audio, such as a waveform or spectrogram.",
+      "input-type": [
+        "audio"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image-to-Video",
+      "desc": "Creates a slideshow video using two input images.",
+      "input-type": [
+        "image",
+        "image"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video-to-Audio",
+      "desc": "Extracts the audio track from a given video file.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "audio"
+      ]
+    },
+    {
+      "id": "Video-to-Image",
+      "desc": "Extracts a still image from a given video.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image Stitcher",
+      "desc": "Stitches together two input images to create a panorama or collage.",
+      "input-type": [
+        "image",
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image Colorizer",
+      "desc": "Adds color to a black and white input image using deep learning techniques.",
+      "input-type": [
+        "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Image Style Transfer",
+      "desc": "Applies the visual style of one image (style) to the content of another image (content) using neural style transfer techniques.",
+      "input-type": [
+        "image", "image"
+      ],
+      "output-type": [
+        "image"
+      ]
+    },
+    {
+      "id": "Video Stabilizer",
+      "desc": "Stabilizes a shaky input video to produce a smoother output video.",
+      "input-type": [
+        "video"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video Speed Changer",
+      "desc": "Adjusts the playback speed of a given video according to human instruction, either speeding it up or slowing it down.",
+      "input-type": [
+        "video", "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video Synchronization",
+      "desc": "Synchronizes the timing of an existing voiceover or audio file with the visuals of a given video.",
+      "input-type": [
+        "video",
+        "audio"
+      ],
+      "output-type": [
+        "video"
+      ]
+    },
+    {
+      "id": "Video Voiceover",
+      "desc": "Adds a voiceover to a given video using a provided script or text.",
+      "input-type": [
+        "video",
+        "text"
+      ],
+      "output-type": [
+        "video"
+      ]
+    }
+  ]
+}
