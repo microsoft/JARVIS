@@ -8,7 +8,7 @@
   <a href="https://opensource.org/licenses/Apache-2.0">
     <img alt="License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-4E94CE.svg">
   </a>
-  <a href="https://arxiv.org/abs/taskbench">
+  <a href="https://arxiv.org/abs/2311.18760">
     <img alt="License: Apache 2.0" src="https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg">
   </a>
 </div>
@@ -24,7 +24,7 @@
 
 +  [2023.11.30] We release TaskBench for evaluating task automation capability of LLMs.
    + The code and datasets are avaliable at [TaskBench](#).
-   + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/taskbench).
+   + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/2311.18760).
 
 ## Table of Contents
 
@@ -159,7 +159,7 @@ python inference.py \
     --reformat_by self \
     --log_first_detail true \
     --use_demos 2 \
-    --ignore_tool_type false \
+    --dependency_type resource \
     --tag true
 ```
 
@@ -175,7 +175,7 @@ python evaluate.py \
     --splits all \
     --n_tools all \
     --mode add \
-    --ignore_tool_type false \
+    --dependency_type resource \
     -m all
 ```
 
@@ -241,7 +241,7 @@ python data_engine.py \
     --llm gpt-4 \
     --temperature 1.0 \
     --top_p 1.0 \
-    --ignore_tool_type false \
+    --dependency_type resource \
     --save_figure false \
     --api_addr localhost \
     --api_port 8000 \
@@ -320,7 +320,7 @@ Based on the evaluation framework and the TaskBench dataset, we provide a leader
 | llama-2-7b-chat           | 37.06 | 16.49 | 86.31 | 30.17 | 4.27 | 14.94 | 9.34 |
 | mpt-7b-chat               | 44.54 | 20.98 | 87.17 | 15.95 | 1.69 | 5.34 | 3.45 |
 
-More details can be found in our paper: [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/taskbench).
+More details can be found in our paper: [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/2311.18760).
 
 ## Citation
 
@@ -329,6 +329,6 @@ If you find this work useful in your method, you can cite the paper as below:
     @article{shen2023taskbench,
       title   = {TaskBench: Benchmarking Large Language Models for Task Automation},
       author  = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Zhang, Wenqi and Ren, Kan and Yuan, Siyu and Lu, Weiming and Li, Dongsheng and Zhuang, Yueting},
-      journal = {arXiv preprint arXiv:2303.17580},
+      journal = {arXiv preprint arXiv:2311.18760},
       year    = {2023}
     }

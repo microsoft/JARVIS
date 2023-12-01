@@ -10,7 +10,7 @@ The mission of JARVIS is to explore artificial general intelligence (AGI) and de
 
 +  [2023.11.30] We release TaskBench for evaluating task automation capability of LLMs.
    + The code and datasets are avaliable at [TaskBench](/taskbench).
-   + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/taskbench).
+   + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/2311.18760).
 +  [2023.07.28] We are now in the process of planning evaluation and project rebuilding. We will release a new version of Jarvis in the near future.
 +  [2023.07.24] We released a light langchain version of Jarvis. See <a href="https://github.com/langchain-ai/langchain/tree/master/libs/experimental/langchain_experimental/autonomous_agents/hugginggpt">here</a>.
 +  [2023.04.16] Jarvis now supports the OpenAI service on the Azure platform and the GPT-4 model.
@@ -233,7 +233,7 @@ If you find this work useful in your method, you can cite the paper as below:
     @article{shen2023taskbench,
       title   = {TaskBench: Benchmarking Large Language Models for Task Automation},
       author  = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Zhang, Wenqi and Ren, Kan and Yuan, Siyu and Lu, Weiming and Li, Dongsheng and Zhuang, Yueting},
-      journal = {arXiv preprint arXiv:2303.17580},
+      journal = {arXiv preprint arXiv:2311.18760},
       year    = {2023}
     }
 
