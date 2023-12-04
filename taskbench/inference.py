@@ -98,7 +98,7 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
                 demos_id = [ "30934207", "20566230", "19003517"]
         demos_id = demos_id[:use_demos]
         logger.info(f"Use {len(demos_id)} demos: {demos_id}")
-        demos_rf = open(f"{data_dir}/data_formulated.json", "r")
+        demos_rf = open(f"{data_dir}/data.json", "r")
         for line in demos_rf:
             data = json.loads(line)
             if data["id"] in demos_id:

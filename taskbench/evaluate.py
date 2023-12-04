@@ -259,12 +259,12 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
         metric_dict = {}
         all_metric_dict[f"{split}_{n_tool}"] = metric_dict
 
-    label_rf = open(f"{data_dir}/data_formulated.json", "r")
+    label_rf = open(f"{data_dir}/data.json", "r")
     
     alignment_ids = None
     if alignment is not None:
         if alignment == "human":
-            label_rf = open(f"{data_dir}/data_human_classified.json", "r")
+            label_rf = open(f"{data_dir}/data.json", "r")
             logger.info(f"Alignment Mode: {alignment} ({len(label_rf.readlines())})")
         else:
             alignment_file = open(f"{data_dir}/alignment_ids.json", "r")
@@ -276,7 +276,7 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
 
     predcitions = {}
     labels = {}
-    label_rf = open(f"{data_dir}/data_human_classified.json", "r")
+    label_rf = open(f"{data_dir}/data.json", "r")
     for line in label_rf:
         data = json.loads(line)
         real_tool_num = len(data["task_nodes"])

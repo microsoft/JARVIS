@@ -92,7 +92,7 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
         shutil.copy(graph_desc, f"{data_dir}/graph_desc.json")
         shutil.copy(tool_desc, f"{data_dir}/tool_desc.json")
 
-    output = f"{data_dir}/data.json"
+    output = f"{data_dir}/data_raw.json"
     statistics_output = f"{data_dir}/statistics.json"
 
     file_handler = logging.FileHandler(f"{data_dir}/data_engine.log")
@@ -285,7 +285,15 @@ async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tool
 
         content = resp["choices"][0]["message"]["content"]
         content = content.replace("\n", "")
-
+        json_start = 0
+        json_end = len(content)
+        
+        if "```json" in content:
+            json_start = content.find("```json") + 7
+        if "```" in content:
+            json_end = content.rfind("```")
+        content = content[json_start:json_end]
+        logger.info(content)
         try:
             content = json.loads(content)
         except json.JSONDecodeError as e:
