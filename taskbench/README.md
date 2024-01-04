@@ -22,9 +22,9 @@
 
 ## What's New
 
-+  [2023.11.30] We release TaskBench for evaluating task automation capability of LLMs.
-   + The code and datasets are avaliable at [TaskBench](#).
-   + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/2311.18760).
++  [2023.11.30] We release TaskBench for evaluating the task automation capability of LLMs.
+   + The code and datasets are available at [TaskBench](#).
+   + The paper is available at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/2311.18760).
 
 ## Table of Contents
 
@@ -46,7 +46,7 @@ To generate high-quality evaluation datasets, we introduce the concept of Tool G
 
 + **Tool Graph Construction:** we first build a tool library and use the tool library to construct the tool graph. The nodes in the tool graph represent the tools, and the edges represent the dependencies between the tools, including the resource dependency and temporal dependency.
 + **Graph Sampling:** we sample the tool graph to generate the tool graph for each sample. The sampled tool graph is used to generate the tool invocation graph and the instruction. According to the topology of the sampled tool graph, we sample the tool graph in three ways: node, chain and DAGs, which represent different structures of task decomposition for task automation.
-+ **Back-Instruct:** we first use the sampled tool graph to generate the task steps and the instruction. Then, we use the instruction to generate the tool invocation parameters to complete the tool invocation graph. 
++ **Back-Instruct:** we first use the sampled tool graph to generate the task steps and the instructions. Then, we use the instruction to generate the tool invocation parameters to complete the tool invocation graph. 
 
 <p align="center">
 <img width="100%" alt="image" src="./assets/backinstruct.png">    
