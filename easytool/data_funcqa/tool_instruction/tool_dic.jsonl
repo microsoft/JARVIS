@@ -1,0 +1,13 @@
+{"ID": 0, "description": "'add_' returns the sum of all the arguments passed to it, normalized to 2 decimal places."}
+{"ID": 1, "description": "'subtract_' returns the difference of the arguments passed to it, starting with the first argument and subtracting all subsequent arguments, normalized to 2 decimal places."}
+{"ID": 2, "description": "'multiply_' returns the product of all the arguments passed to it, normalized to 2 decimal places."}
+{"ID": 3, "description": "'divide_' returns the quotient of the first argument divided by all the subsequent arguments, normalized to 2 decimal places."}
+{"ID": 4, "description": "'power_' returns the result of raising the first argument to the power of all the subsequent arguments, normalized to 2 decimal places."}
+{"ID": 5, "description": "'sqrt_' returns the square root of the first argument, normalized to 2 decimal places."}
+{"ID": 6, "description": "'log_' returns the base-10 logarithm of the first argument if one argument is provided, or the logarithm with base as the second argument if two arguments are provided, normalized to 2 decimal places."}
+{"ID": 7, "description": "'ln_' returns the natural logarithm of the first argument, normalized to 2 decimal places."}
+{"ID": 8, "description": "'lcm_' returns the least common multiple of all the arguments passed to it, normalized to 2 decimal places."}
+{"ID": 9, "description": "'gcd_' returns the greatest common divisor of all the arguments passed to it, normalized to 2 decimal places."}
+{"ID": 10, "description": "'remainder_' returns the remainder of the division of the first argument by the second argument, normalized to 2 decimal places."}
+{"ID": 11, "description": "'choose_' returns the number of ways to choose 'r' items from 'n' options without regard to order, normalized to 2 decimal places."}
+{"ID": 12, "description": "'permutate_' returns the number of ways to arrange 'r' items out of 'n' options, normalized to 2 decimal places."}

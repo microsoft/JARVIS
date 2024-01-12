@@ -1,0 +1,249 @@
+{
+    "0":{
+      "ID":0,
+      "standardized_name":"add_",
+      "API_description":"'add_' returns the sum of all the arguments passed to it, normalized to 2 decimal places.",
+      "Usage":{
+         "required_parameters":[
+            {
+               "name":"input",
+               "type":"List"
+            }
+         ],
+         "Example":{
+            "Scenario":"if you want to add 2 to 1.",
+            "Parameters":{
+               "input":[2,1]
+            }
+         }
+      }
+    },
+    "1": {
+        "ID": 1,
+        "standardized_name": "subtract_",
+        "API_description": "'subtract_' returns the difference of the arguments passed to it, starting with the first argument and subtracting all subsequent arguments, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to subtract 2 from 1.",
+                "Parameters": {
+                    "input": [1,2]
+                }
+            }
+        }
+    },
+    "2": {
+        "ID": 2,
+        "standardized_name": "multiply_",
+        "API_description": "'multiply_' returns the product of all the arguments passed to it, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to calculate 2*1.",
+                "Parameters": {
+                    "input": [2,1]
+                }
+            }
+        }
+    },
+    "3": {
+        "ID": 3,
+        "standardized_name": "divide_",
+        "API_description": "'divide_' returns the quotient of the first argument divided by all the subsequent arguments, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to calculate 4/2.",
+                "Parameters": {
+                    "input": [4,2]
+                }
+            }
+        }
+    },
+    "4": {
+        "ID": 4,
+        "standardized_name": "power_",
+        "API_description": "'power_' returns the result of raising the first argument to the power of all the subsequent arguments, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to calculate 2^3.",
+                "Parameters": {
+                    "input": [2,3]
+                }
+            }
+        }
+    },
+    "5": {
+        "ID": 5,
+        "standardized_name": "sqrt_",
+        "API_description": "'sqrt_' returns the square root of the first argument, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to get the square root of 9.",
+                "Parameters": {
+                    "input": [9]
+                }
+            }
+        }
+    },
+    "6": {
+        "ID": 6,
+        "standardized_name": "log_",
+        "API_description": "'log_' returns the base-10 logarithm of the first argument if one argument is provided, or the logarithm with base as the second argument if two arguments are provided, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to get the logarithm of 100 with base 10.",
+                "Parameters": {
+                    "input": [100,10]
+                }
+            }
+        }
+    },
+    "7": {
+        "ID": 7,
+        "standardized_name": "ln_",
+        "API_description": "'ln_' returns the natural logarithm of the first argument, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to get the natural logarithm of 2.718.",
+                "Parameters": {
+                    "input": [2.718281828459045]
+                }
+            }
+        }
+    },
+    "8": {
+        "ID": 8,
+        "standardized_name": "lcm_",
+        "API_description": "'lcm_' returns the least common multiple of all the arguments passed to it, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to find the LCM of 12 and 18.",
+                "Parameters": {
+                    "input": [12,18]
+                }
+            }
+        }
+    },
+    "9": {
+        "ID": 9,
+        "standardized_name": "gcd_",
+        "API_description": "'gcd_' returns the greatest common divisor of all the arguments passed to it, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to find the GCD of 54 and 24.",
+                "Parameters": {
+                    "input": [54,24]
+                }
+            }
+        }
+    },
+    "10": {
+        "ID": 10,
+        "standardized_name": "remainder_",
+        "API_description": "'remainder_' returns the remainder of the division of the first argument by the second argument, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to find the remainder of 10 divided by 3.",
+                "Parameters": {
+                    "input": [10,3]
+                }
+            }
+        }
+    },
+    "11": {
+        "ID": 11,
+        "standardized_name": "choose_",
+        "API_description": "'choose_' returns the number of ways to choose 'r' items from 'n' options without regard to order, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to choose 2 items out of 5.",
+                "Parameters": {
+                    "input": [5,2]
+                }
+            }
+        }
+    },
+    "12": {
+        "ID": 12,
+        "standardized_name": "permutate_",
+        "API_description": "'permutate_' returns the number of ways to arrange 'r' items out of 'n' options, normalized to 2 decimal places.",
+        "Usage": {
+            "required_parameters": [
+                {
+                    "name": "input",
+                    "type": "List"
+                }
+            ],
+            "Example": {
+                "Scenario": "if you want to find the number of arrangements of 3 items out of 5.",
+                "Parameters": {
+                    "input": [5,3]
+                }
+            }
+        }
+    }
+}
