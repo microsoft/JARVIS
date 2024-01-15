@@ -7,6 +7,11 @@
 <h3>Enhancing LLM-based Agents with Concise Tool Instruction<h3>
 </div>
 
+## What's New
++  [2024.01.15] We release Easytool for easier tool usage.
+   + The code and datasets are available at [easytool](#).
+   + The paper is available at [EASYTOOL: Enhancing LLM-based Agents with Concise Tool Instruction](https://arxiv.org/abs/2401.06201).
+   
 ## Overview
 
 LLM-based agents usually employ tool documentation to grasp the selection and usage of tools from different sources, but these documentations could be inconsistent in formats, redundant with excessive length, and lacking demonstrations for instructions. 
@@ -90,6 +95,17 @@ python3 main.py \
     --model_name gpt-3.5-turbo \
     --task restbench 
 ```
+
+## Citation
+
+If you find this work useful in your method, you can cite the paper as below:
+
+    @article{yuan2024easytool,
+      title   = {EASYTOOL: Enhancing LLM-based Agents with Concise Tool Instruction}, 
+      author  = {Siyu Yuan and Kaitao Song and Jiangjie Chen and Xu Tan and Yongliang Shen and Ren Kan and Dongsheng Li and Deqing Yang},
+      journal = {arXiv preprint arXiv:2401.06201},
+      year    = {2024}
+    }
 
 ## Acknowledgement
 
