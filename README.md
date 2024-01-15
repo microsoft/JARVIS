@@ -8,6 +8,9 @@ The mission of JARVIS is to explore artificial general intelligence (AGI) and de
 
 ## What's New
 
++  [2024.01.15] We release Easytool for easier tool usage.
+   + The code and datasets are available at [EasyTool](/easytool).
+   + The paper is available at [EasyTool: Enhancing LLM-based Agents with Concise Tool Instruction](https://arxiv.org/abs/2401.06201).
 +  [2023.11.30] We release TaskBench for evaluating task automation capability of LLMs.
    + The code and datasets are avaliable at [TaskBench](/taskbench).
    + The paper is avaliable at [TaskBench: Benchmarking Large Language Models for Task Automation](https://arxiv.org/abs/2311.18760).
@@ -230,6 +233,14 @@ docker exec jarvis npm run dev --prefix=/app/web
 ## Citation
 If you find this work useful in your method, you can cite the paper as below:
 
+    @inproceedings{shen2023hugginggpt,
+      author = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Li, Dongsheng and Lu, Weiming and Zhuang, Yueting},
+      booktitle = {Advances in Neural Information Processing Systems},
+      title = {HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace},
+      year = {2023}
+    }
+
+>
     @article{shen2023taskbench,
       title   = {TaskBench: Benchmarking Large Language Models for Task Automation},
       author  = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Zhang, Wenqi and Ren, Kan and Yuan, Siyu and Lu, Weiming and Li, Dongsheng and Zhuang, Yueting},
@@ -238,10 +249,9 @@ If you find this work useful in your method, you can cite the paper as below:
     }
 
 >
-
-    @inproceedings{shen2023hugginggpt,
-      author = {Shen, Yongliang and Song, Kaitao and Tan, Xu and Li, Dongsheng and Lu, Weiming and Zhuang, Yueting},
-      booktitle = {Advances in Neural Information Processing Systems},
-      title = {HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace},
-      year = {2023}
+    @article{yuan2024easytool,
+      title   = {EASYTOOL: Enhancing LLM-based Agents with Concise Tool Instruction},
+      author  = {Siyu Yuan and Kaitao Song and Jiangjie Chen and Xu Tan and Yongliang Shen and Ren Kan and Dongsheng Li and Deqing Yang},
+      journal = {arXiv preprint arXiv:2401.06201},
+      year    = {2024}
     }
