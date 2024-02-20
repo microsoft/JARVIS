@@ -1,7 +1,7 @@
 import json
 import click
 
-def generate_graph_temporal(tool_file):
+def generate_graph_resource(tool_file):
     with open(tool_file) as f:
         data = json.load(f)
     data = data["nodes"]
@@ -19,7 +19,7 @@ def generate_graph_temporal(tool_file):
     with open(tool_file.replace("tools", "graph"), 'w') as f:
         json.dump(graph, f, indent=2)
 
-def generate_graph_resource(tool_file):
+def generate_graph_temporal(tool_file):
     with open(tool_file) as f:
         data = json.load(f)
     nodes = []
