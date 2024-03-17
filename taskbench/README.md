@@ -133,7 +133,7 @@ conda activate taskbench
 pip install -r requirements.txt
 ```
 
-Additionally, if you wish to evaluate open-source large language models, you will also need to deploy the LLMs locally using an **OpenAI-compatible API**. We recommend using the `fastchat` tool to deploy the service to the `localhost:8000` endpoint.
+Additionally, if you wish to evaluate open-source large language models, you will also need to deploy the LLMs locally using an **OpenAI-compatible API**. We recommend using the `fastchat` tool to deploy the service to the `localhost:4000` endpoint.
 
 ```bash
 pip install fastchat
@@ -142,21 +142,23 @@ pip install "fastapi[all]"
 
 python3 -m fastchat.serve.controller
 python3 -m fastchat.serve.vllm_worker --model-path lmsys/vicuna-7b-v1.3
-python3 -m fastchat.serve.openai_api_server --host localhost --port 8000
+python3 -m fastchat.serve.openai_api_server --host localhost --port 4000
 ```
 
 ### Inference
 
-For convenience, it is recommended to deploy all LLMs to the same endpoint, such as `localhost:8000`. To generate the prediction file on TaskBench, specify the name of the LLM using the following command:
+For convenience, it is recommended to deploy all LLMs to the same endpoint, such as `localhost:4000`. To generate the prediction file on TaskBench, specify the name of the LLM using the following command:
 
 ```bash
+export YOUR_API_KEY=API_KEY
 python inference.py \
     --llm gpt-4 \
     --data_dir data_multimedia \
     --temperature 0.2 \
     --top_p 0.1 \
     --api_addr localhost \
-    --api_port 8000 \
+    --api_port 4000 \
+    --api_key $YOUR_API_KEY \
     --multiworker 5 \
     --use_demos 0 \
     --reformat true \
@@ -248,11 +250,27 @@ python data_engine.py \
     --dependency_type resource \
     --save_figure false \
     --api_addr localhost \
-    --api_port 8002 \
+    --api_port 4000 \
+    --api_key $YOUR_API_KEY \
     --check true \
     --use_async true \
     --multiworker 5
-  
+    
+# specify the data_dir to resume data generation
+python data_engine.py \
+    --data_dir result_20240317170826_gpt-4-32k_t1_0_p1_0_check \
+    --llm gpt-4-32k \
+    --temperature 1.0 \
+    --top_p 1.0 \
+    --dependency_type temporal \
+    --save_figure false \
+    --api_addr localhost \
+    --api_port 4000 \
+    --api_key $YOUR_API_KEY \
+    --check true \
+    --use_async true \
+    --multiworker 5
+
 python format_data.py \
     --data_dir data_multimedia \
     --dependency_type resource

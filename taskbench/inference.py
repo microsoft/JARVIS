@@ -24,7 +24,8 @@ class ContentFormatError(Exception):
 @click.option("--temperature", type=float, default=0.2)
 @click.option("--top_p", type=float, default=0.1)
 @click.option("--api_addr", type=str, default="localhost")
-@click.option("--api_port", type=int, default=8000)
+@click.option("--api_port", type=int, default=4000)
+@click.option("--api_key", type=str, default="your api key")
 @click.option("--multiworker", type=int, default=1)
 @click.option("--llm", type=str, default="gpt-4")
 @click.option("--use_demos", type=int, default=0)
@@ -33,10 +34,14 @@ class ContentFormatError(Exception):
 @click.option("--tag", type=bool, default=False)
 @click.option("--dependency_type", type=str, default="resource")
 @click.option("--log_first_detail", type=bool, default=False)
-def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use_demos, reformat, reformat_by, tag, dependency_type, log_first_detail):
+def main(data_dir, temperature, top_p, api_addr, api_key, api_port, multiworker, llm, use_demos, reformat, reformat_by, tag, dependency_type, log_first_detail):
     assert dependency_type in ["resource", "temporal"], "Dependency type not supported"
     arguments = locals()
     url = f"http://{api_addr}:{api_port}/v1/chat/completions"
+    header = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
 
     prediction_dir = f"{data_dir}/predictions{f'_use_demos_{use_demos}' if use_demos and tag else ''}{f'_reformat_by_{ reformat_by}' if reformat and tag else ''}"
     wf_name = f"{prediction_dir}/{llm}.json"
@@ -128,9 +133,9 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
     
     sem = asyncio.Semaphore(multiworker)
 
-    async def inference_wrapper(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail = False):
+    async def inference_wrapper(input, url, header, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail = False):
         async with sem:
-            await inference(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail)
+            await inference(input, url, header, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail)
 
     if len(inputs) == 0:
         logger.info("All Completed!")
@@ -142,13 +147,13 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
     loop = asyncio.get_event_loop()
 
     if log_first_detail:
-        tasks = [inference_wrapper(inputs[0], url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail=True)]
+        tasks = [inference_wrapper(inputs[0], url, header, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail=True)]
         results = loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
         inputs = inputs[1:]
 
     tasks = []
     for input in inputs:
-        tasks.append(inference_wrapper(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type))
+        tasks.append(inference_wrapper(input, url, header, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type))
 
     results += loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
     failed = []
@@ -162,7 +167,7 @@ def main(data_dir, temperature, top_p, api_addr, api_port, multiworker, llm, use
     logger.info(f"Failed: {len(failed)}")
     loop.close()
 
-async def inference(input, url, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail = False):
+async def inference(input, url, header, temperature, top_p, tool_string, wf, llm, demos, reformat, reformat_by, dependency_type, log_detail = False):
     user_request = input["user_request"]
     if dependency_type == "resource":
         prompt = """\n# GOAL #: Based on the above tools, I want you generate task steps and task nodes to solve the # USER REQUEST #. The format must in a strict JSON format, like: {"task_steps": [ step description of one or more steps ], "task_nodes": [{"task": "tool name must be from # TOOL LIST #", "arguments": [ a concise list of arguments for the tool. Either original text, or user-mentioned filename, or tag '<node-j>' (start from 0) to refer to the output of the j-th node. ]}]} """
@@ -196,7 +201,7 @@ async def inference(input, url, temperature, top_p, tool_string, wf, llm, demos,
         "stop": None
     })
     try:
-        result = await get_response(url, payload, input['id'], reformat, reformat_by, dependency_type, log_detail)
+        result = await get_response(url, header, payload, input['id'], reformat, reformat_by, dependency_type, log_detail)
     except Exception as e:
         logger.info(f"Failed #id {input['id']}: {type(e)} {e}")
         raise e
@@ -205,12 +210,9 @@ async def inference(input, url, temperature, top_p, tool_string, wf, llm, demos,
     wf.write(json.dumps(input) + "\n")
     wf.flush()
 
-async def get_response(url, payload, id, reformat, reformat_by, dependency_type, log_detail=False):
-    headers = {
-    'Content-Type': 'application/json'
-    }
+async def get_response(url, header, payload, id, reformat, reformat_by, dependency_type, log_detail=False):
     async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, data=payload, timeout=300) as response:
+        async with session.post(url, headers=header, data=payload, timeout=300) as response:
             resp = await response.json()
 
     if response.status == 429:
@@ -226,10 +228,12 @@ async def get_response(url, payload, id, reformat, reformat_by, dependency_type,
     oring_content = oring_content.replace("\n", "")
     oring_content = oring_content.replace("\_", "_")
     content = oring_content.replace("\\", "")
-    
+
     start_pos = content.find("RESULT #:")
     if start_pos!=-1:
         content = content[start_pos+len("RESULT #:"):]
+        
+    content = content[content.find("{"):content.rfind("}")+1]
     try:
         content = json.loads(content)
         if isinstance(content, list) and len(content):
@@ -247,10 +251,6 @@ async def get_response(url, payload, id, reformat, reformat_by, dependency_type,
             prompt = prompt.replace("{{illegal_result}}", oring_content)
             payload = json.loads(payload)
             if reformat_by != "self":
-                if payload["model"] == "text-davinci-003":
-                    url = url.replace("8012", "8002")
-                else:
-                    url = url.replace("8015", "8002")
                 payload["model"] = reformat_by
 
             if log_detail:
@@ -261,7 +261,7 @@ async def get_response(url, payload, id, reformat, reformat_by, dependency_type,
             payload = json.dumps(payload)
             
             async with aiohttp.ClientSession() as session:
-                async with session.post(url, headers=headers, data=payload, timeout=120) as response:
+                async with session.post(url, headers=header, data=payload, timeout=120) as response:
                     resp = await response.json()
 
             if response.status == 429:

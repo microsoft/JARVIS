@@ -33,7 +33,8 @@ logger.addHandler(console_handler)
 @click.option("--graph_desc", type=str, default=None)
 @click.option("--tool_desc", type=str, default=None)
 @click.option("--api_addr", type=str, default="localhost")
-@click.option("--api_port", type=int, default=8000)
+@click.option("--api_port", type=int, default=4000)
+@click.option("--api_key", type=str, default="your api key")
 @click.option("--play", type=bool, default=False)
 @click.option("--method", type=str, default=None)
 @click.option("--tool_number", type=int, default=None)
@@ -44,9 +45,13 @@ logger.addHandler(console_handler)
 @click.option("--llm", type=str, default="gpt-4")
 @click.option("--use_async", type=bool, default=False)
 @click.option("--dependency_type", type=str, default="resource")
-def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, play, method, tool_number, number_of_samples, seed, data_dir, save_figure, multiworker, llm, use_async, dependency_type):
+def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, api_key, play, method, tool_number, number_of_samples, seed, data_dir, save_figure, multiworker, llm, use_async, dependency_type):
     args = locals()
     url = f"http://{api_addr}:{api_port}/v1/chat/completions"
+    header = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
     now = datetime.now()
 
     if data_dir:
@@ -81,7 +86,7 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
     if play:
         assert method is not None
         assert tool_number is not None
-        result = asyncio.run(sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, "./", None, dependency_type))
+        result = asyncio.run(sample(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, "./", None, dependency_type))
         logger.info(json.dumps(result, indent=2))
         return
 
@@ -134,13 +139,13 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
     if use_async:
         # coroutine with Semaphore
         sem = asyncio.Semaphore(multiworker)
-        async def sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type):
+        async def sample_with_statistics(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type):
             async with sem:  # semaphore limits num of simultaneous sampling
                 if statistics["total"] % 100 == 0 and statistics["total"] != 0:
                     logger.info(json.dumps(statistics, indent=2))
                     statistics_wf.write(json.dumps(statistics) + "\n")
                 try:
-                    await sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type)
+                    await sample(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type)
                 except Exception as e:
                     statistics["total"] += 1
                     statistics["fail"] += 1
@@ -152,7 +157,7 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
                 statistics["success"] += 1
                 statistics["avg_time_per_sample"] = str((datetime.now() - now) / statistics["success"])
 
-        async def run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type):
+        async def run(url, header, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type):
             method = random.choices(list(method_weights.keys()), weights=list(method_weights.values()))[0]
             if method == "single":
                 tool_number = 1
@@ -160,11 +165,11 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
                 tool_number = random.choices(list(number_weights.keys()), weights=list(number_weights.values()))[0]
                 if method == "dag":
                     tool_number = max(tool_number, 3)
-            await sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type)
+            await sample_with_statistics(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type)
 
         tasks = []
         for _ in range(number_of_samples):
-            tasks.append(run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type))
+            tasks.append(run(url, header, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type))
 
         loop = asyncio.get_event_loop()
         results = loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
@@ -177,12 +182,12 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
     else:
         # multi-thread with ThreadPoolExecutor
         executor = ThreadPoolExecutor(max_workers=multiworker)
-        def sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type):
+        def sample_with_statistics(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type):
             if statistics["total"] % 100 == 0 and statistics["total"] != 0:
                 logger.info(json.dumps(statistics, indent=2))
                 statistics_wf.write(json.dumps(statistics) + "\n")
             try:
-                asyncio.run(sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type))
+                asyncio.run(sample(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type))
             except Exception as e:
                 statistics["total"] += 1
                 statistics["fail"] += 1
@@ -194,7 +199,7 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
             statistics["success"] += 1
             statistics["avg_time_per_sample"] = str((datetime.now() - now) / statistics["success"])
 
-        def run(url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type):
+        def run(url, header, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type):
             method = random.choices(list(method_weights.keys()), weights=list(method_weights.values()))[0]
             if method == "single":
                 tool_number = 1
@@ -202,11 +207,11 @@ def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, p
                 tool_number = random.choices(list(number_weights.keys()), weights=list(number_weights.values()))[0]
                 if method == "dag":
                     tool_number = max(tool_number, 3)
-            sample_with_statistics(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type)
+            sample_with_statistics(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, statistics, now, dependency_type)
 
         tasks = []
         for _ in range(number_of_samples):
-            tasks.append(executor.submit(run, url, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type))
+            tasks.append(executor.submit(run, url, header, llm, temperature, top_p, check, sampler, tools, figure_dir, wf, statistics, now, dependency_type))
         for future in as_completed(tasks):
             try:
                 future.result()
@@ -225,7 +230,7 @@ class ContentFormatError(Exception):
     def __init__(self, message):
         super().__init__(message)
 
-async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type):
+async def sample(url, header, llm, temperature, top_p, check, tool_number, sampler, tools, method, figure_dir, wf, dependency_type):
     start_time = datetime.now()
     sample_id = str(uuid.uuid4().int)[:8]
     sub_G = sampler.sample_subgraph(tool_number, sample_method=method)
@@ -233,9 +238,6 @@ async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tool
     tool_list = list(sub_G.nodes)
     tool_edge = list(sub_G.edges)  
     seed = random.randint(0, 1000000)
-    headers = {
-    'Content-Type': 'application/json'
-    }
     sampled_tools_string = "Given a tool graph with tools as nodes, and invoking chains between tools as edges. The following tools (nodes) are available with their corresponding descriptions and input/outputs types:\n"
     for k, tool in enumerate(tool_list):
         sampled_tools_string += f"Node {k+1}:" + json.dumps(tools[tool]) + "\n"
@@ -275,7 +277,7 @@ async def sample(url, llm, temperature, top_p, check, tool_number, sampler, tool
     })
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, headers=headers, data=payload, timeout=120) as response:
+            async with session.post(url, headers=header, data=payload, timeout=120) as response:
                 resp = await response.json()
 
         if response.status == 429:
