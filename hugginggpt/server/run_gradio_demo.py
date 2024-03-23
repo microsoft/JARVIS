@@ -47,14 +47,14 @@ def add_text(messages, message):
 
     for image_url in image_urls:
         if not image_url.startswith("http"):
-            image_url = "public/" + image_url
+            image_url = f"public/{image_url}"
         image = load_image(image_url)
         name = f"public/images/{str(uuid.uuid4())[:4]}.jpg" 
         image.save(name)
         messages = messages + [((f"{name}",), None)]
     for audio_url in audio_urls:
         if not audio_url.startswith("http"):
-            audio_url = "public/" + audio_url
+            audio_url = f"public/{audio_url}"
         ext = audio_url.split(".")[-1]
         name = f"public/audios/{str(uuid.uuid4()[:4])}.{ext}"
         response = requests.get(audio_url)
@@ -63,7 +63,7 @@ def add_text(messages, message):
         messages = messages + [((f"{name}",), None)]
     for video_url in video_urls:
         if not video_url.startswith("http"):
-            video_url = "public/" + video_url
+            video_url = f"public/{video_url}"
         ext = video_url.split(".")[-1]
         name = f"public/audios/{str(uuid.uuid4()[:4])}.{ext}"
         response = requests.get(video_url)
