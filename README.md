@@ -228,7 +228,9 @@ docker exec jarvis npm run dev --prefix=/app/web
 <p align="center"><img src="./hugginggpt/assets/screenshot_q.jpg"><img src="./hugginggpt/assets/screenshot_a.jpg"></p>
 
 
+### Step by step installation 
 
+If you need more guidance, you can follow [this walktrough](https://rekcodman.gitbook.io/972)
 
 ## Citation
 If you find this work useful in your method, you can cite the paper as below:
