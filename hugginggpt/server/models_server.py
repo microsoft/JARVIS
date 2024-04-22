@@ -29,7 +29,7 @@ from transformers import MaskFormerFeatureExtractor, MaskFormerForInstanceSegmen
 from controlnet_aux import OpenposeDetector, MLSDdetector, HEDdetector, CannyDetector, MidasDetector
 from controlnet_aux.open_pose.body import Body
 from controlnet_aux.mlsd.models.mbv2_mlsd_large import MobileV2_MLSD_Large
-from controlnet_aux.hed import Network
+from controlnet_aux.hed import ControlNetHED_Apache2
 from transformers import DPTForDepthEstimation, DPTFeatureExtractor
 import warnings
 import time
@@ -279,8 +279,10 @@ def load_pipes(local_deployment):
             model.load_state_dict(torch.load(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/mlsd_large_512_fp32.pth"), strict=True)
             return MLSDdetector(model)
 
-
-        hed_network = Network(f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/network-bsds500.pth")
+        model_path = f"{local_fold}/lllyasviel/ControlNet/annotator/ckpts/ControlNetHED.pth"
+        hed_network = ControlNetHED_Apache2()
+        hed_network.load_state_dict(torch.load(model_path, map_location="cpu"))
+        hed_network.float().eval()
 
         controlnet_sd_pipes = {
             "openpose-control": {
