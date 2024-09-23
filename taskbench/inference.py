@@ -36,6 +36,9 @@ class ContentFormatError(Exception):
 @click.option("--log_first_detail", type=bool, default=False)
 def main(data_dir, temperature, top_p, api_addr, api_key, api_port, multiworker, llm, use_demos, reformat, reformat_by, tag, dependency_type, log_first_detail):
     assert dependency_type in ["resource", "temporal"], "Dependency type not supported"
+    if dependency_type == "resource":
+        assert data_dir != "data_dailylifeapis", "Resource dependency type only support data_huggingface and data_multimedia"
+
     arguments = locals()
     url = f"http://{api_addr}:{api_port}/v1/chat/completions"
     header = {
