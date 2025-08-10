@@ -1,0 +1,3208 @@
+{
+  "overall_overall": {
+    "all_samples": 5552,
+    "step_supports": 5552,
+    "node_supports": 5539,
+    "link_supports": 5539,
+    "argument_supports": 5539,
+    "step_rouge1": 0.5476583561095734,
+    "step_rouge2": 0.2961547439590422,
+    "step_rougeL": 0.463216346062887,
+    "step_rougeLsum": 0.5088438657506003,
+    "step_bertscore_precision": 0.9136068246270979,
+    "step_bertscore_recall": 0.9293271667117344,
+    "step_bertscore_f1": 0.9212496192637369,
+    "node_micro_precision_no_matching": 0.8049623503271202,
+    "node_micro_recall_no_matching": 0.864109189690585,
+    "node_micro_f1_no_matching": 0.8334877776002556,
+    "node_macro_precision_no_matching": 0.8326553876727644,
+    "node_macro_recall_no_matching": 0.8685752197000449,
+    "node_macro_f1_no_matching": 0.8364970103371521,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.7625,
+        "recall": 0.9384615384615385,
+        "f1-score": 0.8413793103448275,
+        "support": 260
+      },
+      "Video Downloader": {
+        "precision": 0.753125,
+        "recall": 0.9377431906614786,
+        "f1-score": 0.8353552859618717,
+        "support": 257
+      },
+      "Audio Downloader": {
+        "precision": 0.8053892215568862,
+        "recall": 0.950530035335689,
+        "f1-score": 0.8719611021069692,
+        "support": 283
+      },
+      "Text Downloader": {
+        "precision": 0.6146435452793835,
+        "recall": 0.9608433734939759,
+        "f1-score": 0.7497062279670975,
+        "support": 332
+      },
+      "Text Search": {
+        "precision": 0.787012987012987,
+        "recall": 0.8347107438016529,
+        "f1-score": 0.8101604278074866,
+        "support": 363
+      },
+      "Image Search": {
+        "precision": 0.711038961038961,
+        "recall": 0.8725099601593626,
+        "f1-score": 0.7835420393559929,
+        "support": 251
+      },
+      "Image Search (by Image)": {
+        "precision": 0.9315476190476191,
+        "recall": 0.8025641025641026,
+        "f1-score": 0.862258953168044,
+        "support": 390
+      },
+      "URL Extractor": {
+        "precision": 0.8319327731092437,
+        "recall": 0.8898876404494382,
+        "f1-score": 0.8599348534201955,
+        "support": 445
+      },
+      "Video Search": {
+        "precision": 0.9176470588235294,
+        "recall": 0.8602941176470589,
+        "f1-score": 0.8880455407969641,
+        "support": 272
+      },
+      "Text-to-Image": {
+        "precision": 0.7515151515151515,
+        "recall": 0.9276807980049875,
+        "f1-score": 0.8303571428571428,
+        "support": 401
+      },
+      "Text-to-Video": {
+        "precision": 0.8237082066869301,
+        "recall": 0.8575949367088608,
+        "f1-score": 0.8403100775193798,
+        "support": 316
+      },
+      "Text-to-Audio": {
+        "precision": 0.5647058823529412,
+        "recall": 0.9438202247191011,
+        "f1-score": 0.7066246056782334,
+        "support": 356
+      },
+      "Image-to-Text": {
+        "precision": 0.9689655172413794,
+        "recall": 0.9639794168096055,
+        "f1-score": 0.9664660361134996,
+        "support": 583
+      },
+      "Audio-to-Text": {
+        "precision": 0.5645604395604396,
+        "recall": 0.9256756756756757,
+        "f1-score": 0.7013651877133106,
+        "support": 444
+      },
+      "Video-to-Text": {
+        "precision": 0.8579881656804734,
+        "recall": 0.3215077605321508,
+        "f1-score": 0.4677419354838711,
+        "support": 451
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.9648562300319489,
+        "recall": 0.940809968847352,
+        "f1-score": 0.9526813880126183,
+        "support": 321
+      },
+      "Audio Effects": {
+        "precision": 0.8368298368298368,
+        "recall": 0.9808743169398907,
+        "f1-score": 0.9031446540880502,
+        "support": 366
+      },
+      "Audio Splicer": {
+        "precision": 0.732824427480916,
+        "recall": 0.9795918367346939,
+        "f1-score": 0.8384279475982532,
+        "support": 294
+      },
+      "Voice Changer": {
+        "precision": 0.9233333333333333,
+        "recall": 0.826865671641791,
+        "f1-score": 0.8724409448818897,
+        "support": 335
+      },
+      "Text Summarizer": {
+        "precision": 0.6863468634686347,
+        "recall": 0.9117647058823529,
+        "f1-score": 0.7831578947368422,
+        "support": 408
+      },
+      "Text Translator": {
+        "precision": 0.9816272965879265,
+        "recall": 0.9565217391304348,
+        "f1-score": 0.9689119170984456,
+        "support": 391
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.9336870026525199,
+        "recall": 0.8934010152284264,
+        "f1-score": 0.9130998702983139,
+        "support": 394
+      },
+      "Text Grammar Checker": {
+        "precision": 0.9395604395604396,
+        "recall": 0.8085106382978723,
+        "f1-score": 0.8691232528589581,
+        "support": 423
+      },
+      "Text Simplifier": {
+        "precision": 0.7182203389830508,
+        "recall": 0.8411910669975186,
+        "f1-score": 0.7748571428571427,
+        "support": 403
+      },
+      "Text Expander": {
+        "precision": 0.890282131661442,
+        "recall": 0.7263427109974424,
+        "f1-score": 0.8,
+        "support": 391
+      },
+      "Keyword Extractor": {
+        "precision": 0.8383838383838383,
+        "recall": 0.7345132743362832,
+        "f1-score": 0.7830188679245284,
+        "support": 452
+      },
+      "Text Paraphraser": {
+        "precision": 0.6701461377870563,
+        "recall": 0.7753623188405797,
+        "f1-score": 0.7189249720044792,
+        "support": 414
+      },
+      "Article Spinner": {
+        "precision": 0.9576719576719577,
+        "recall": 0.48138297872340424,
+        "f1-score": 0.6407079646017699,
+        "support": 376
+      },
+      "Topic Generator": {
+        "precision": 0.9735973597359736,
+        "recall": 0.7266009852216748,
+        "f1-score": 0.8321579689703807,
+        "support": 406
+      },
+      "Audio-to-Image": {
+        "precision": 0.9537037037037037,
+        "recall": 0.9716981132075472,
+        "f1-score": 0.9626168224299064,
+        "support": 424
+      },
+      "Image-to-Video": {
+        "precision": 0.8668407310704961,
+        "recall": 0.9021739130434783,
+        "f1-score": 0.8841544607190412,
+        "support": 368
+      },
+      "Video-to-Audio": {
+        "precision": 0.4477791116446579,
+        "recall": 0.9419191919191919,
+        "f1-score": 0.6069975589910497,
+        "support": 396
+      },
+      "Video-to-Image": {
+        "precision": 0.9172932330827067,
+        "recall": 0.9682539682539683,
+        "f1-score": 0.942084942084942,
+        "support": 378
+      },
+      "Image Stitcher": {
+        "precision": 0.9095744680851063,
+        "recall": 0.9661016949152542,
+        "f1-score": 0.9369863013698628,
+        "support": 354
+      },
+      "Image Colorizer": {
+        "precision": 0.9604863221884499,
+        "recall": 0.8633879781420765,
+        "f1-score": 0.9093525179856116,
+        "support": 366
+      },
+      "Image Style Transfer": {
+        "precision": 0.9872773536895675,
+        "recall": 0.9724310776942355,
+        "f1-score": 0.9797979797979799,
+        "support": 399
+      },
+      "Video Stabilizer": {
+        "precision": 0.9595015576323987,
+        "recall": 0.924924924924925,
+        "f1-score": 0.9418960244648318,
+        "support": 333
+      },
+      "Video Speed Changer": {
+        "precision": 0.9564220183486238,
+        "recall": 0.9881516587677726,
+        "f1-score": 0.972027972027972,
+        "support": 422
+      },
+      "Video Synchronization": {
+        "precision": 0.7988505747126436,
+        "recall": 0.8987068965517241,
+        "f1-score": 0.845841784989858,
+        "support": 464
+      },
+      "Video Voiceover": {
+        "precision": 0.8548387096774194,
+        "recall": 0.7737226277372263,
+        "f1-score": 0.8122605363984675,
+        "support": 411
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7455846442160259,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5628671848944303,
+    "edit_distance": 0.2258014186677907,
+    "link_binary_f1": 0.5188654696851418
+  },
+  "single_overall": {
+    "all_samples": 2035,
+    "step_supports": 2035,
+    "node_supports": 2026,
+    "link_supports": 2026,
+    "argument_supports": 2026,
+    "step_rouge1": 0.48700643263951904,
+    "step_rouge2": 0.2719602784510811,
+    "step_rougeL": 0.42795891059565266,
+    "step_rougeLsum": 0.4360908126055324,
+    "step_bertscore_precision": 0.9008369907407269,
+    "step_bertscore_recall": 0.9299005787554185,
+    "step_bertscore_f1": 0.9149900919096475,
+    "node_micro_precision_no_matching": 0.6598403332176328,
+    "node_micro_recall_no_matching": 0.9467131474103586,
+    "node_micro_f1_no_matching": 0.7776641439967273,
+    "node_macro_precision_no_matching": 0.7265937622963643,
+    "node_macro_recall_no_matching": 0.9428988454356102,
+    "node_macro_f1_no_matching": 0.795891040029806,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.5192307692307693,
+        "recall": 1.0,
+        "f1-score": 0.6835443037974684,
+        "support": 54
+      },
+      "Video Downloader": {
+        "precision": 0.7323943661971831,
+        "recall": 1.0,
+        "f1-score": 0.8455284552845529,
+        "support": 52
+      },
+      "Audio Downloader": {
+        "precision": 0.5360824742268041,
+        "recall": 1.0,
+        "f1-score": 0.697986577181208,
+        "support": 52
+      },
+      "Text Downloader": {
+        "precision": 0.32903225806451614,
+        "recall": 1.0,
+        "f1-score": 0.49514563106796117,
+        "support": 51
+      },
+      "Text Search": {
+        "precision": 0.8169014084507042,
+        "recall": 1.0,
+        "f1-score": 0.8992248062015504,
+        "support": 58
+      },
+      "Image Search": {
+        "precision": 0.7439024390243902,
+        "recall": 0.9682539682539683,
+        "f1-score": 0.8413793103448277,
+        "support": 63
+      },
+      "Image Search (by Image)": {
+        "precision": 0.8305084745762712,
+        "recall": 1.0,
+        "f1-score": 0.9074074074074074,
+        "support": 49
+      },
+      "URL Extractor": {
+        "precision": 0.5094339622641509,
+        "recall": 1.0,
+        "f1-score": 0.6749999999999999,
+        "support": 54
+      },
+      "Video Search": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 53
+      },
+      "Text-to-Image": {
+        "precision": 0.5510204081632653,
+        "recall": 1.0,
+        "f1-score": 0.7105263157894737,
+        "support": 54
+      },
+      "Text-to-Video": {
+        "precision": 0.9722222222222222,
+        "recall": 0.7,
+        "f1-score": 0.813953488372093,
+        "support": 50
+      },
+      "Text-to-Audio": {
+        "precision": 0.53,
+        "recall": 1.0,
+        "f1-score": 0.6928104575163399,
+        "support": 53
+      },
+      "Image-to-Text": {
+        "precision": 0.9821428571428571,
+        "recall": 1.0,
+        "f1-score": 0.9909909909909909,
+        "support": 55
+      },
+      "Audio-to-Text": {
+        "precision": 0.43373493975903615,
+        "recall": 1.0,
+        "f1-score": 0.6050420168067226,
+        "support": 36
+      },
+      "Video-to-Text": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 45
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.9636363636363636,
+        "recall": 1.0,
+        "f1-score": 0.9814814814814815,
+        "support": 53
+      },
+      "Audio Effects": {
+        "precision": 0.5061728395061729,
+        "recall": 1.0,
+        "f1-score": 0.6721311475409836,
+        "support": 41
+      },
+      "Audio Splicer": {
+        "precision": 0.6162790697674418,
+        "recall": 1.0,
+        "f1-score": 0.762589928057554,
+        "support": 53
+      },
+      "Voice Changer": {
+        "precision": 0.9743589743589743,
+        "recall": 0.9743589743589743,
+        "f1-score": 0.9743589743589743,
+        "support": 39
+      },
+      "Text Summarizer": {
+        "precision": 0.47959183673469385,
+        "recall": 1.0,
+        "f1-score": 0.6482758620689655,
+        "support": 47
+      },
+      "Text Translator": {
+        "precision": 0.9622641509433962,
+        "recall": 1.0,
+        "f1-score": 0.9807692307692307,
+        "support": 51
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.8888888888888888,
+        "recall": 1.0,
+        "f1-score": 0.9411764705882353,
+        "support": 48
+      },
+      "Text Grammar Checker": {
+        "precision": 0.7638888888888888,
+        "recall": 0.9821428571428571,
+        "f1-score": 0.8593749999999999,
+        "support": 56
+      },
+      "Text Simplifier": {
+        "precision": 0.271523178807947,
+        "recall": 1.0,
+        "f1-score": 0.4270833333333333,
+        "support": 41
+      },
+      "Text Expander": {
+        "precision": 0.9772727272727273,
+        "recall": 1.0,
+        "f1-score": 0.9885057471264368,
+        "support": 43
+      },
+      "Keyword Extractor": {
+        "precision": 0.8412698412698413,
+        "recall": 1.0,
+        "f1-score": 0.9137931034482758,
+        "support": 53
+      },
+      "Text Paraphraser": {
+        "precision": 0.6794871794871795,
+        "recall": 1.0,
+        "f1-score": 0.8091603053435115,
+        "support": 53
+      },
+      "Article Spinner": {
+        "precision": 1.0,
+        "recall": 0.8846153846153846,
+        "f1-score": 0.9387755102040816,
+        "support": 52
+      },
+      "Topic Generator": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 52
+      },
+      "Audio-to-Image": {
+        "precision": 0.9803921568627451,
+        "recall": 1.0,
+        "f1-score": 0.99009900990099,
+        "support": 50
+      },
+      "Image-to-Video": {
+        "precision": 0.7575757575757576,
+        "recall": 0.9803921568627451,
+        "f1-score": 0.8547008547008548,
+        "support": 51
+      },
+      "Video-to-Audio": {
+        "precision": 0.2568306010928962,
+        "recall": 1.0,
+        "f1-score": 0.408695652173913,
+        "support": 47
+      },
+      "Video-to-Image": {
+        "precision": 0.7457627118644068,
+        "recall": 1.0,
+        "f1-score": 0.8543689320388349,
+        "support": 44
+      },
+      "Image Stitcher": {
+        "precision": 0.9811320754716981,
+        "recall": 1.0,
+        "f1-score": 0.9904761904761905,
+        "support": 52
+      },
+      "Image Colorizer": {
+        "precision": 0.8833333333333333,
+        "recall": 1.0,
+        "f1-score": 0.9380530973451328,
+        "support": 53
+      },
+      "Image Style Transfer": {
+        "precision": 0.9591836734693877,
+        "recall": 1.0,
+        "f1-score": 0.9791666666666666,
+        "support": 47
+      },
+      "Video Stabilizer": {
+        "precision": 0.8148148148148148,
+        "recall": 1.0,
+        "f1-score": 0.8979591836734693,
+        "support": 44
+      },
+      "Video Speed Changer": {
+        "precision": 0.9666666666666667,
+        "recall": 1.0,
+        "f1-score": 0.983050847457627,
+        "support": 58
+      },
+      "Video Synchronization": {
+        "precision": 0.625,
+        "recall": 0.8928571428571429,
+        "f1-score": 0.7352941176470589,
+        "support": 56
+      },
+      "Video Voiceover": {
+        "precision": 0.6818181818181818,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.4477611940298507,
+        "support": 45
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7054532823897186,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5079177149622613,
+    "edit_distance": 0.25545292154373367,
+    "link_binary_f1": 0.0
+  },
+  "chain_overall": {
+    "all_samples": 2967,
+    "step_supports": 2967,
+    "node_supports": 2964,
+    "link_supports": 2964,
+    "argument_supports": 2964,
+    "step_rouge1": 0.5815914106702884,
+    "step_rouge2": 0.3078957408969363,
+    "step_rougeL": 0.48398930666429785,
+    "step_rougeLsum": 0.5490801660130606,
+    "step_bertscore_precision": 0.9211278868356376,
+    "step_bertscore_recall": 0.9289339514022971,
+    "step_bertscore_f1": 0.9249084247938503,
+    "node_micro_precision_no_matching": 0.8388642413487134,
+    "node_micro_recall_no_matching": 0.8527103815279156,
+    "node_micro_f1_no_matching": 0.8457306436462853,
+    "node_macro_precision_no_matching": 0.8590406367424283,
+    "node_macro_recall_no_matching": 0.8578478773317911,
+    "node_macro_f1_no_matching": 0.8463873957095132,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.8662790697674418,
+        "recall": 0.9085365853658537,
+        "f1-score": 0.886904761904762,
+        "support": 164
+      },
+      "Video Downloader": {
+        "precision": 0.7416267942583732,
+        "recall": 0.9281437125748503,
+        "f1-score": 0.8244680851063829,
+        "support": 167
+      },
+      "Audio Downloader": {
+        "precision": 0.9081081081081082,
+        "recall": 0.9438202247191011,
+        "f1-score": 0.9256198347107438,
+        "support": 178
+      },
+      "Text Downloader": {
+        "precision": 0.7327044025157232,
+        "recall": 0.9510204081632653,
+        "f1-score": 0.8277087033747779,
+        "support": 245
+      },
+      "Text Search": {
+        "precision": 0.7892857142857143,
+        "recall": 0.8185185185185185,
+        "f1-score": 0.8036363636363637,
+        "support": 270
+      },
+      "Image Search": {
+        "precision": 0.6758241758241759,
+        "recall": 0.831081081081081,
+        "f1-score": 0.7454545454545456,
+        "support": 148
+      },
+      "Image Search (by Image)": {
+        "precision": 0.95703125,
+        "recall": 0.7802547770700637,
+        "f1-score": 0.8596491228070176,
+        "support": 314
+      },
+      "URL Extractor": {
+        "precision": 0.9153094462540716,
+        "recall": 0.8646153846153846,
+        "f1-score": 0.8892405063291139,
+        "support": 325
+      },
+      "Video Search": {
+        "precision": 0.8850574712643678,
+        "recall": 0.8105263157894737,
+        "f1-score": 0.8461538461538461,
+        "support": 190
+      },
+      "Text-to-Image": {
+        "precision": 0.7889908256880734,
+        "recall": 0.9347826086956522,
+        "f1-score": 0.855721393034826,
+        "support": 276
+      },
+      "Text-to-Video": {
+        "precision": 0.8244897959183674,
+        "recall": 0.8706896551724138,
+        "f1-score": 0.8469601677148847,
+        "support": 232
+      },
+      "Text-to-Audio": {
+        "precision": 0.6058394160583942,
+        "recall": 0.9431818181818182,
+        "f1-score": 0.7377777777777779,
+        "support": 264
+      },
+      "Image-to-Text": {
+        "precision": 0.9698924731182795,
+        "recall": 0.9678111587982833,
+        "f1-score": 0.9688506981740065,
+        "support": 466
+      },
+      "Audio-to-Text": {
+        "precision": 0.5955882352941176,
+        "recall": 0.9257142857142857,
+        "f1-score": 0.7248322147651006,
+        "support": 350
+      },
+      "Video-to-Text": {
+        "precision": 0.8732394366197183,
+        "recall": 0.36578171091445427,
+        "f1-score": 0.5155925155925155,
+        "support": 339
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.963302752293578,
+        "recall": 0.9375,
+        "f1-score": 0.9502262443438915,
+        "support": 224
+      },
+      "Audio Effects": {
+        "precision": 0.9187279151943463,
+        "recall": 0.9737827715355806,
+        "f1-score": 0.9454545454545455,
+        "support": 267
+      },
+      "Audio Splicer": {
+        "precision": 0.7738095238095238,
+        "recall": 0.975,
+        "f1-score": 0.8628318584070797,
+        "support": 200
+      },
+      "Voice Changer": {
+        "precision": 0.9052132701421801,
+        "recall": 0.8127659574468085,
+        "f1-score": 0.8565022421524663,
+        "support": 235
+      },
+      "Text Summarizer": {
+        "precision": 0.7324675324675325,
+        "recall": 0.9038461538461539,
+        "f1-score": 0.8091822094691535,
+        "support": 312
+      },
+      "Text Translator": {
+        "precision": 0.9830508474576272,
+        "recall": 0.9666666666666667,
+        "f1-score": 0.9747899159663865,
+        "support": 300
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.9409448818897638,
+        "recall": 0.8786764705882353,
+        "f1-score": 0.9087452471482891,
+        "support": 272
+      },
+      "Text Grammar Checker": {
+        "precision": 0.9846153846153847,
+        "recall": 0.7828746177370031,
+        "f1-score": 0.8722316865417378,
+        "support": 327
+      },
+      "Text Simplifier": {
+        "precision": 0.9264705882352942,
+        "recall": 0.8181818181818182,
+        "f1-score": 0.8689655172413794,
+        "support": 308
+      },
+      "Text Expander": {
+        "precision": 0.871244635193133,
+        "recall": 0.6835016835016835,
+        "f1-score": 0.7660377358490565,
+        "support": 297
+      },
+      "Keyword Extractor": {
+        "precision": 0.8327526132404182,
+        "recall": 0.6988304093567251,
+        "f1-score": 0.7599364069952306,
+        "support": 342
+      },
+      "Text Paraphraser": {
+        "precision": 0.6903409090909091,
+        "recall": 0.75,
+        "f1-score": 0.7189349112426034,
+        "support": 324
+      },
+      "Article Spinner": {
+        "precision": 0.9375,
+        "recall": 0.425531914893617,
+        "f1-score": 0.5853658536585366,
+        "support": 282
+      },
+      "Topic Generator": {
+        "precision": 0.9634703196347032,
+        "recall": 0.6784565916398714,
+        "f1-score": 0.7962264150943396,
+        "support": 311
+      },
+      "Audio-to-Image": {
+        "precision": 0.9596273291925466,
+        "recall": 0.9626168224299065,
+        "f1-score": 0.9611197511664075,
+        "support": 321
+      },
+      "Image-to-Video": {
+        "precision": 0.8807692307692307,
+        "recall": 0.8980392156862745,
+        "f1-score": 0.8893203883495147,
+        "support": 255
+      },
+      "Video-to-Audio": {
+        "precision": 0.503690036900369,
+        "recall": 0.9381443298969072,
+        "f1-score": 0.6554621848739495,
+        "support": 291
+      },
+      "Video-to-Image": {
+        "precision": 0.9430604982206405,
+        "recall": 0.9636363636363636,
+        "f1-score": 0.9532374100719425,
+        "support": 275
+      },
+      "Image Stitcher": {
+        "precision": 0.896797153024911,
+        "recall": 0.9581749049429658,
+        "f1-score": 0.9264705882352942,
+        "support": 263
+      },
+      "Image Colorizer": {
+        "precision": 0.9789029535864979,
+        "recall": 0.8467153284671532,
+        "f1-score": 0.9080234833659492,
+        "support": 274
+      },
+      "Image Style Transfer": {
+        "precision": 0.99,
+        "recall": 0.9705882352941176,
+        "f1-score": 0.9801980198019802,
+        "support": 306
+      },
+      "Video Stabilizer": {
+        "precision": 0.985781990521327,
+        "recall": 0.9043478260869565,
+        "f1-score": 0.9433106575963719,
+        "support": 230
+      },
+      "Video Speed Changer": {
+        "precision": 0.9548387096774194,
+        "recall": 0.9833887043189369,
+        "f1-score": 0.9689034369885433,
+        "support": 301
+      },
+      "Video Synchronization": {
+        "precision": 0.841225626740947,
+        "recall": 0.9014925373134328,
+        "f1-score": 0.8703170028818443,
+        "support": 335
+      },
+      "Video Voiceover": {
+        "precision": 0.8737541528239202,
+        "recall": 0.8566775244299675,
+        "f1-score": 0.8651315789473685,
+        "support": 307
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.756802515419035,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5782342979162065,
+    "edit_distance": 0.2001232270745863,
+    "link_binary_f1": 0.5652946987158379
+  },
+  "dag_overall": {
+    "all_samples": 550,
+    "step_supports": 550,
+    "node_supports": 549,
+    "link_supports": 549,
+    "argument_supports": 549,
+    "step_rouge1": 0.588705528831339,
+    "step_rouge2": 0.32311066057641,
+    "step_rougeL": 0.48222050003767997,
+    "step_rougeLsum": 0.5606055714776,
+    "step_bertscore_precision": 0.9202824951301921,
+    "step_bertscore_recall": 0.9293267593600533,
+    "step_bertscore_f1": 0.9246722759983756,
+    "node_micro_precision_no_matching": 0.8225255972696246,
+    "node_micro_recall_no_matching": 0.8443443443443444,
+    "node_micro_f1_no_matching": 0.8332921709063966,
+    "node_macro_precision_no_matching": 0.8546408886409591,
+    "node_macro_recall_no_matching": 0.8439679883285004,
+    "node_macro_f1_no_matching": 0.8330607880729044,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.9318181818181818,
+        "recall": 0.9761904761904762,
+        "f1-score": 0.9534883720930233,
+        "support": 42
+      },
+      "Video Downloader": {
+        "precision": 0.85,
+        "recall": 0.8947368421052632,
+        "f1-score": 0.8717948717948718,
+        "support": 38
+      },
+      "Audio Downloader": {
+        "precision": 0.9423076923076923,
+        "recall": 0.9245283018867925,
+        "f1-score": 0.9333333333333333,
+        "support": 53
+      },
+      "Text Downloader": {
+        "precision": 0.7608695652173914,
+        "recall": 0.9722222222222222,
+        "f1-score": 0.853658536585366,
+        "support": 36
+      },
+      "Text Search": {
+        "precision": 0.7058823529411765,
+        "recall": 0.6857142857142857,
+        "f1-score": 0.6956521739130436,
+        "support": 35
+      },
+      "Image Search": {
+        "precision": 0.7954545454545454,
+        "recall": 0.875,
+        "f1-score": 0.8333333333333334,
+        "support": 40
+      },
+      "Image Search (by Image)": {
+        "precision": 0.9047619047619048,
+        "recall": 0.7037037037037037,
+        "f1-score": 0.7916666666666667,
+        "support": 27
+      },
+      "URL Extractor": {
+        "precision": 0.9682539682539683,
+        "recall": 0.9242424242424242,
+        "f1-score": 0.9457364341085271,
+        "support": 66
+      },
+      "Video Search": {
+        "precision": 0.9642857142857143,
+        "recall": 0.9310344827586207,
+        "f1-score": 0.9473684210526316,
+        "support": 29
+      },
+      "Text-to-Image": {
+        "precision": 0.8571428571428571,
+        "recall": 0.8450704225352113,
+        "f1-score": 0.851063829787234,
+        "support": 71
+      },
+      "Text-to-Video": {
+        "precision": 0.7083333333333334,
+        "recall": 1.0,
+        "f1-score": 0.8292682926829268,
+        "support": 34
+      },
+      "Text-to-Audio": {
+        "precision": 0.40476190476190477,
+        "recall": 0.8717948717948718,
+        "f1-score": 0.5528455284552847,
+        "support": 39
+      },
+      "Image-to-Text": {
+        "precision": 0.9491525423728814,
+        "recall": 0.9032258064516129,
+        "f1-score": 0.9256198347107438,
+        "support": 62
+      },
+      "Audio-to-Text": {
+        "precision": 0.504950495049505,
+        "recall": 0.8793103448275862,
+        "f1-score": 0.6415094339622641,
+        "support": 58
+      },
+      "Video-to-Text": {
+        "precision": 0.8076923076923077,
+        "recall": 0.31343283582089554,
+        "f1-score": 0.4516129032258065,
+        "support": 67
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.975,
+        "recall": 0.8863636363636364,
+        "f1-score": 0.9285714285714285,
+        "support": 44
+      },
+      "Audio Effects": {
+        "precision": 0.8923076923076924,
+        "recall": 1.0,
+        "f1-score": 0.9430894308943091,
+        "support": 58
+      },
+      "Audio Splicer": {
+        "precision": 0.7272727272727273,
+        "recall": 0.975609756097561,
+        "f1-score": 0.8333333333333334,
+        "support": 41
+      },
+      "Voice Changer": {
+        "precision": 0.96,
+        "recall": 0.7868852459016393,
+        "f1-score": 0.8648648648648649,
+        "support": 61
+      },
+      "Text Summarizer": {
+        "precision": 0.7288135593220338,
+        "recall": 0.8775510204081632,
+        "f1-score": 0.7962962962962963,
+        "support": 49
+      },
+      "Text Translator": {
+        "precision": 1.0,
+        "recall": 0.825,
+        "f1-score": 0.9041095890410958,
+        "support": 40
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.9420289855072463,
+        "recall": 0.8783783783783784,
+        "f1-score": 0.9090909090909092,
+        "support": 74
+      },
+      "Text Grammar Checker": {
+        "precision": 0.96875,
+        "recall": 0.775,
+        "f1-score": 0.8611111111111113,
+        "support": 40
+      },
+      "Text Simplifier": {
+        "precision": 0.9387755102040817,
+        "recall": 0.8518518518518519,
+        "f1-score": 0.8932038834951458,
+        "support": 54
+      },
+      "Text Expander": {
+        "precision": 0.9047619047619048,
+        "recall": 0.7450980392156863,
+        "f1-score": 0.8172043010752689,
+        "support": 51
+      },
+      "Keyword Extractor": {
+        "precision": 0.8695652173913043,
+        "recall": 0.7017543859649122,
+        "f1-score": 0.7766990291262136,
+        "support": 57
+      },
+      "Text Paraphraser": {
+        "precision": 0.5102040816326531,
+        "recall": 0.6756756756756757,
+        "f1-score": 0.5813953488372092,
+        "support": 37
+      },
+      "Article Spinner": {
+        "precision": 1.0,
+        "recall": 0.35714285714285715,
+        "f1-score": 0.5263157894736842,
+        "support": 42
+      },
+      "Topic Generator": {
+        "precision": 1.0,
+        "recall": 0.7441860465116279,
+        "f1-score": 0.8533333333333333,
+        "support": 43
+      },
+      "Audio-to-Image": {
+        "precision": 0.8983050847457628,
+        "recall": 1.0,
+        "f1-score": 0.9464285714285715,
+        "support": 53
+      },
+      "Image-to-Video": {
+        "precision": 0.9298245614035088,
+        "recall": 0.8548387096774194,
+        "f1-score": 0.8907563025210085,
+        "support": 62
+      },
+      "Video-to-Audio": {
+        "precision": 0.49074074074074076,
+        "recall": 0.9137931034482759,
+        "f1-score": 0.6385542168674698,
+        "support": 58
+      },
+      "Video-to-Image": {
+        "precision": 0.9661016949152542,
+        "recall": 0.9661016949152542,
+        "f1-score": 0.9661016949152542,
+        "support": 59
+      },
+      "Image Stitcher": {
+        "precision": 0.9047619047619048,
+        "recall": 0.9743589743589743,
+        "f1-score": 0.9382716049382716,
+        "support": 39
+      },
+      "Image Colorizer": {
+        "precision": 0.96875,
+        "recall": 0.7948717948717948,
+        "f1-score": 0.8732394366197183,
+        "support": 39
+      },
+      "Image Style Transfer": {
+        "precision": 1.0,
+        "recall": 0.9565217391304348,
+        "f1-score": 0.9777777777777777,
+        "support": 46
+      },
+      "Video Stabilizer": {
+        "precision": 1.0,
+        "recall": 0.9491525423728814,
+        "f1-score": 0.9739130434782608,
+        "support": 59
+      },
+      "Video Speed Changer": {
+        "precision": 0.9545454545454546,
+        "recall": 1.0,
+        "f1-score": 0.9767441860465117,
+        "support": 63
+      },
+      "Video Synchronization": {
+        "precision": 0.7831325301204819,
+        "recall": 0.8904109589041096,
+        "f1-score": 0.8333333333333334,
+        "support": 73
+      },
+      "Video Voiceover": {
+        "precision": 0.8163265306122449,
+        "recall": 0.6779661016949152,
+        "f1-score": 0.7407407407407407,
+        "support": 59
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7354395013969482,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5537549407114625,
+    "edit_distance": 0.2550112821568935,
+    "link_binary_f1": 0.5198799699924982
+  },
+  "overall_1": {
+    "all_samples": 2023,
+    "step_supports": 2023,
+    "node_supports": 2014,
+    "link_supports": 2014,
+    "argument_supports": 2014,
+    "step_rouge1": 0.4867500301204591,
+    "step_rouge2": 0.2711642656198615,
+    "step_rougeL": 0.4272448296467083,
+    "step_rougeLsum": 0.43531304113364466,
+    "step_bertscore_precision": 0.9006876869185161,
+    "step_bertscore_recall": 0.9298700261870293,
+    "step_bertscore_f1": 0.9148997744297663,
+    "node_micro_precision_no_matching": 0.6615330766538327,
+    "node_micro_recall_no_matching": 0.9468937875751503,
+    "node_micro_f1_no_matching": 0.7788996497012157,
+    "node_macro_precision_no_matching": 0.7273964921297316,
+    "node_macro_recall_no_matching": 0.9432614617465024,
+    "node_macro_f1_no_matching": 0.7967216671118176,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.5454545454545454,
+        "recall": 1.0,
+        "f1-score": 0.7058823529411764,
+        "support": 54
+      },
+      "Video Downloader": {
+        "precision": 0.7323943661971831,
+        "recall": 1.0,
+        "f1-score": 0.8455284552845529,
+        "support": 52
+      },
+      "Audio Downloader": {
+        "precision": 0.5416666666666666,
+        "recall": 1.0,
+        "f1-score": 0.7027027027027027,
+        "support": 52
+      },
+      "Text Downloader": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1-score": 0.5,
+        "support": 50
+      },
+      "Text Search": {
+        "precision": 0.8169014084507042,
+        "recall": 1.0,
+        "f1-score": 0.8992248062015504,
+        "support": 58
+      },
+      "Image Search": {
+        "precision": 0.7307692307692307,
+        "recall": 0.9827586206896551,
+        "f1-score": 0.8382352941176471,
+        "support": 58
+      },
+      "Image Search (by Image)": {
+        "precision": 0.8448275862068966,
+        "recall": 1.0,
+        "f1-score": 0.9158878504672897,
+        "support": 49
+      },
+      "URL Extractor": {
+        "precision": 0.5142857142857142,
+        "recall": 1.0,
+        "f1-score": 0.6792452830188679,
+        "support": 54
+      },
+      "Video Search": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 51
+      },
+      "Text-to-Image": {
+        "precision": 0.5463917525773195,
+        "recall": 1.0,
+        "f1-score": 0.7066666666666667,
+        "support": 53
+      },
+      "Text-to-Video": {
+        "precision": 0.9722222222222222,
+        "recall": 0.7,
+        "f1-score": 0.813953488372093,
+        "support": 50
+      },
+      "Text-to-Audio": {
+        "precision": 0.5252525252525253,
+        "recall": 1.0,
+        "f1-score": 0.6887417218543047,
+        "support": 52
+      },
+      "Image-to-Text": {
+        "precision": 0.9814814814814815,
+        "recall": 1.0,
+        "f1-score": 0.9906542056074767,
+        "support": 53
+      },
+      "Audio-to-Text": {
+        "precision": 0.43373493975903615,
+        "recall": 1.0,
+        "f1-score": 0.6050420168067226,
+        "support": 36
+      },
+      "Video-to-Text": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 45
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.9636363636363636,
+        "recall": 1.0,
+        "f1-score": 0.9814814814814815,
+        "support": 53
+      },
+      "Audio Effects": {
+        "precision": 0.5061728395061729,
+        "recall": 1.0,
+        "f1-score": 0.6721311475409836,
+        "support": 41
+      },
+      "Audio Splicer": {
+        "precision": 0.6162790697674418,
+        "recall": 1.0,
+        "f1-score": 0.762589928057554,
+        "support": 53
+      },
+      "Voice Changer": {
+        "precision": 0.9743589743589743,
+        "recall": 0.9743589743589743,
+        "f1-score": 0.9743589743589743,
+        "support": 39
+      },
+      "Text Summarizer": {
+        "precision": 0.47959183673469385,
+        "recall": 1.0,
+        "f1-score": 0.6482758620689655,
+        "support": 47
+      },
+      "Text Translator": {
+        "precision": 0.9622641509433962,
+        "recall": 1.0,
+        "f1-score": 0.9807692307692307,
+        "support": 51
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.8888888888888888,
+        "recall": 1.0,
+        "f1-score": 0.9411764705882353,
+        "support": 48
+      },
+      "Text Grammar Checker": {
+        "precision": 0.7638888888888888,
+        "recall": 0.9821428571428571,
+        "f1-score": 0.8593749999999999,
+        "support": 56
+      },
+      "Text Simplifier": {
+        "precision": 0.271523178807947,
+        "recall": 1.0,
+        "f1-score": 0.4270833333333333,
+        "support": 41
+      },
+      "Text Expander": {
+        "precision": 0.9772727272727273,
+        "recall": 1.0,
+        "f1-score": 0.9885057471264368,
+        "support": 43
+      },
+      "Keyword Extractor": {
+        "precision": 0.8412698412698413,
+        "recall": 1.0,
+        "f1-score": 0.9137931034482758,
+        "support": 53
+      },
+      "Text Paraphraser": {
+        "precision": 0.6794871794871795,
+        "recall": 1.0,
+        "f1-score": 0.8091603053435115,
+        "support": 53
+      },
+      "Article Spinner": {
+        "precision": 1.0,
+        "recall": 0.8846153846153846,
+        "f1-score": 0.9387755102040816,
+        "support": 52
+      },
+      "Topic Generator": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 52
+      },
+      "Audio-to-Image": {
+        "precision": 0.9803921568627451,
+        "recall": 1.0,
+        "f1-score": 0.99009900990099,
+        "support": 50
+      },
+      "Image-to-Video": {
+        "precision": 0.7575757575757576,
+        "recall": 0.9803921568627451,
+        "f1-score": 0.8547008547008548,
+        "support": 51
+      },
+      "Video-to-Audio": {
+        "precision": 0.2568306010928962,
+        "recall": 1.0,
+        "f1-score": 0.408695652173913,
+        "support": 47
+      },
+      "Video-to-Image": {
+        "precision": 0.7457627118644068,
+        "recall": 1.0,
+        "f1-score": 0.8543689320388349,
+        "support": 44
+      },
+      "Image Stitcher": {
+        "precision": 0.9811320754716981,
+        "recall": 1.0,
+        "f1-score": 0.9904761904761905,
+        "support": 52
+      },
+      "Image Colorizer": {
+        "precision": 0.8833333333333333,
+        "recall": 1.0,
+        "f1-score": 0.9380530973451328,
+        "support": 53
+      },
+      "Image Style Transfer": {
+        "precision": 0.9591836734693877,
+        "recall": 1.0,
+        "f1-score": 0.9791666666666666,
+        "support": 47
+      },
+      "Video Stabilizer": {
+        "precision": 0.8148148148148148,
+        "recall": 1.0,
+        "f1-score": 0.8979591836734693,
+        "support": 44
+      },
+      "Video Speed Changer": {
+        "precision": 0.9666666666666667,
+        "recall": 1.0,
+        "f1-score": 0.983050847457627,
+        "support": 58
+      },
+      "Video Synchronization": {
+        "precision": 0.625,
+        "recall": 0.8928571428571429,
+        "f1-score": 0.7352941176470589,
+        "support": 56
+      },
+      "Video Voiceover": {
+        "precision": 0.6818181818181818,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.4477611940298507,
+        "support": 45
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7080266386260077,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5100731234144157,
+    "edit_distance": 0.25397928784224,
+    "link_binary_f1": 0.0
+  },
+  "overall_2": {
+    "all_samples": 312,
+    "step_supports": 312,
+    "node_supports": 312,
+    "link_supports": 312,
+    "argument_supports": 312,
+    "step_rouge1": 0.5693451768226092,
+    "step_rouge2": 0.3015512175274534,
+    "step_rougeL": 0.48175102709451406,
+    "step_rougeLsum": 0.5215647533684249,
+    "step_bertscore_precision": 0.9233321362198927,
+    "step_bertscore_recall": 0.9338319416229541,
+    "step_bertscore_f1": 0.9284084985653559,
+    "node_micro_precision_no_matching": 0.7979351032448377,
+    "node_micro_recall_no_matching": 0.8898026315789473,
+    "node_micro_f1_no_matching": 0.8413685847589423,
+    "node_macro_precision_no_matching": 0.8349640276319926,
+    "node_macro_recall_no_matching": 0.8977411939195996,
+    "node_macro_f1_no_matching": 0.8479962783072363,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.6470588235294118,
+        "recall": 1.0,
+        "f1-score": 0.7857142857142858,
+        "support": 11
+      },
+      "Video Downloader": {
+        "precision": 0.6923076923076923,
+        "recall": 1.0,
+        "f1-score": 0.8181818181818181,
+        "support": 9
+      },
+      "Audio Downloader": {
+        "precision": 0.8571428571428571,
+        "recall": 1.0,
+        "f1-score": 0.923076923076923,
+        "support": 6
+      },
+      "Text Downloader": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1-score": 0.6666666666666666,
+        "support": 9
+      },
+      "Text Search": {
+        "precision": 0.7272727272727273,
+        "recall": 1.0,
+        "f1-score": 0.8421052631578948,
+        "support": 8
+      },
+      "Image Search": {
+        "precision": 0.6875,
+        "recall": 0.6875,
+        "f1-score": 0.6875,
+        "support": 16
+      },
+      "Image Search (by Image)": {
+        "precision": 0.8823529411764706,
+        "recall": 0.7894736842105263,
+        "f1-score": 0.8333333333333333,
+        "support": 19
+      },
+      "URL Extractor": {
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1-score": 0.8235294117647058,
+        "support": 14
+      },
+      "Video Search": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.923076923076923,
+        "support": 7
+      },
+      "Text-to-Image": {
+        "precision": 0.7575757575757576,
+        "recall": 0.9615384615384616,
+        "f1-score": 0.8474576271186441,
+        "support": 26
+      },
+      "Text-to-Video": {
+        "precision": 0.9166666666666666,
+        "recall": 0.7333333333333333,
+        "f1-score": 0.8148148148148148,
+        "support": 15
+      },
+      "Text-to-Audio": {
+        "precision": 0.6571428571428571,
+        "recall": 1.0,
+        "f1-score": 0.7931034482758621,
+        "support": 23
+      },
+      "Image-to-Text": {
+        "precision": 0.9259259259259259,
+        "recall": 1.0,
+        "f1-score": 0.9615384615384615,
+        "support": 25
+      },
+      "Audio-to-Text": {
+        "precision": 0.375,
+        "recall": 0.9230769230769231,
+        "f1-score": 0.5333333333333333,
+        "support": 13
+      },
+      "Video-to-Text": {
+        "precision": 0.5,
+        "recall": 0.1,
+        "f1-score": 0.16666666666666669,
+        "support": 20
+      },
+      "Audio Noise Reduction": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5
+      },
+      "Audio Effects": {
+        "precision": 0.8421052631578947,
+        "recall": 1.0,
+        "f1-score": 0.9142857142857143,
+        "support": 16
+      },
+      "Audio Splicer": {
+        "precision": 0.875,
+        "recall": 1.0,
+        "f1-score": 0.9333333333333333,
+        "support": 14
+      },
+      "Voice Changer": {
+        "precision": 1.0,
+        "recall": 0.8181818181818182,
+        "f1-score": 0.9,
+        "support": 11
+      },
+      "Text Summarizer": {
+        "precision": 0.7368421052631579,
+        "recall": 0.9333333333333333,
+        "f1-score": 0.8235294117647058,
+        "support": 15
+      },
+      "Text Translator": {
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1-score": 0.9743589743589743,
+        "support": 20
+      },
+      "Text Sentiment Analysis": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 13
+      },
+      "Text Grammar Checker": {
+        "precision": 1.0,
+        "recall": 0.8823529411764706,
+        "f1-score": 0.9375,
+        "support": 17
+      },
+      "Text Simplifier": {
+        "precision": 0.7333333333333333,
+        "recall": 1.0,
+        "f1-score": 0.846153846153846,
+        "support": 11
+      },
+      "Text Expander": {
+        "precision": 0.9473684210526315,
+        "recall": 0.9,
+        "f1-score": 0.9230769230769231,
+        "support": 20
+      },
+      "Keyword Extractor": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1-score": 0.8571428571428571,
+        "support": 8
+      },
+      "Text Paraphraser": {
+        "precision": 0.75,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.7999999999999999,
+        "support": 21
+      },
+      "Article Spinner": {
+        "precision": 1.0,
+        "recall": 0.6470588235294118,
+        "f1-score": 0.7857142857142858,
+        "support": 17
+      },
+      "Topic Generator": {
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1-score": 0.888888888888889,
+        "support": 15
+      },
+      "Audio-to-Image": {
+        "precision": 0.9473684210526315,
+        "recall": 1.0,
+        "f1-score": 0.972972972972973,
+        "support": 18
+      },
+      "Image-to-Video": {
+        "precision": 0.7894736842105263,
+        "recall": 0.9375,
+        "f1-score": 0.8571428571428572,
+        "support": 16
+      },
+      "Video-to-Audio": {
+        "precision": 0.4358974358974359,
+        "recall": 0.8947368421052632,
+        "f1-score": 0.5862068965517242,
+        "support": 19
+      },
+      "Video-to-Image": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 14
+      },
+      "Image Stitcher": {
+        "precision": 0.9565217391304348,
+        "recall": 1.0,
+        "f1-score": 0.9777777777777777,
+        "support": 22
+      },
+      "Image Colorizer": {
+        "precision": 1.0,
+        "recall": 0.9285714285714286,
+        "f1-score": 0.962962962962963,
+        "support": 14
+      },
+      "Image Style Transfer": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 24
+      },
+      "Video Stabilizer": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 7
+      },
+      "Video Speed Changer": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 18
+      },
+      "Video Synchronization": {
+        "precision": 0.7894736842105263,
+        "recall": 0.7894736842105263,
+        "f1-score": 0.7894736842105263,
+        "support": 19
+      },
+      "Video Voiceover": {
+        "precision": 0.7692307692307693,
+        "recall": 0.7692307692307693,
+        "f1-score": 0.7692307692307693,
+        "support": 13
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.768688293370945,
+    "argument_task_argname_value_binary_f1_no_matching": 0.6443037974683544,
+    "edit_distance": 0.172115384615384,
+    "link_binary_f1": 0.5572649572649573
+  },
+  "overall_3": {
+    "all_samples": 1243,
+    "step_supports": 1243,
+    "node_supports": 1241,
+    "link_supports": 1241,
+    "argument_supports": 1241,
+    "step_rouge1": 0.5625117113221713,
+    "step_rouge2": 0.2937951841427351,
+    "step_rougeL": 0.47069840792480544,
+    "step_rougeLsum": 0.529748721006293,
+    "step_bertscore_precision": 0.9197179376359726,
+    "step_bertscore_recall": 0.9277962347910659,
+    "step_bertscore_f1": 0.9236223310208186,
+    "node_micro_precision_no_matching": 0.8136662286465177,
+    "node_micro_recall_no_matching": 0.8566685113447703,
+    "node_micro_f1_no_matching": 0.8346138293570562,
+    "node_macro_precision_no_matching": 0.8435540816841118,
+    "node_macro_recall_no_matching": 0.8625399139430453,
+    "node_macro_f1_no_matching": 0.8355978170523276,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.859375,
+        "recall": 0.9821428571428571,
+        "f1-score": 0.9166666666666665,
+        "support": 56
+      },
+      "Video Downloader": {
+        "precision": 0.6486486486486487,
+        "recall": 0.96,
+        "f1-score": 0.7741935483870968,
+        "support": 50
+      },
+      "Audio Downloader": {
+        "precision": 0.9315068493150684,
+        "recall": 0.9444444444444444,
+        "f1-score": 0.9379310344827586,
+        "support": 72
+      },
+      "Text Downloader": {
+        "precision": 0.6396396396396397,
+        "recall": 0.9594594594594594,
+        "f1-score": 0.7675675675675677,
+        "support": 74
+      },
+      "Text Search": {
+        "precision": 0.7647058823529411,
+        "recall": 0.7926829268292683,
+        "f1-score": 0.7784431137724551,
+        "support": 82
+      },
+      "Image Search": {
+        "precision": 0.6567164179104478,
+        "recall": 0.8461538461538461,
+        "f1-score": 0.7394957983193277,
+        "support": 52
+      },
+      "Image Search (by Image)": {
+        "precision": 0.9838709677419355,
+        "recall": 0.7349397590361446,
+        "f1-score": 0.8413793103448276,
+        "support": 83
+      },
+      "URL Extractor": {
+        "precision": 0.8415841584158416,
+        "recall": 0.9042553191489362,
+        "f1-score": 0.8717948717948718,
+        "support": 94
+      },
+      "Video Search": {
+        "precision": 0.935064935064935,
+        "recall": 0.8780487804878049,
+        "f1-score": 0.9056603773584906,
+        "support": 82
+      },
+      "Text-to-Image": {
+        "precision": 0.8099173553719008,
+        "recall": 0.9245283018867925,
+        "f1-score": 0.8634361233480177,
+        "support": 106
+      },
+      "Text-to-Video": {
+        "precision": 0.8068181818181818,
+        "recall": 0.9102564102564102,
+        "f1-score": 0.8554216867469879,
+        "support": 78
+      },
+      "Text-to-Audio": {
+        "precision": 0.5569620253164557,
+        "recall": 0.9887640449438202,
+        "f1-score": 0.7125506072874493,
+        "support": 89
+      },
+      "Image-to-Text": {
+        "precision": 0.984251968503937,
+        "recall": 1.0,
+        "f1-score": 0.9920634920634921,
+        "support": 125
+      },
+      "Audio-to-Text": {
+        "precision": 0.581151832460733,
+        "recall": 0.9652173913043478,
+        "f1-score": 0.7254901960784313,
+        "support": 115
+      },
+      "Video-to-Text": {
+        "precision": 0.875,
+        "recall": 0.22105263157894736,
+        "f1-score": 0.3529411764705882,
+        "support": 95
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.9722222222222222,
+        "recall": 0.9859154929577465,
+        "f1-score": 0.979020979020979,
+        "support": 71
+      },
+      "Audio Effects": {
+        "precision": 0.9223300970873787,
+        "recall": 0.979381443298969,
+        "f1-score": 0.95,
+        "support": 97
+      },
+      "Audio Splicer": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1-score": 0.8,
+        "support": 60
+      },
+      "Voice Changer": {
+        "precision": 0.8846153846153846,
+        "recall": 0.8214285714285714,
+        "f1-score": 0.8518518518518519,
+        "support": 84
+      },
+      "Text Summarizer": {
+        "precision": 0.7101449275362319,
+        "recall": 0.8990825688073395,
+        "f1-score": 0.7935222672064779,
+        "support": 109
+      },
+      "Text Translator": {
+        "precision": 0.9791666666666666,
+        "recall": 0.9791666666666666,
+        "f1-score": 0.9791666666666666,
+        "support": 96
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.9479166666666666,
+        "recall": 0.8504672897196262,
+        "f1-score": 0.8965517241379312,
+        "support": 107
+      },
+      "Text Grammar Checker": {
+        "precision": 0.9866666666666667,
+        "recall": 0.7551020408163265,
+        "f1-score": 0.8554913294797689,
+        "support": 98
+      },
+      "Text Simplifier": {
+        "precision": 0.8936170212765957,
+        "recall": 0.8076923076923077,
+        "f1-score": 0.8484848484848485,
+        "support": 104
+      },
+      "Text Expander": {
+        "precision": 0.8354430379746836,
+        "recall": 0.7096774193548387,
+        "f1-score": 0.7674418604651164,
+        "support": 93
+      },
+      "Keyword Extractor": {
+        "precision": 0.7830188679245284,
+        "recall": 0.6693548387096774,
+        "f1-score": 0.7217391304347825,
+        "support": 124
+      },
+      "Text Paraphraser": {
+        "precision": 0.6910569105691057,
+        "recall": 0.7327586206896551,
+        "f1-score": 0.7112970711297071,
+        "support": 116
+      },
+      "Article Spinner": {
+        "precision": 0.9148936170212766,
+        "recall": 0.4673913043478261,
+        "f1-score": 0.6187050359712231,
+        "support": 92
+      },
+      "Topic Generator": {
+        "precision": 0.9545454545454546,
+        "recall": 0.6923076923076923,
+        "f1-score": 0.8025477707006369,
+        "support": 91
+      },
+      "Audio-to-Image": {
+        "precision": 0.9903846153846154,
+        "recall": 0.9716981132075472,
+        "f1-score": 0.9809523809523809,
+        "support": 106
+      },
+      "Image-to-Video": {
+        "precision": 0.8645833333333334,
+        "recall": 0.8924731182795699,
+        "f1-score": 0.8783068783068784,
+        "support": 93
+      },
+      "Video-to-Audio": {
+        "precision": 0.42783505154639173,
+        "recall": 0.9540229885057471,
+        "f1-score": 0.5907473309608541,
+        "support": 87
+      },
+      "Video-to-Image": {
+        "precision": 0.9662921348314607,
+        "recall": 0.9885057471264368,
+        "f1-score": 0.9772727272727273,
+        "support": 87
+      },
+      "Image Stitcher": {
+        "precision": 0.9156626506024096,
+        "recall": 0.9743589743589743,
+        "f1-score": 0.9440993788819876,
+        "support": 78
+      },
+      "Image Colorizer": {
+        "precision": 1.0,
+        "recall": 0.851063829787234,
+        "f1-score": 0.9195402298850576,
+        "support": 94
+      },
+      "Image Style Transfer": {
+        "precision": 1.0,
+        "recall": 0.989247311827957,
+        "f1-score": 0.9945945945945946,
+        "support": 93
+      },
+      "Video Stabilizer": {
+        "precision": 0.9710144927536232,
+        "recall": 0.8481012658227848,
+        "f1-score": 0.9054054054054054,
+        "support": 79
+      },
+      "Video Speed Changer": {
+        "precision": 0.9393939393939394,
+        "recall": 0.9893617021276596,
+        "f1-score": 0.9637305699481866,
+        "support": 94
+      },
+      "Video Synchronization": {
+        "precision": 0.8016528925619835,
+        "recall": 0.9238095238095239,
+        "f1-score": 0.8584070796460178,
+        "support": 105
+      },
+      "Video Voiceover": {
+        "precision": 0.8478260869565217,
+        "recall": 0.7572815533980582,
+        "f1-score": 0.8,
+        "support": 103
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7563451776649747,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5712390847794849,
+    "edit_distance": 0.2115757552502151,
+    "link_binary_f1": 0.5409284592958062
+  },
+  "overall_4": {
+    "all_samples": 1161,
+    "step_supports": 1161,
+    "node_supports": 1160,
+    "link_supports": 1160,
+    "argument_supports": 1160,
+    "step_rouge1": 0.5892158897376295,
+    "step_rouge2": 0.314074621385093,
+    "step_rougeL": 0.48810628418042423,
+    "step_rougeLsum": 0.558999102701378,
+    "step_bertscore_precision": 0.9216532887927835,
+    "step_bertscore_recall": 0.9289191093658394,
+    "step_bertscore_f1": 0.9251713012437385,
+    "node_micro_precision_no_matching": 0.841909349682505,
+    "node_micro_recall_no_matching": 0.8580673956706092,
+    "node_micro_f1_no_matching": 0.8499115826702033,
+    "node_macro_precision_no_matching": 0.864095533301304,
+    "node_macro_recall_no_matching": 0.8621004444864576,
+    "node_macro_f1_no_matching": 0.8516422022473009,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.9571428571428572,
+        "recall": 0.9305555555555556,
+        "f1-score": 0.943661971830986,
+        "support": 72
+      },
+      "Video Downloader": {
+        "precision": 0.8023255813953488,
+        "recall": 0.9078947368421053,
+        "f1-score": 0.8518518518518517,
+        "support": 76
+      },
+      "Audio Downloader": {
+        "precision": 0.8928571428571429,
+        "recall": 0.9493670886075949,
+        "f1-score": 0.920245398773006,
+        "support": 79
+      },
+      "Text Downloader": {
+        "precision": 0.7391304347826086,
+        "recall": 0.9883720930232558,
+        "f1-score": 0.8457711442786069,
+        "support": 86
+      },
+      "Text Search": {
+        "precision": 0.8181818181818182,
+        "recall": 0.7641509433962265,
+        "f1-score": 0.7902439024390244,
+        "support": 106
+      },
+      "Image Search": {
+        "precision": 0.7108433734939759,
+        "recall": 0.8676470588235294,
+        "f1-score": 0.7814569536423841,
+        "support": 68
+      },
+      "Image Search (by Image)": {
+        "precision": 0.9479166666666666,
+        "recall": 0.7777777777777778,
+        "f1-score": 0.8544600938967136,
+        "support": 117
+      },
+      "URL Extractor": {
+        "precision": 0.9758064516129032,
+        "recall": 0.8768115942028986,
+        "f1-score": 0.9236641221374046,
+        "support": 138
+      },
+      "Video Search": {
+        "precision": 0.8870967741935484,
+        "recall": 0.8461538461538461,
+        "f1-score": 0.8661417322834646,
+        "support": 65
+      },
+      "Text-to-Image": {
+        "precision": 0.8360655737704918,
+        "recall": 0.8869565217391304,
+        "f1-score": 0.8607594936708861,
+        "support": 115
+      },
+      "Text-to-Video": {
+        "precision": 0.7941176470588235,
+        "recall": 0.9204545454545454,
+        "f1-score": 0.8526315789473684,
+        "support": 88
+      },
+      "Text-to-Audio": {
+        "precision": 0.5730337078651685,
+        "recall": 0.9357798165137615,
+        "f1-score": 0.7108013937282229,
+        "support": 109
+      },
+      "Image-to-Text": {
+        "precision": 0.9576719576719577,
+        "recall": 0.9783783783783784,
+        "f1-score": 0.9679144385026738,
+        "support": 185
+      },
+      "Audio-to-Text": {
+        "precision": 0.5594713656387665,
+        "recall": 0.8943661971830986,
+        "f1-score": 0.6883468834688348,
+        "support": 142
+      },
+      "Video-to-Text": {
+        "precision": 0.7592592592592593,
+        "recall": 0.30597014925373134,
+        "f1-score": 0.43617021276595747,
+        "support": 134
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.9595959595959596,
+        "recall": 0.9405940594059405,
+        "f1-score": 0.95,
+        "support": 101
+      },
+      "Audio Effects": {
+        "precision": 0.9147286821705426,
+        "recall": 1.0,
+        "f1-score": 0.9554655870445344,
+        "support": 118
+      },
+      "Audio Splicer": {
+        "precision": 0.7981651376146789,
+        "recall": 0.9775280898876404,
+        "f1-score": 0.8787878787878788,
+        "support": 89
+      },
+      "Voice Changer": {
+        "precision": 0.93,
+        "recall": 0.7948717948717948,
+        "f1-score": 0.8571428571428572,
+        "support": 117
+      },
+      "Text Summarizer": {
+        "precision": 0.7549668874172185,
+        "recall": 0.9193548387096774,
+        "f1-score": 0.829090909090909,
+        "support": 124
+      },
+      "Text Translator": {
+        "precision": 0.9827586206896551,
+        "recall": 0.95,
+        "f1-score": 0.9661016949152542,
+        "support": 120
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.956140350877193,
+        "recall": 0.8790322580645161,
+        "f1-score": 0.9159663865546219,
+        "support": 124
+      },
+      "Text Grammar Checker": {
+        "precision": 0.9727272727272728,
+        "recall": 0.816793893129771,
+        "f1-score": 0.8879668049792532,
+        "support": 131
+      },
+      "Text Simplifier": {
+        "precision": 0.9537037037037037,
+        "recall": 0.824,
+        "f1-score": 0.8841201716738197,
+        "support": 125
+      },
+      "Text Expander": {
+        "precision": 0.9069767441860465,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.7684729064039408,
+        "support": 117
+      },
+      "Keyword Extractor": {
+        "precision": 0.8495575221238938,
+        "recall": 0.7559055118110236,
+        "f1-score": 0.8,
+        "support": 127
+      },
+      "Text Paraphraser": {
+        "precision": 0.616,
+        "recall": 0.7333333333333333,
+        "f1-score": 0.6695652173913044,
+        "support": 105
+      },
+      "Article Spinner": {
+        "precision": 0.9454545454545454,
+        "recall": 0.46846846846846846,
+        "f1-score": 0.6265060240963856,
+        "support": 111
+      },
+      "Topic Generator": {
+        "precision": 0.9659090909090909,
+        "recall": 0.7024793388429752,
+        "f1-score": 0.8133971291866029,
+        "support": 121
+      },
+      "Audio-to-Image": {
+        "precision": 0.9312977099236641,
+        "recall": 0.9838709677419355,
+        "f1-score": 0.9568627450980393,
+        "support": 124
+      },
+      "Image-to-Video": {
+        "precision": 0.9320388349514563,
+        "recall": 0.8807339449541285,
+        "f1-score": 0.9056603773584906,
+        "support": 109
+      },
+      "Video-to-Audio": {
+        "precision": 0.5330396475770925,
+        "recall": 0.937984496124031,
+        "f1-score": 0.6797752808988764,
+        "support": 129
+      },
+      "Video-to-Image": {
+        "precision": 0.9464285714285714,
+        "recall": 0.954954954954955,
+        "f1-score": 0.9506726457399103,
+        "support": 111
+      },
+      "Image Stitcher": {
+        "precision": 0.89,
+        "recall": 0.9468085106382979,
+        "f1-score": 0.9175257731958764,
+        "support": 94
+      },
+      "Image Colorizer": {
+        "precision": 0.9882352941176471,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.9180327868852458,
+        "support": 98
+      },
+      "Image Style Transfer": {
+        "precision": 0.9905660377358491,
+        "recall": 0.9459459459459459,
+        "f1-score": 0.967741935483871,
+        "support": 111
+      },
+      "Video Stabilizer": {
+        "precision": 1.0,
+        "recall": 0.9595959595959596,
+        "f1-score": 0.979381443298969,
+        "support": 99
+      },
+      "Video Speed Changer": {
+        "precision": 0.92,
+        "recall": 1.0,
+        "f1-score": 0.9583333333333334,
+        "support": 115
+      },
+      "Video Synchronization": {
+        "precision": 0.8291139240506329,
+        "recall": 0.8851351351351351,
+        "f1-score": 0.8562091503267973,
+        "support": 148
+      },
+      "Video Voiceover": {
+        "precision": 0.8854961832061069,
+        "recall": 0.8721804511278195,
+        "f1-score": 0.8787878787878788,
+        "support": 133
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7554203865397823,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5720692438783748,
+    "edit_distance": 0.2112528611235509,
+    "link_binary_f1": 0.5695813803135606
+  },
+  "overall_5": {
+    "all_samples": 472,
+    "step_supports": 472,
+    "node_supports": 471,
+    "link_supports": 471,
+    "argument_supports": 471,
+    "step_rouge1": 0.6062403097073026,
+    "step_rouge2": 0.32953585409107045,
+    "step_rougeL": 0.49379999996565893,
+    "step_rougeLsum": 0.577286778689085,
+    "step_bertscore_precision": 0.9215874961119587,
+    "step_bertscore_recall": 0.9299894821340755,
+    "step_bertscore_f1": 0.9256817521685261,
+    "node_micro_precision_no_matching": 0.8460153084196308,
+    "node_micro_recall_no_matching": 0.8328900709219859,
+    "node_micro_f1_no_matching": 0.8394013848559304,
+    "node_macro_precision_no_matching": 0.8681719333982949,
+    "node_macro_recall_no_matching": 0.8334462153808444,
+    "node_macro_f1_no_matching": 0.8351083810913842,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.8461538461538461,
+        "recall": 0.8918918918918919,
+        "f1-score": 0.868421052631579,
+        "support": 37
+      },
+      "Video Downloader": {
+        "precision": 0.85,
+        "recall": 0.8947368421052632,
+        "f1-score": 0.8717948717948718,
+        "support": 38
+      },
+      "Audio Downloader": {
+        "precision": 0.9473684210526315,
+        "recall": 0.9473684210526315,
+        "f1-score": 0.9473684210526315,
+        "support": 38
+      },
+      "Text Downloader": {
+        "precision": 0.821917808219178,
+        "recall": 0.967741935483871,
+        "f1-score": 0.8888888888888888,
+        "support": 62
+      },
+      "Text Search": {
+        "precision": 0.7457627118644068,
+        "recall": 0.8148148148148148,
+        "f1-score": 0.7787610619469028,
+        "support": 54
+      },
+      "Image Search": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8148148148148148,
+        "f1-score": 0.7333333333333333,
+        "support": 27
+      },
+      "Image Search (by Image)": {
+        "precision": 0.9387755102040817,
+        "recall": 0.7796610169491526,
+        "f1-score": 0.8518518518518519,
+        "support": 59
+      },
+      "URL Extractor": {
+        "precision": 0.9538461538461539,
+        "recall": 0.8266666666666667,
+        "f1-score": 0.8857142857142857,
+        "support": 75
+      },
+      "Video Search": {
+        "precision": 0.8,
+        "recall": 0.7272727272727273,
+        "f1-score": 0.761904761904762,
+        "support": 33
+      },
+      "Text-to-Image": {
+        "precision": 0.7619047619047619,
+        "recall": 0.9230769230769231,
+        "f1-score": 0.8347826086956522,
+        "support": 52
+      },
+      "Text-to-Video": {
+        "precision": 0.82,
+        "recall": 0.8541666666666666,
+        "f1-score": 0.836734693877551,
+        "support": 48
+      },
+      "Text-to-Audio": {
+        "precision": 0.5555555555555556,
+        "recall": 0.8333333333333334,
+        "f1-score": 0.6666666666666667,
+        "support": 54
+      },
+      "Image-to-Text": {
+        "precision": 0.9642857142857143,
+        "recall": 0.8901098901098901,
+        "f1-score": 0.9257142857142856,
+        "support": 91
+      },
+      "Audio-to-Text": {
+        "precision": 0.6363636363636364,
+        "recall": 0.9722222222222222,
+        "f1-score": 0.7692307692307692,
+        "support": 72
+      },
+      "Video-to-Text": {
+        "precision": 0.9428571428571428,
+        "recall": 0.44594594594594594,
+        "f1-score": 0.6055045871559633,
+        "support": 74
+      },
+      "Audio Noise Reduction": {
+        "precision": 1.0,
+        "recall": 0.8703703703703703,
+        "f1-score": 0.9306930693069307,
+        "support": 54
+      },
+      "Audio Effects": {
+        "precision": 0.96,
+        "recall": 0.9411764705882353,
+        "f1-score": 0.9504950495049505,
+        "support": 51
+      },
+      "Audio Splicer": {
+        "precision": 0.8125,
+        "recall": 0.9512195121951219,
+        "f1-score": 0.8764044943820225,
+        "support": 41
+      },
+      "Voice Changer": {
+        "precision": 0.9444444444444444,
+        "recall": 0.7555555555555555,
+        "f1-score": 0.8395061728395062,
+        "support": 45
+      },
+      "Text Summarizer": {
+        "precision": 0.6842105263157895,
+        "recall": 0.896551724137931,
+        "f1-score": 0.7761194029850746,
+        "support": 58
+      },
+      "Text Translator": {
+        "precision": 1.0,
+        "recall": 0.9298245614035088,
+        "f1-score": 0.9636363636363636,
+        "support": 57
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.8936170212765957,
+        "recall": 0.8936170212765957,
+        "f1-score": 0.8936170212765957,
+        "support": 47
+      },
+      "Text Grammar Checker": {
+        "precision": 1.0,
+        "recall": 0.7719298245614035,
+        "f1-score": 0.8712871287128713,
+        "support": 57
+      },
+      "Text Simplifier": {
+        "precision": 0.9629629629629629,
+        "recall": 0.7761194029850746,
+        "f1-score": 0.859504132231405,
+        "support": 67
+      },
+      "Text Expander": {
+        "precision": 0.8723404255319149,
+        "recall": 0.6721311475409836,
+        "f1-score": 0.7592592592592592,
+        "support": 61
+      },
+      "Keyword Extractor": {
+        "precision": 0.8372093023255814,
+        "recall": 0.5901639344262295,
+        "f1-score": 0.6923076923076923,
+        "support": 61
+      },
+      "Text Paraphraser": {
+        "precision": 0.676923076923077,
+        "recall": 0.7333333333333333,
+        "f1-score": 0.7040000000000001,
+        "support": 60
+      },
+      "Article Spinner": {
+        "precision": 1.0,
+        "recall": 0.24,
+        "f1-score": 0.3870967741935484,
+        "support": 50
+      },
+      "Topic Generator": {
+        "precision": 1.0,
+        "recall": 0.6307692307692307,
+        "f1-score": 0.7735849056603773,
+        "support": 65
+      },
+      "Audio-to-Image": {
+        "precision": 0.967741935483871,
+        "recall": 0.9375,
+        "f1-score": 0.9523809523809523,
+        "support": 64
+      },
+      "Image-to-Video": {
+        "precision": 0.9090909090909091,
+        "recall": 0.8888888888888888,
+        "f1-score": 0.8988764044943819,
+        "support": 45
+      },
+      "Video-to-Audio": {
+        "precision": 0.5185185185185185,
+        "recall": 0.9180327868852459,
+        "f1-score": 0.6627218934911242,
+        "support": 61
+      },
+      "Video-to-Image": {
+        "precision": 0.9354838709677419,
+        "recall": 0.9354838709677419,
+        "f1-score": 0.9354838709677419,
+        "support": 62
+      },
+      "Image Stitcher": {
+        "precision": 0.9016393442622951,
+        "recall": 0.9649122807017544,
+        "f1-score": 0.9322033898305084,
+        "support": 57
+      },
+      "Image Colorizer": {
+        "precision": 0.94,
+        "recall": 0.8245614035087719,
+        "f1-score": 0.8785046728971964,
+        "support": 57
+      },
+      "Image Style Transfer": {
+        "precision": 0.9861111111111112,
+        "recall": 0.9726027397260274,
+        "f1-score": 0.9793103448275863,
+        "support": 73
+      },
+      "Video Stabilizer": {
+        "precision": 1.0,
+        "recall": 0.9433962264150944,
+        "f1-score": 0.970873786407767,
+        "support": 53
+      },
+      "Video Speed Changer": {
+        "precision": 1.0,
+        "recall": 0.9714285714285714,
+        "f1-score": 0.9855072463768115,
+        "support": 70
+      },
+      "Video Synchronization": {
+        "precision": 0.8082191780821918,
+        "recall": 0.921875,
+        "f1-score": 0.8613138686131386,
+        "support": 64
+      },
+      "Video Voiceover": {
+        "precision": 0.864406779661017,
+        "recall": 0.8225806451612904,
+        "f1-score": 0.8429752066115702,
+        "support": 62
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7364606402254882,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5612677353970886,
+    "edit_distance": 0.22487651532237296,
+    "link_binary_f1": 0.5376019329507702
+  },
+  "overall_6": {
+    "all_samples": 208,
+    "step_supports": 208,
+    "node_supports": 208,
+    "link_supports": 208,
+    "argument_supports": 208,
+    "step_rouge1": 0.6132573398445176,
+    "step_rouge2": 0.341194412297661,
+    "step_rougeL": 0.5064309888296057,
+    "step_rougeLsum": 0.5911111420375557,
+    "step_bertscore_precision": 0.9220140668062063,
+    "step_bertscore_recall": 0.9289270673806851,
+    "step_bertscore_f1": 0.9253741451180898,
+    "node_micro_precision_no_matching": 0.8517566409597258,
+    "node_micro_recall_no_matching": 0.8324958123953099,
+    "node_micro_f1_no_matching": 0.842016094875053,
+    "node_macro_precision_no_matching": 0.8595315528543557,
+    "node_macro_recall_no_matching": 0.8438505423556037,
+    "node_macro_f1_no_matching": 0.8385156543387954,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.7692307692307693,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.8333333333333333,
+        "support": 11
+      },
+      "Video Downloader": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8823529411764706,
+        "f1-score": 0.8571428571428571,
+        "support": 17
+      },
+      "Audio Downloader": {
+        "precision": 0.9090909090909091,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.9090909090909091,
+        "support": 22
+      },
+      "Text Downloader": {
+        "precision": 0.7878787878787878,
+        "recall": 0.8666666666666667,
+        "f1-score": 0.8253968253968254,
+        "support": 30
+      },
+      "Text Search": {
+        "precision": 0.875,
+        "recall": 0.8235294117647058,
+        "f1-score": 0.8484848484848485,
+        "support": 34
+      },
+      "Image Search": {
+        "precision": 0.9444444444444444,
+        "recall": 0.8947368421052632,
+        "f1-score": 0.918918918918919,
+        "support": 19
+      },
+      "Image Search (by Image)": {
+        "precision": 0.967741935483871,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.9374999999999999,
+        "support": 33
+      },
+      "URL Extractor": {
+        "precision": 0.972972972972973,
+        "recall": 0.9,
+        "f1-score": 0.935064935064935,
+        "support": 40
+      },
+      "Video Search": {
+        "precision": 0.8333333333333334,
+        "recall": 0.75,
+        "f1-score": 0.7894736842105262,
+        "support": 20
+      },
+      "Text-to-Image": {
+        "precision": 0.8055555555555556,
+        "recall": 0.9354838709677419,
+        "f1-score": 0.8656716417910448,
+        "support": 31
+      },
+      "Text-to-Video": {
+        "precision": 0.8181818181818182,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.8372093023255814,
+        "support": 21
+      },
+      "Text-to-Audio": {
+        "precision": 0.47619047619047616,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.6249999999999999,
+        "support": 11
+      },
+      "Image-to-Text": {
+        "precision": 0.9615384615384616,
+        "recall": 0.9615384615384616,
+        "f1-score": 0.9615384615384616,
+        "support": 52
+      },
+      "Audio-to-Text": {
+        "precision": 0.5849056603773585,
+        "recall": 0.8378378378378378,
+        "f1-score": 0.6888888888888889,
+        "support": 37
+      },
+      "Video-to-Text": {
+        "precision": 0.9166666666666666,
+        "recall": 0.4782608695652174,
+        "f1-score": 0.6285714285714286,
+        "support": 46
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.9,
+        "recall": 0.9473684210526315,
+        "f1-score": 0.9230769230769231,
+        "support": 19
+      },
+      "Audio Effects": {
+        "precision": 0.8076923076923077,
+        "recall": 0.9130434782608695,
+        "f1-score": 0.8571428571428572,
+        "support": 23
+      },
+      "Audio Splicer": {
+        "precision": 0.7931034482758621,
+        "recall": 1.0,
+        "f1-score": 0.8846153846153846,
+        "support": 23
+      },
+      "Voice Changer": {
+        "precision": 0.9565217391304348,
+        "recall": 0.8148148148148148,
+        "f1-score": 0.8800000000000001,
+        "support": 27
+      },
+      "Text Summarizer": {
+        "precision": 0.7714285714285715,
+        "recall": 0.84375,
+        "f1-score": 0.8059701492537314,
+        "support": 32
+      },
+      "Text Translator": {
+        "precision": 0.95,
+        "recall": 0.9047619047619048,
+        "f1-score": 0.9268292682926829,
+        "support": 21
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.9375,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.923076923076923,
+        "support": 33
+      },
+      "Text Grammar Checker": {
+        "precision": 0.9629629629629629,
+        "recall": 0.7428571428571429,
+        "f1-score": 0.8387096774193549,
+        "support": 35
+      },
+      "Text Simplifier": {
+        "precision": 0.9655172413793104,
+        "recall": 0.875,
+        "f1-score": 0.9180327868852458,
+        "support": 32
+      },
+      "Text Expander": {
+        "precision": 0.8518518518518519,
+        "recall": 0.6764705882352942,
+        "f1-score": 0.7540983606557378,
+        "support": 34
+      },
+      "Keyword Extractor": {
+        "precision": 0.926829268292683,
+        "recall": 0.7307692307692307,
+        "f1-score": 0.8172043010752689,
+        "support": 52
+      },
+      "Text Paraphraser": {
+        "precision": 0.6,
+        "recall": 0.6774193548387096,
+        "f1-score": 0.6363636363636364,
+        "support": 31
+      },
+      "Article Spinner": {
+        "precision": 0.9,
+        "recall": 0.28125,
+        "f1-score": 0.4285714285714286,
+        "support": 32
+      },
+      "Topic Generator": {
+        "precision": 0.9047619047619048,
+        "recall": 0.5428571428571428,
+        "f1-score": 0.6785714285714285,
+        "support": 35
+      },
+      "Audio-to-Image": {
+        "precision": 0.8947368421052632,
+        "recall": 0.918918918918919,
+        "f1-score": 0.9066666666666667,
+        "support": 37
+      },
+      "Image-to-Video": {
+        "precision": 0.8888888888888888,
+        "recall": 0.8888888888888888,
+        "f1-score": 0.8888888888888888,
+        "support": 27
+      },
+      "Video-to-Audio": {
+        "precision": 0.5306122448979592,
+        "recall": 0.9629629629629629,
+        "f1-score": 0.6842105263157895,
+        "support": 27
+      },
+      "Video-to-Image": {
+        "precision": 0.9032258064516129,
+        "recall": 0.9655172413793104,
+        "f1-score": 0.9333333333333333,
+        "support": 29
+      },
+      "Image Stitcher": {
+        "precision": 0.9310344827586207,
+        "recall": 0.9310344827586207,
+        "f1-score": 0.9310344827586207,
+        "support": 29
+      },
+      "Image Colorizer": {
+        "precision": 0.9090909090909091,
+        "recall": 0.7142857142857143,
+        "f1-score": 0.8,
+        "support": 28
+      },
+      "Image Style Transfer": {
+        "precision": 0.9629629629629629,
+        "recall": 0.9629629629629629,
+        "f1-score": 0.9629629629629629,
+        "support": 27
+      },
+      "Video Stabilizer": {
+        "precision": 0.9666666666666667,
+        "recall": 0.9354838709677419,
+        "f1-score": 0.9508196721311476,
+        "support": 31
+      },
+      "Video Speed Changer": {
+        "precision": 0.975609756097561,
+        "recall": 0.975609756097561,
+        "f1-score": 0.975609756097561,
+        "support": 41
+      },
+      "Video Synchronization": {
+        "precision": 0.8857142857142857,
+        "recall": 0.9117647058823529,
+        "f1-score": 0.8985507246376812,
+        "support": 34
+      },
+      "Video Voiceover": {
+        "precision": 0.8484848484848485,
+        "recall": 0.9032258064516129,
+        "f1-score": 0.875,
+        "support": 31
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7403736179946627,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5761519521632078,
+    "edit_distance": 0.21385849727195894,
+    "link_binary_f1": 0.5848017621145375
+  },
+  "overall_7": {
+    "all_samples": 98,
+    "step_supports": 98,
+    "node_supports": 98,
+    "link_supports": 98,
+    "argument_supports": 98,
+    "step_rouge1": 0.6178067060507684,
+    "step_rouge2": 0.3467776794487176,
+    "step_rougeL": 0.5102419514025429,
+    "step_rougeLsum": 0.5947761556049538,
+    "step_bertscore_precision": 0.919494553488128,
+    "step_bertscore_recall": 0.9272141626902989,
+    "step_bertscore_f1": 0.9232352759156909,
+    "node_micro_precision_no_matching": 0.8665644171779141,
+    "node_micro_recall_no_matching": 0.8483483483483484,
+    "node_micro_f1_no_matching": 0.8573596358118363,
+    "node_macro_precision_no_matching": 0.8668554291733976,
+    "node_macro_recall_no_matching": 0.8487345067682289,
+    "node_macro_f1_no_matching": 0.8466493535707519,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.8125,
+        "recall": 0.8125,
+        "f1-score": 0.8125,
+        "support": 16
+      },
+      "Video Downloader": {
+        "precision": 0.7692307692307693,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.8333333333333333,
+        "support": 11
+      },
+      "Audio Downloader": {
+        "precision": 0.7777777777777778,
+        "recall": 0.7777777777777778,
+        "f1-score": 0.7777777777777778,
+        "support": 9
+      },
+      "Text Downloader": {
+        "precision": 0.9166666666666666,
+        "recall": 0.9166666666666666,
+        "f1-score": 0.9166666666666666,
+        "support": 12
+      },
+      "Text Search": {
+        "precision": 0.7222222222222222,
+        "recall": 0.9285714285714286,
+        "f1-score": 0.8125000000000001,
+        "support": 14
+      },
+      "Image Search": {
+        "precision": 0.625,
+        "recall": 0.7142857142857143,
+        "f1-score": 0.6666666666666666,
+        "support": 7
+      },
+      "Image Search (by Image)": {
+        "precision": 0.9285714285714286,
+        "recall": 0.6842105263157895,
+        "f1-score": 0.7878787878787878,
+        "support": 19
+      },
+      "URL Extractor": {
+        "precision": 1.0,
+        "recall": 0.7894736842105263,
+        "f1-score": 0.8823529411764706,
+        "support": 19
+      },
+      "Video Search": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1-score": 0.9090909090909091,
+        "support": 12
+      },
+      "Text-to-Image": {
+        "precision": 0.7142857142857143,
+        "recall": 0.9375,
+        "f1-score": 0.8108108108108109,
+        "support": 16
+      },
+      "Text-to-Video": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8,
+        "f1-score": 0.7272727272727272,
+        "support": 10
+      },
+      "Text-to-Audio": {
+        "precision": 0.7058823529411765,
+        "recall": 0.9230769230769231,
+        "f1-score": 0.8000000000000002,
+        "support": 13
+      },
+      "Image-to-Text": {
+        "precision": 1.0,
+        "recall": 0.918918918918919,
+        "f1-score": 0.9577464788732395,
+        "support": 37
+      },
+      "Audio-to-Text": {
+        "precision": 0.7391304347826086,
+        "recall": 0.85,
+        "f1-score": 0.7906976744186046,
+        "support": 20
+      },
+      "Video-to-Text": {
+        "precision": 0.92,
+        "recall": 0.7931034482758621,
+        "f1-score": 0.851851851851852,
+        "support": 29
+      },
+      "Audio Noise Reduction": {
+        "precision": 0.9166666666666666,
+        "recall": 0.9166666666666666,
+        "f1-score": 0.9166666666666666,
+        "support": 12
+      },
+      "Audio Effects": {
+        "precision": 0.9230769230769231,
+        "recall": 1.0,
+        "f1-score": 0.9600000000000001,
+        "support": 12
+      },
+      "Audio Splicer": {
+        "precision": 0.8,
+        "recall": 0.8888888888888888,
+        "f1-score": 0.8421052631578948,
+        "support": 9
+      },
+      "Voice Changer": {
+        "precision": 0.7272727272727273,
+        "recall": 1.0,
+        "f1-score": 0.8421052631578948,
+        "support": 8
+      },
+      "Text Summarizer": {
+        "precision": 0.8,
+        "recall": 0.9230769230769231,
+        "f1-score": 0.8571428571428571,
+        "support": 13
+      },
+      "Text Translator": {
+        "precision": 1.0,
+        "recall": 0.8947368421052632,
+        "f1-score": 0.9444444444444444,
+        "support": 19
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.9285714285714286,
+        "recall": 0.9285714285714286,
+        "f1-score": 0.9285714285714286,
+        "support": 14
+      },
+      "Text Grammar Checker": {
+        "precision": 1.0,
+        "recall": 0.7272727272727273,
+        "f1-score": 0.8421052631578948,
+        "support": 22
+      },
+      "Text Simplifier": {
+        "precision": 0.9411764705882353,
+        "recall": 0.8421052631578947,
+        "f1-score": 0.8888888888888888,
+        "support": 19
+      },
+      "Text Expander": {
+        "precision": 0.8,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.6666666666666666,
+        "support": 14
+      },
+      "Keyword Extractor": {
+        "precision": 0.8333333333333334,
+        "recall": 0.7142857142857143,
+        "f1-score": 0.7692307692307692,
+        "support": 21
+      },
+      "Text Paraphraser": {
+        "precision": 0.7272727272727273,
+        "recall": 0.8,
+        "f1-score": 0.761904761904762,
+        "support": 20
+      },
+      "Article Spinner": {
+        "precision": 1.0,
+        "recall": 0.29411764705882354,
+        "f1-score": 0.45454545454545453,
+        "support": 17
+      },
+      "Topic Generator": {
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "f1-score": 0.9411764705882353,
+        "support": 18
+      },
+      "Audio-to-Image": {
+        "precision": 0.9047619047619048,
+        "recall": 1.0,
+        "f1-score": 0.9500000000000001,
+        "support": 19
+      },
+      "Image-to-Video": {
+        "precision": 0.875,
+        "recall": 0.875,
+        "f1-score": 0.875,
+        "support": 24
+      },
+      "Video-to-Audio": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8421052631578947,
+        "f1-score": 0.744186046511628,
+        "support": 19
+      },
+      "Video-to-Image": {
+        "precision": 0.9473684210526315,
+        "recall": 0.9473684210526315,
+        "f1-score": 0.9473684210526315,
+        "support": 19
+      },
+      "Image Stitcher": {
+        "precision": 0.7272727272727273,
+        "recall": 1.0,
+        "f1-score": 0.8421052631578948,
+        "support": 16
+      },
+      "Image Colorizer": {
+        "precision": 1.0,
+        "recall": 0.8823529411764706,
+        "f1-score": 0.9375,
+        "support": 17
+      },
+      "Image Style Transfer": {
+        "precision": 1.0,
+        "recall": 0.9411764705882353,
+        "f1-score": 0.9696969696969697,
+        "support": 17
+      },
+      "Video Stabilizer": {
+        "precision": 1.0,
+        "recall": 0.7272727272727273,
+        "f1-score": 0.8421052631578948,
+        "support": 11
+      },
+      "Video Speed Changer": {
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1-score": 0.9743589743589743,
+        "support": 20
+      },
+      "Video Synchronization": {
+        "precision": 0.9166666666666666,
+        "recall": 0.9166666666666666,
+        "f1-score": 0.9166666666666666,
+        "support": 24
+      },
+      "Video Voiceover": {
+        "precision": 0.9411764705882353,
+        "recall": 0.8888888888888888,
+        "f1-score": 0.9142857142857143,
+        "support": 18
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.7660738714090287,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5675340768277573,
+    "edit_distance": 0.21214598393469974,
+    "link_binary_f1": 0.5658627087198516
+  },
+  "overall_8": {
+    "all_samples": 35,
+    "step_supports": 35,
+    "node_supports": 35,
+    "link_supports": 35,
+    "argument_supports": 35,
+    "step_rouge1": 0.6006346228065105,
+    "step_rouge2": 0.31813431067895637,
+    "step_rougeL": 0.47907745438159133,
+    "step_rougeLsum": 0.5821014723964495,
+    "step_bertscore_precision": 0.9156204632350377,
+    "step_bertscore_recall": 0.9250611901283264,
+    "step_bertscore_f1": 0.9202595932143075,
+    "node_micro_precision_no_matching": 0.9098039215686274,
+    "node_micro_recall_no_matching": 0.8345323741007195,
+    "node_micro_f1_no_matching": 0.8705440900562853,
+    "node_macro_precision_no_matching": 0.910795177045177,
+    "node_macro_recall_no_matching": 0.8326839826839827,
+    "node_macro_f1_no_matching": 0.8568948910566558,
+    "node_per_type_no_matchcing": {
+      "Image Downloader": {
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.4,
+        "support": 3
+      },
+      "Video Downloader": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1-score": 0.888888888888889,
+        "support": 4
+      },
+      "Audio Downloader": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5
+      },
+      "Text Downloader": {
+        "precision": 1.0,
+        "recall": 0.7777777777777778,
+        "f1-score": 0.8750000000000001,
+        "support": 9
+      },
+      "Text Search": {
+        "precision": 0.6,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.7058823529411764,
+        "support": 7
+      },
+      "Image Search": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1-score": 0.888888888888889,
+        "support": 4
+      },
+      "Image Search (by Image)": {
+        "precision": 0.8888888888888888,
+        "recall": 0.7272727272727273,
+        "f1-score": 0.7999999999999999,
+        "support": 11
+      },
+      "URL Extractor": {
+        "precision": 1.0,
+        "recall": 0.8181818181818182,
+        "f1-score": 0.9,
+        "support": 11
+      },
+      "Video Search": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 2
+      },
+      "Text-to-Image": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 2
+      },
+      "Text-to-Video": {
+        "precision": 0.8571428571428571,
+        "recall": 1.0,
+        "f1-score": 0.923076923076923,
+        "support": 6
+      },
+      "Text-to-Audio": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8,
+        "f1-score": 0.7272727272727272,
+        "support": 5
+      },
+      "Image-to-Text": {
+        "precision": 1.0,
+        "recall": 0.8666666666666667,
+        "f1-score": 0.9285714285714286,
+        "support": 15
+      },
+      "Audio-to-Text": {
+        "precision": 0.7777777777777778,
+        "recall": 0.7777777777777778,
+        "f1-score": 0.7777777777777778,
+        "support": 9
+      },
+      "Video-to-Text": {
+        "precision": 1.0,
+        "recall": 0.375,
+        "f1-score": 0.5454545454545454,
+        "support": 8
+      },
+      "Audio Noise Reduction": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 6
+      },
+      "Audio Effects": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 8
+      },
+      "Audio Splicer": {
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1-score": 0.8000000000000002,
+        "support": 5
+      },
+      "Voice Changer": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4
+      },
+      "Text Summarizer": {
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1-score": 0.8000000000000002,
+        "support": 10
+      },
+      "Text Translator": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 7
+      },
+      "Text Sentiment Analysis": {
+        "precision": 0.8571428571428571,
+        "recall": 0.75,
+        "f1-score": 0.7999999999999999,
+        "support": 8
+      },
+      "Text Grammar Checker": {
+        "precision": 1.0,
+        "recall": 0.7142857142857143,
+        "f1-score": 0.8333333333333333,
+        "support": 7
+      },
+      "Text Simplifier": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4
+      },
+      "Text Expander": {
+        "precision": 1.0,
+        "recall": 0.7777777777777778,
+        "f1-score": 0.8750000000000001,
+        "support": 9
+      },
+      "Keyword Extractor": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8333333333333334,
+        "f1-score": 0.8333333333333334,
+        "support": 6
+      },
+      "Text Paraphraser": {
+        "precision": 1.0,
+        "recall": 0.875,
+        "f1-score": 0.9333333333333333,
+        "support": 8
+      },
+      "Article Spinner": {
+        "precision": 1.0,
+        "recall": 0.6,
+        "f1-score": 0.7499999999999999,
+        "support": 5
+      },
+      "Topic Generator": {
+        "precision": 1.0,
+        "recall": 0.7777777777777778,
+        "f1-score": 0.8750000000000001,
+        "support": 9
+      },
+      "Audio-to-Image": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 6
+      },
+      "Image-to-Video": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1-score": 0.8571428571428571,
+        "support": 3
+      },
+      "Video-to-Audio": {
+        "precision": 0.7777777777777778,
+        "recall": 1.0,
+        "f1-score": 0.8750000000000001,
+        "support": 7
+      },
+      "Video-to-Image": {
+        "precision": 0.9230769230769231,
+        "recall": 1.0,
+        "f1-score": 0.9600000000000001,
+        "support": 12
+      },
+      "Image Stitcher": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1-score": 0.9090909090909091,
+        "support": 6
+      },
+      "Image Colorizer": {
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1-score": 0.888888888888889,
+        "support": 5
+      },
+      "Image Style Transfer": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 7
+      },
+      "Video Stabilizer": {
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "f1-score": 0.9411764705882353,
+        "support": 9
+      },
+      "Video Speed Changer": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 6
+      },
+      "Video Synchronization": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.923076923076923,
+        "support": 14
+      },
+      "Video Voiceover": {
+        "precision": 0.8,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.7272727272727272,
+        "support": 6
+      }
+    },
+    "argument_task_argname_binary_f1_no_matching": 0.782608695652174,
+    "argument_task_argname_value_binary_f1_no_matching": 0.5792880258899678,
+    "edit_distance": 0.19117795836283213,
+    "link_binary_f1": 0.5981308411214953
+  },
+  "overall_9": {
+    "all_samples": 0,
+    "step_supports": 0,
+    "node_supports": 0,
+    "link_supports": 0,
+    "argument_supports": 0
+  },
+  "overall_10": {
+    "all_samples": 0,
+    "step_supports": 0,
+    "node_supports": 0,
+    "link_supports": 0,
+    "argument_supports": 0
+  }
+}

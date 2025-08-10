@@ -1,4 +1,3 @@
-
 import os
 import json
 import click
@@ -25,6 +24,7 @@ class ContentFormatError(Exception):
 @click.option("--top_p", type=float, default=0.1)
 @click.option("--api_addr", type=str, default="localhost")
 @click.option("--api_port", type=int, default=4000)
+@click.option("--api_base", type=str, default=None)
 @click.option("--api_key", type=str, default="your api key")
 @click.option("--multiworker", type=int, default=1)
 @click.option("--llm", type=str, default="gpt-4")
@@ -34,20 +34,23 @@ class ContentFormatError(Exception):
 @click.option("--tag", type=bool, default=False)
 @click.option("--dependency_type", type=str, default="resource")
 @click.option("--log_first_detail", type=bool, default=False)
-def main(data_dir, temperature, top_p, api_addr, api_key, api_port, multiworker, llm, use_demos, reformat, reformat_by, tag, dependency_type, log_first_detail):
+def main(data_dir, temperature, top_p, api_addr, api_key, api_port, api_base, multiworker, llm, use_demos, reformat, reformat_by, tag, dependency_type, log_first_detail):
     assert dependency_type in ["resource", "temporal"], "Dependency type not supported"
     if dependency_type == "resource":
         assert data_dir != "data_dailylifeapis", "Resource dependency type only support data_huggingface and data_multimedia"
 
     arguments = locals()
-    url = f"http://{api_addr}:{api_port}/v1/chat/completions"
+    if api_base is not None:
+        url = f"{api_base}/chat/completions"
+    else:
+        url = f"http://{api_addr}:{api_port}/v1/chat/completions"
     header = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
 
     prediction_dir = f"{data_dir}/predictions{f'_use_demos_{use_demos}' if use_demos and tag else ''}{f'_reformat_by_{ reformat_by}' if reformat and tag else ''}"
-    wf_name = f"{prediction_dir}/{llm}.json"
+    wf_name = f"{prediction_dir}/{llm}_temperature_{temperature}_topp_{top_p}_dependency_{dependency_type}.json"
     
     if not os.path.exists(prediction_dir):
         os.makedirs(prediction_dir, exist_ok=True)
@@ -109,22 +112,23 @@ def main(data_dir, temperature, top_p, api_addr, api_key, api_port, multiworker,
         demos_rf = open(f"{data_dir}/data.json", "r")
         for line in demos_rf:
             data = json.loads(line)
+            # print(data)
             if data["id"] in demos_id:
                 if dependency_type == "temporal":
                     demo = {
-                        "user_request": data["user_request"],
+                        "user_request": data["instruction"],
                         "result":{
-                            "task_steps": data["task_steps"],
-                            "task_nodes": data["task_nodes"],
-                            "task_links": data["task_links"]
+                            "task_steps": data["tool_steps"],
+                            "task_nodes": data["tool_nodes"],
+                            "task_links": data["tool_links"]
                         }
                     }
                 else:
                     demo = {
-                        "user_request": data["user_request"],
+                        "user_request": data["instruction"],
                         "result":{
-                            "task_steps": data["task_steps"],
-                            "task_nodes": data["task_nodes"]
+                            "task_steps": data["tool_steps"],
+                            "task_nodes": data["tool_nodes"]
                         }
                     }
                 demos.append(demo)

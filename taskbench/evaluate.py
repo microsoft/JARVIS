@@ -172,10 +172,10 @@ def get_content_type(content):
 @click.option("--n_tools", "-n", multiple=True, default=["overall"])
 @click.option("--mode", default="add")
 @click.option("--metric", "-m", multiple=True, default=["all"])
-@click.option("--llm", default="gpt-3.5-turbo")
+@click.option("--file_name", default="gpt-3.5-turbo")
 @click.option("--dependency_type", type=str, default="resource")
 @click.option("--prompting", default="cot")
-def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm, dependency_type, alignment, prompting):
+def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, file_name, dependency_type, alignment, prompting):
     assert dependency_type in ["resource", "temporal"], "Dependency type not supported"
     args = locals()
     
@@ -183,17 +183,17 @@ def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm,
         save_dir = prediction_dir.replace("predictions", "metrics") 
         save_dir = save_dir + f"_alignment_{alignment}" if alignment is not None else save_dir
 
-    formatter = logging.Formatter(f'%(asctime)s - [ {llm} ] - %(levelname)s - %(message)s')
+    formatter = logging.Formatter(f'%(asctime)s - [ {file_name} ] - %(levelname)s - %(message)s')
     if not os.path.exists(f'{data_dir}/{save_dir}'):
         os.makedirs(f'{data_dir}/{save_dir}')
     
-    metric_file = f'{data_dir}/{save_dir}/{llm}.json'
+    metric_file = f'{data_dir}/{save_dir}/{file_name}.json'
     if os.path.exists(metric_file):
         all_metric_dict = json.load(open(metric_file, "r"))
     else:
         all_metric_dict = {}
     
-    file_handler = logging.FileHandler(f'{data_dir}/{save_dir}/{llm}.log')
+    file_handler = logging.FileHandler(f'{data_dir}/{save_dir}/{file_name}.log')
     stream_handler = logging.StreamHandler()
     
     file_handler.setFormatter(formatter)
@@ -247,12 +247,12 @@ def main(data_dir, prediction_dir, save_dir, splits, n_tools, mode, metric, llm,
     for s, n in group:
         logger.info("-"*15)
         logger.info(f"Tools Number: {n}, Task Split: {s}")
-        evaluate(data_dir, prediction_dir, llm, s, n, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, dependency_type=dependency_type, alignment=alignment)
+        evaluate(data_dir, prediction_dir, file_name, s, n, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, dependency_type=dependency_type, alignment=alignment)
 
     metric_json = open(metric_file, "w")
     metric_json.write(json.dumps(all_metric_dict, indent=2))
 
-def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, dependency_type, alignment = None):
+def evaluate(data_dir, prediction_dir, file_name, split, n_tool, metric, tool_desc, tool_map, tool_output_type_map, tool_map_reverse, all_metric_dict, dependency_type, alignment = None):
     if f"{split}_{n_tool}" in all_metric_dict:
         metric_dict = all_metric_dict[f"{split}_{n_tool}"]
     else:
@@ -272,14 +272,14 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
             alignment_ids = list(itertools.chain(*alignment_ids[f"{alignment}_alignment_id"].values()))
             logger.info(f"Alignment Mode: {alignment} ({len(alignment_ids)})")
         
-    predcition_rf = open(f"{data_dir}/{prediction_dir}/{llm}.json", "r")
+    predcition_rf = open(f"{data_dir}/{prediction_dir}/{file_name}.json", "r")
 
     predcitions = {}
     labels = {}
     label_rf = open(f"{data_dir}/data.json", "r")
     for line in label_rf:
         data = json.loads(line)
-        real_tool_num = len(data["task_nodes"])
+        real_tool_num = len(json.loads(data["tool_nodes"]))
         if alignment_ids is None or data["id"] in alignment_ids:
             if split == "overall" or data["type"] == split:
                 if n_tool == "overall" or str(real_tool_num) == n_tool:
@@ -320,7 +320,7 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
 
             if "rouge" in metric or "bertscore" in metric:
                 predcition_task_step = predcition["result"]["task_steps"]
-                label_task_step = label["task_steps"]
+                label_task_step = json.loads(label["tool_steps"])
                 
                 try:
                     if isinstance(predcition_task_step[0], str):
@@ -341,8 +341,13 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
 
                 label_task_steps.append("\n".join(label_task_step))
 
-            label_nodes = label["task_nodes"]
-            predcition_nodes = predcition["result"]["task_nodes"] 
+            label_nodes = json.loads(label["tool_nodes"])
+            if isinstance(label_nodes, dict):
+                label_nodes = [label_nodes]
+            predcition_nodes = predcition["result"]["task_nodes"]
+
+            if isinstance(predcition_nodes, str):
+                predcition_nodes = json.loads(predcition_nodes)
 
             label_node_name = [node["task"] for node in label_nodes]
             predcition_node_name = [node["task"] for node in predcition_nodes]
@@ -407,7 +412,7 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
                     node["arguments"] = new_arguments
             else:
                 predcition_link = predcition["result"]["task_links"]
-                label_link = label["task_links"]
+                label_link = json.loads(label["tool_links"])
 
             predcition_node_argument = [node.get("arguments", []) for node in predcition_nodes]
             label_node_argument = [node["arguments"] for node in label_nodes]
@@ -477,14 +482,14 @@ def evaluate(data_dir, prediction_dir, llm, split, n_tool, metric, tool_desc, to
             logger.info(f"Step {key}: {rouge_scores[key].mid.fmeasure}")
             metric_dict[f"step_{key}"] = rouge_scores[key].mid.fmeasure
 
-    if "bertscore" in metric:
-        bertscore = load_metric("bertscore")
-        bertscore_scores = bertscore.compute(predictions=predcition_task_steps, references=label_task_steps, model_type="roberta-large")
-        for key in bertscore_scores:
-            if key in ["precision", "recall", "f1"]:
-                bertscore_scores[key] = np.mean(bertscore_scores[key])
-                logger.info(f"Step BERTScore {key}: {bertscore_scores[key]}")
-                metric_dict[f"step_bertscore_{key}"] = bertscore_scores[key]
+    # if "bertscore" in metric:
+    #     bertscore = load_metric("bertscore")
+    #     bertscore_scores = bertscore.compute(predictions=predcition_task_steps, references=label_task_steps, model_type="roberta-large")
+    #     for key in bertscore_scores:
+    #         if key in ["precision", "recall", "f1"]:
+    #             bertscore_scores[key] = np.mean(bertscore_scores[key])
+    #             logger.info(f"Step BERTScore {key}: {bertscore_scores[key]}")
+    #             metric_dict[f"step_bertscore_{key}"] = bertscore_scores[key]
     
     if "f1" in metric or "argument" in metric:
         types = list(range(1, len(tool_desc["nodes"])+1))

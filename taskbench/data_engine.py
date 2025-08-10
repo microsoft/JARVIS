@@ -32,6 +32,7 @@ logger.addHandler(console_handler)
 @click.option("--data_dir", type=str, default=None)
 @click.option("--graph_desc", type=str, default=None)
 @click.option("--tool_desc", type=str, default=None)
+@click.option("--api_base", type=str, default=None)
 @click.option("--api_addr", type=str, default="localhost")
 @click.option("--api_port", type=int, default=4000)
 @click.option("--api_key", type=str, default="your api key")
@@ -45,9 +46,12 @@ logger.addHandler(console_handler)
 @click.option("--llm", type=str, default="gpt-4")
 @click.option("--use_async", type=bool, default=False)
 @click.option("--dependency_type", type=str, default="resource")
-def main(temperature, top_p, check, graph_desc, tool_desc, api_addr, api_port, api_key, play, method, tool_number, number_of_samples, seed, data_dir, save_figure, multiworker, llm, use_async, dependency_type):
+def main(temperature, top_p, check, graph_desc, tool_desc, api_base, api_addr, api_port, api_key, play, method, tool_number, number_of_samples, seed, data_dir, save_figure, multiworker, llm, use_async, dependency_type):
     args = locals()
-    url = f"http://{api_addr}:{api_port}/v1/chat/completions"
+    if api_base is not None:
+        url = f"{api_base}/chat/completions"
+    else:
+        url = f"http://{api_addr}:{api_port}/v1/chat/completions"
     header = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"

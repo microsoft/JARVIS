@@ -133,6 +133,8 @@ conda activate taskbench
 pip install -r requirements.txt
 ```
 
+Now you can use any LLM hosted in the cloud that follows the OpenAI API for inference.
+
 Additionally, if you wish to evaluate open-source large language models, you will also need to deploy the LLMs locally using an **OpenAI-compatible API**. We recommend using the `fastchat` tool to deploy the service to the `localhost:4000` endpoint.
 
 ```bash
@@ -147,10 +149,13 @@ python3 -m fastchat.serve.openai_api_server --host localhost --port 4000
 
 ### Inference
 
+When using an LLM cloud service, ensure that the correct `api_key` and `api_base` are set. In this case, `api_addr` and `api_host` can be omitted. If the model is hosted locally, provide the correct `api_addr` and `api_host`, and do not include `api_base`.
+
 For convenience, it is recommended to deploy all LLMs to the same endpoint, such as `localhost:4000`. To generate the prediction file on TaskBench, specify the name of the LLM using the following command:
 
 ```bash
 export YOUR_API_KEY=API_KEY
+export YOUR_API_BASE=API_BASE # not needed for local LLM
 python inference.py \
     --llm gpt-4 \
     --data_dir data_multimedia \
@@ -158,6 +163,7 @@ python inference.py \
     --top_p 0.1 \
     --api_addr localhost \
     --api_port 4000 \
+    --api_base $YOUR_API_BASE \ # not needed for local LLM
     --api_key $YOUR_API_KEY \
     --multiworker 5 \
     --use_demos 0 \

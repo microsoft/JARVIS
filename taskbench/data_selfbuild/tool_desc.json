@@ -1,0 +1,34 @@
+{
+    "nodes": [
+        {
+            "id": "Web-Search",
+            "desc": "Web-Search is the tool of searching the web for information. It will return a list of urls that are relevant to the query.",
+            "input-type": [
+            "text"
+        ],
+        "output-type": [
+            "array[text]"
+        ]
+    },
+    {
+    "id": "Read-Webpage",
+    "desc": "Read-Webpage is the tool of reading a webpage. It will return the content of the webpage.",
+        "input-type": [
+            "array[text]"
+        ],
+        "output-type": [
+            "text"
+        ]
+    },
+    {
+        "id": "Run-Python", 
+        "desc": "Run-Python is the tool of running a python script. It will return the stdout and stderr",
+        "input-type": [
+            "text"
+        ],
+        "output-type": [
+            "text"
+        ]
+    }
+    ]
+}

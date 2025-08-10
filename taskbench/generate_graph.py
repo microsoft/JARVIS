@@ -16,7 +16,7 @@ def generate_graph_resource(tool_file):
                 if len(set(nodes[i]["output-type"]).intersection(set(nodes[j]["input-type"]))) > 0:
                     links.append({"source": nodes[i]["id"], "target": nodes[j]["id"], "type": list(set(nodes[i]["output-type"]).intersection(set(nodes[j]["input-type"])))[0]})
     graph = {"nodes": nodes, "links": links}
-    with open(tool_file.replace("tools", "graph"), 'w') as f:
+    with open(tool_file.replace("tool", "graph"), 'w') as f:
         json.dump(graph, f, indent=2)
 
 def generate_graph_temporal(tool_file):
