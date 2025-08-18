@@ -1,0 +1,171 @@
+Last login: Thu Jul 20 22:09:28 on ttys003
+elgiguiere@giguiere ~ % /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+==> Checking for `sudo` access (which may request your password)...
+Password:
+==> This script will install:
+/opt/homebrew/bin/brew
+/opt/homebrew/share/doc/homebrew
+/opt/homebrew/share/man/man1/brew.1
+/opt/homebrew/share/zsh/site-functions/_brew
+/opt/homebrew/etc/bash_completion.d/brew
+/opt/homebrew
+
+Press RETURN/ENTER to continue or any other key to abort:
+elgiguiere@giguiere ~ % 
+elgiguiere@giguiere ~ % brew install --cask powershell
+Warning: Cask 'powershell' is already installed.
+
+To re-install powershell, run:
+  brew reinstall --cask powershell
+elgiguiere@giguiere ~ % pwsh
+PowerShell 7.3.6
+PS /Users/elgiguiere> brew update                          
+
+Already up-to-date.
+PS /Users/elgiguiere> brew upgrade powershell --cask
+Warning: Not upgrading powershell, the latest version is already installed
+PS /Users/elgiguiere> brew tap homebrew/cask-versions
+==> Tapping homebrew/cask-versions
+Cloning into '/opt/homebrew/Library/Taps/homebrew/homebrew-cask-versions'...
+remote: Enumerating objects: 260156, done.
+remote: Counting objects: 100% (17555/17555), done.
+remote: Compressing objects: 100% (251/251), done.
+remote: Total 260156 (delta 17363), reused 17381 (delta 17304), pack-reused 242601
+Receiving objects: 100% (260156/260156), 66.11 MiB | 25.36 MiB/s, done.
+Resolving deltas: 100% (180750/180750), done.
+Tapped 232 casks (262 files, 73.4MB).
+PS /Users/elgiguiere> brew install --cask powershell-preview
+==> Caveats
+To use Homebrew in PowerShell, set:
+  Add-Content -Path $PROFILE.CurrentUserAllHosts -Value '$(/opt/homebrew/bin/brew shellenv) | Invoke-Expression'
+
+==> Downloading https://github.com/PowerShell/PowerShell/releases/download/v7.4.0-preview.4/powershe
+==> Downloading from https://objects.githubusercontent.com/github-production-release-asset-2e65be/49
+############################################################################################# 100.0%
+All formula dependencies satisfied.
+==> Installing Cask powershell-preview
+==> Running installer for powershell-preview; your password may be necessary.
+Package installers may write to any location; options such as `--appdir` are ignored.
+Password:
+installer: Package name is PowerShell - 7.4.0-preview.4
+installer: Installing at base path /
+installer: The install was successful.
+🍺  powershell-preview was successfully installed!
+PS /Users/elgiguiere> pwsh-preview                
+PowerShell 7.4.0-preview.4
+PS /Users/elgiguiere> brew update                           
+
+Already up-to-date.
+PS /Users/elgiguiere> brew upgrade powershell-preview --caskbrew install powershell/tap/powershell
+Usage: brew upgrade [options] [outdated_formula|outdated_cask ...]
+
+Upgrade outdated casks and outdated, unpinned formulae using the same options
+they were originally installed with, plus any appended brew formula options. If
+cask or formula are specified, upgrade only the given cask or formula
+kegs (unless they are pinned; see pin, unpin).
+
+Unless HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK is set, brew upgrade or brew
+reinstall will be run for outdated dependents and dependents with broken
+linkage, respectively.
+
+Unless HOMEBREW_NO_INSTALL_CLEANUP is set, brew cleanup will then be run for
+the upgraded formulae or, every 30 days, for all formulae.
+
+  -d, --debug                      If brewing fails, open an interactive
+                                   debugging session with access to IRB or a
+                                   shell inside the temporary build directory.
+  -f, --force                      Install formulae without checking for
+                                   previously installed keg-only or non-migrated
+                                   versions. When installing casks, overwrite
+                                   existing files (binaries and symlinks are
+                                   excluded, unless originally from the same
+                                   cask).
+  -v, --verbose                    Print the verification and postinstall steps.
+  -n, --dry-run                    Show what would be upgraded, but do not
+                                   actually upgrade anything.
+      --formula, --formulae        Treat all named arguments as formulae. If no
+                                   named arguments are specified, upgrade only
+                                   outdated formulae.
+  -s, --build-from-source          Compile formula from source even if a
+                                   bottle is available.
+  -i, --interactive                Download and patch formula, then open a
+                                   shell. This allows the user to run
+                                   ./configure --help and otherwise determine
+                                   how to turn the software package into a
+                                   Homebrew package.
+      --force-bottle               Install from a bottle if it exists for the
+                                   current or newest version of macOS, even if
+                                   it would not normally be used for
+                                   installation.
+      --fetch-HEAD                 Fetch the upstream repository to detect if
+                                   the HEAD installation of the formula is
+                                   outdated. Otherwise, the repository's HEAD
+                                   will only be checked for updates when a new
+                                   stable or development version has been
+                                   released.
+      --ignore-pinned              Set a successful exit status even if pinned
+                                   formulae are not upgraded.
+      --keep-tmp                   Retain the temporary files created during
+                                   installation.
+      --debug-symbols              Generate debug symbols on build. Source will
+                                   be retained in a cache directory.
+      --display-times              Print install times for each package at the
+                                   end of the run.
+      --cask, --casks              Treat all named arguments as casks. If no
+                                   named arguments are specified, upgrade only
+                                   outdated casks.
+      --skip-cask-deps             Skip installing cask dependencies.
+  -g, --greedy                     Also include casks with auto_updates true
+                                   or version :latest.
+      --greedy-latest              Also include casks with version :latest.
+      --greedy-auto-updates        Also include casks with auto_updates true.
+      --[no-]binaries              Disable/enable linking of helper executables
+                                   (default: enabled).
+      --require-sha                Require all casks to have a checksum.
+      --[no-]quarantine            Disable/enable quarantining of downloads
+                                   (default: enabled).
+      --appdir                     Target location for Applications (default:
+                                   /Applications).
+      --keyboard-layoutdir         Target location for Keyboard Layouts
+                                   (default: /Library/Keyboard Layouts).
+      --colorpickerdir             Target location for Color Pickers (default:
+                                   ~/Library/ColorPickers).
+      --prefpanedir                Target location for Preference Panes
+                                   (default: ~/Library/PreferencePanes).
+      --qlplugindir                Target location for QuickLook Plugins
+                                   (default: ~/Library/QuickLook).
+      --mdimporterdir              Target location for Spotlight Plugins
+                                   (default: ~/Library/Spotlight).
+      --dictionarydir              Target location for Dictionaries (default:
+                                   ~/Library/Dictionaries).
+      --fontdir                    Target location for Fonts (default:
+                                   ~/Library/Fonts).
+      --servicedir                 Target location for Services (default:
+                                   ~/Library/Services).
+      --input-methoddir            Target location for Input Methods (default:
+                                   ~/Library/Input Methods).
+      --internet-plugindir         Target location for Internet Plugins
+                                   (default: ~/Library/Internet Plug-Ins).
+      --audio-unit-plugindir       Target location for Audio Unit Plugins
+                                   (default:
+                                   ~/Library/Audio/Plug-Ins/Components).
+      --vst-plugindir              Target location for VST Plugins (default:
+                                   ~/Library/Audio/Plug-Ins/VST).
+      --vst3-plugindir             Target location for VST3 Plugins (default:
+                                   ~/Library/Audio/Plug-Ins/VST3).
+      --screen-saverdir            Target location for Screen Savers (default:
+                                   ~/Library/Screen Savers).
+      --language                   Comma-separated list of language codes to
+                                   prefer for cask installation. The first
+                                   matching language is used, otherwise it
+                                   reverts to the cask's default language. The
+                                   default value is the language of your system.
+  -q, --quiet                      Make some output more quiet.
+  -h, --help                       Show this message.
+Error: invalid option: --caskbrew
+NativeCommandExitException: Program "brew" ended with non-zero exit code: 1.
+PS /Users/elgiguiere> pwsh
+PowerShell 7.4.0-preview.4
+PS /Users/elgiguiere> brew upgrade powershell
+Warning: Not upgrading powershell, the latest version is already installed
+PS /Users/elgiguiere> 
