@@ -376,7 +376,7 @@ def models(model_id):
     if "device" in pipes[model_id]:
         try:
             pipe.to(pipes[model_id]["device"])
-        except:
+        except Exception:
             pipe.device = torch.device(pipes[model_id]["device"])
             pipe.model.to(pipes[model_id]["device"])
     
@@ -605,7 +605,7 @@ def models(model_id):
         try:
             pipe.to("cpu")
             torch.cuda.empty_cache()
-        except:
+        except Exception:
             pipe.device = torch.device("cpu")
             pipe.model.to("cpu")
             torch.cuda.empty_cache()

@@ -126,7 +126,7 @@ if inference_mode!="huggingface":
         r = requests.get(Model_Server + "/running")
         if r.status_code != 200:
             raise ValueError(message)
-    except:
+    except Exception:
         raise ValueError(message)
 
 
@@ -231,7 +231,7 @@ def field_extract(s, field):
     try:
         field_rep = re.compile(f'{field}.*?:.*?"(.*?)"', re.IGNORECASE)
         extracted = field_rep.search(s).group(1).replace("\"", "\'")
-    except:
+    except Exception:
         field_rep = re.compile(f'{field}:\ *"(.*?)"', re.IGNORECASE)
         extracted = field_rep.search(s).group(1).replace("\"", "\'")
     return extracted
