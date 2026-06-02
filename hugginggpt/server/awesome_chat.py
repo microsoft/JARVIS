@@ -80,11 +80,13 @@ else:
     api_name = "chat/completions"
 
 API_TYPE = None
-# priority: local > azure > openai
+# priority: local > azure > minimax > openai
 if "dev" in config and config["dev"]:
     API_TYPE = "local"
 elif "azure" in config:
     API_TYPE = "azure"
+elif "minimax" in config:
+    API_TYPE = "minimax"
 elif "openai" in config:
     API_TYPE = "openai"
 else:
@@ -100,6 +102,14 @@ if API_TYPE == "local":
 elif API_TYPE == "azure":
     API_ENDPOINT = f"{config['azure']['base_url']}/openai/deployments/{config['azure']['deployment_name']}/{api_name}?api-version={config['azure']['api_version']}"
     API_KEY = config["azure"]["api_key"]
+elif API_TYPE == "minimax":
+    API_ENDPOINT = f"{config['minimax'].get('base_url', 'https://api.minimax.io/v1')}/{api_name}"
+    if config["minimax"]["api_key"] and config["minimax"]["api_key"] != "REPLACE_WITH_YOUR_MINIMAX_API_KEY_HERE":
+        API_KEY = config["minimax"]["api_key"]
+    elif "MINIMAX_API_KEY" in os.environ:
+        API_KEY = os.getenv("MINIMAX_API_KEY")
+    else:
+        raise ValueError(f"Incorrect MiniMax key. Please check your {args.config} file or set the MINIMAX_API_KEY environment variable.")
 elif API_TYPE == "openai":
     API_ENDPOINT = f"https://api.openai.com/v1/{api_name}"
     if config["openai"]["api_key"].startswith("sk-"):  # Check for valid OpenAI key in config file
@@ -190,9 +200,12 @@ def send_request(data):
     api_key = data.pop("api_key")
     api_type = data.pop("api_type")
     api_endpoint = data.pop("api_endpoint")
+    # MiniMax requires temperature in (0.0, 1.0]; adjust zero values
+    if api_type == "minimax" and data.get("temperature", 1) == 0:
+        data["temperature"] = 0.01
     if use_completion:
         data = convert_chat_to_completion(data)
-    if api_type == "openai":
+    if api_type in ("openai", "minimax"):
         HEADER = {
             "Authorization": f"Bearer {api_key}"
         }

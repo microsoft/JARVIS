@@ -71,7 +71,7 @@ The configuration `configs/config.lite.yaml` does not require any expert models 
 
 ### Quick Start
 
-First replace `openai.key` and `huggingface.token` in `server/configs/config.default.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectively. Then run the following commands:
+First replace `openai.key` and `huggingface.token` in `server/configs/config.default.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectively. Alternatively, you can use [MiniMax](https://www.minimaxi.com/) as the LLM provider by running with `--config configs/config.minimax.yaml` (set your MiniMax API key first). Then run the following commands:
 
 <span id="Server"></span>
 
@@ -182,7 +182,7 @@ Welcome to Jarvis! A collaborative system that consists of an LLM as the control
 
 The server-side configuration file is `server/configs/config.default.yaml`, and some parameters are presented as follows:
 
-+ `model`: LLM, currently supports `text-davinci-003`. We are working on integrating more open-source LLMs.
++ `model`: LLM, currently supports `text-davinci-003`, `gpt-4`, and [MiniMax](https://www.minimaxi.com/) models (`MiniMax-M3` (default, 512K context), `MiniMax-M2.7`, `MiniMax-M2.7-highspeed`). We are working on integrating more open-source LLMs.
 + `inference_mode`: mode of inference endpoints
   + `local`: only use the local inference endpoints
   + `huggingface`: only use the Hugging Face Inference Endpoints **(free of local inference endpoints)**
@@ -191,6 +191,14 @@ The server-side configuration file is `server/configs/config.default.yaml`, and 
   +  `minimal` (RAM>12GB, ControlNet only)
   +  `standard` (RAM>16GB, ControlNet + Standard Pipelines)
   +  `full` (RAM>42GB, All registered models)
+
+#### LLM Provider
+
+Jarvis supports multiple LLM providers as the backbone controller. Configure the provider in the YAML config file:
+
++ **OpenAI** (default): Set `openai.api_key` in config or the `OPENAI_API_KEY` environment variable.
++ **Azure OpenAI**: Set `azure.api_key`, `azure.base_url`, `azure.deployment_name`, and `azure.api_version` in config.
++ **MiniMax**: Set `minimax.api_key` in config or the `MINIMAX_API_KEY` environment variable. Use `model: MiniMax-M3` (default) and `use_completion: false`. A ready-to-use config is provided at `server/configs/config.minimax.yaml`. MiniMax-M3 offers a 512K token context window. Get your API key at [MiniMax Platform](https://www.minimaxi.com/).
 
 On a personal laptop, we recommend the configuration of `inference_mode: hybrid `and `local_deployment: minimal`. But the available models under this setting may be limited due to the instability of remote Hugging Face Inference Endpoints.
 
