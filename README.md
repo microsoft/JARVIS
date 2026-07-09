@@ -255,3 +255,15 @@ If you find this work useful in your method, you can cite the paper as below:
       journal = {arXiv preprint arXiv:2401.06201},
       year    = {2024}
     }
+
+
+## Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on
+how to report bugs, suggest features, and submit pull requests.
+
+By participating, you agree to our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+---
+
+*[Mukller](https://github.com/Mukller)*
