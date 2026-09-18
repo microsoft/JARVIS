@@ -1,5 +1,12 @@
 # JARVIS
 
+## Crypto perpetual futures signals
+
+JARVIS also includes an isolated, signal-only crypto perpetual futures scanner
+under [`crypto_bot/`](./crypto_bot/). It uses public Binance USDⓈ-M data, never
+places orders, and includes setup, configuration, and paper-testing guidance in
+[`crypto_bot/README.md`](./crypto_bot/README.md).
+
 
 [![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2303.17580)
 [![Open in Spaces](https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue)](https://huggingface.co/spaces/microsoft/HuggingGPT)

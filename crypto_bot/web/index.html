@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>INTRA // Signal Console</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/hologram.css">
+  <link rel="stylesheet" href="/hologram-3d.css">
+  <style>
+    .hologram{display:none!important}.opinion-panel{width:min(520px,90%);min-height:300px;margin:28px auto 24px;padding:8px 30px 28px;border:1px solid #2b7894;border-radius:10px;background:linear-gradient(145deg,#0a1c2c,#061018);box-shadow:0 0 38px #1baed42b,inset 0 0 30px #1b6f8c18;text-align:left}.opinion-panel .hero{margin:12px auto 4px}.opinion-panel .hero-core{text-align:center;justify-items:center}.opinion-kicker{color:var(--cyan);font-size:11px;letter-spacing:.2em}.opinion-state{color:#e6fbff;font-size:24px;font-weight:bold;margin-top:22px}.opinion-text{color:#b4cbd5;font-size:12px;line-height:1.7;margin-top:12px}.opinion-source{color:#6c9aaa;font-size:9px;margin-top:18px;letter-spacing:.12em}
+    .settings-launch{padding:6px 10px;margin:0;color:var(--cyan);font-size:9px}.settings-dialog{width:min(980px,calc(100% - 24px));max-height:90vh;padding:0;border:1px solid #24536a;background:#061019;color:#c9d8e3;box-shadow:0 0 60px #1599bb44}.settings-dialog::backdrop{background:#02050bcc}.settings-shell{display:grid;grid-template-columns:190px 1fr;min-height:620px}.settings-nav{border-right:1px solid #163347;padding:22px 12px;background:#07131d}.settings-nav h2{margin:0 10px 20px;color:var(--cyan);font-size:15px;letter-spacing:.18em}.settings-nav button{display:block;width:100%;margin:4px 0;padding:10px;text-align:left;font-size:9px}.settings-nav button.active{background:#12384b;border-color:var(--cyan)}.settings-content{padding:24px;overflow:auto}.settings-head{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #163347;padding-bottom:14px;margin-bottom:16px}.settings-head h3{margin:0;color:#e5f8ff;font-size:16px}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.settings-card{border:1px solid #163347;padding:14px;background:#07131dcc}.settings-card.full{grid-column:1/-1}.settings-card h4{margin:0 0 10px;color:var(--cyan);font-size:10px;letter-spacing:.14em}.settings-card p{margin:7px 0;color:#7190a0;font-size:9px;line-height:1.6}.settings-card label{display:block;margin:9px 0 4px;color:#9db7c4;font-size:9px}.settings-card input,.settings-card select{width:100%;padding:7px;background:#091722;border:1px solid #24536a;color:#e1f5fb;font:inherit;font-size:10px}.settings-card input[type=checkbox]{width:auto;margin-right:7px;accent-color:var(--cyan)}.setting-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.settings-status{color:var(--green);font-size:9px;min-height:14px}.google-button{width:100%;margin:8px 0 0}.locked-note{color:#d0a653!important}.settings-actions{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid #163347;padding-top:16px;margin-top:18px}.settings-actions button{margin:0}.layout-preview{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:8px}.layout-preview span{border:1px solid #24536a;padding:12px 4px;text-align:center;color:#6f95a5;font-size:8px}.layout-preview span.active{border-color:var(--cyan);color:var(--cyan);background:#12384b}.layout-range{display:grid;grid-template-columns:130px 1fr 42px;align-items:center;gap:8px;margin:10px 0;color:#9db7c4;font-size:9px}.layout-range input{padding:0!important}.layout-range output{color:var(--cyan);text-align:right}
+    body.layout-compact .signal-grid{grid-template-columns:repeat(4,minmax(0,1fr))}body.layout-wide .console-shell{max-width:1500px}body.layout-sidebar-right .console-shell{grid-template-columns:minmax(0,1fr) 260px}body.layout-sidebar-right .move-window{grid-column:2;grid-row:1}body.layout-sidebar-right .console{grid-column:1;grid-row:1}body.layout-hide-news #news-list,body.layout-hide-news .rail.right .eyebrow:nth-of-type(3),body.layout-hide-performance .paper-performance{display:none}body.core-left .opinion-panel .hero{margin-left:0}body.core-right .opinion-panel .hero{margin-right:0;margin-left:auto}
+    .telemetry-controls{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #163347;color:#66889c;font-size:9px}.telemetry-controls select,.telemetry-filter{background:#091722;border:1px solid #24536a;color:var(--cyan);padding:5px 7px;font:inherit;font-size:9px}.telemetry-filter.active{background:#12384b;border-color:var(--cyan)}
+    .console-shell{max-width:var(--console-width,1200px);margin:0 auto;display:grid;grid-template-columns:var(--move-width,260px) minmax(0,1fr);gap:18px;align-items:start}
+    .console{width:100%;justify-self:center}
+    .console-head{justify-content:center;gap:18px;text-align:center}
+    .console-head span:last-child{color:#9db1c0}
+    .console .signal-grid{grid-template-columns:repeat(var(--telemetry-columns,3),minmax(0,1fr));grid-auto-rows:minmax(168px,auto);max-height:570px;overflow-y:auto;align-content:start}
+    .move-window{border:1px solid #163347;background:#071019cc;min-height:180px}
+    .move-head{display:flex;justify-content:space-between;padding:13px 15px;border-bottom:1px solid #163347;color:#66889c;font-size:10px}
+    .move-note{padding:10px 15px;color:#55798a;font-size:8px;line-height:1.5;border-bottom:1px solid #102b3b}
+    .move-list{padding:8px 12px}.move-item{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;padding:10px 3px;border-bottom:1px solid #102b3b}
+    .move-rank{color:#55798a;font-size:9px}.move-symbol{color:#d4e7ef;font-weight:bold;font-size:11px}.move-detail{color:#628397;font-size:8px;margin-top:4px}.move-eta{font-size:10px;color:var(--cyan);text-align:right}.move-long .move-eta{color:var(--green)}.move-short .move-eta{color:var(--red)}
+    .paper-performance{margin-top:14px;border:1px solid #163347;background:#071019cc}.paper-performance .move-head{border-bottom:1px solid #163347}.profit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:10px}.profit-cell{padding:8px 4px;text-align:center;border:1px solid #163347}.profit-cell b{display:block;font-size:14px;margin-top:4px}.profit-cell small{color:#628397;font-size:8px}.profit-positive{color:var(--green)}.profit-negative{color:var(--red)}
+    .order-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;border-top:1px solid #153344;padding-top:9px}.order-levels span{color:#7fa5b8;font-size:9px;font-weight:bold}.order-levels b{display:block;color:#f0fbff;font-size:14px;letter-spacing:0;margin-top:5px;white-space:nowrap}.signal.long .order-levels b:nth-child(1){color:var(--green)}.signal.short .order-levels b:nth-child(1){color:var(--red)}.copy-one{padding:3px 5px;margin:5px 0 0;font-size:8px;display:block}.copy-levels{grid-column:1/-1;padding:7px 8px;margin:2px 0 0;color:var(--cyan);font-size:9px}    .telemetry-countdown{color:var(--cyan)!important;font-size:11px!important}.probability-live{animation:probabilityPulse .8s ease-out}@keyframes probabilityPulse{0%{text-shadow:0 0 12px var(--cyan);color:#fff}100%{text-shadow:none}}
+    .signal{cursor:pointer}.signal:focus,.signal:hover{outline:1px solid var(--cyan);box-shadow:0 0 18px #20b4d633}
+    .symbol-detail{width:min(330px,calc(100% - 24px));min-height:250px;margin:18px auto 0;padding:18px;border:1px solid #1d6a83;border-radius:8px;background:linear-gradient(145deg,#0a1c2acc,#061019f2);box-shadow:0 0 28px #1599bb22;text-align:left;display:none}
+    .symbol-detail.open{display:block}.symbol-detail-head{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #153344;padding-bottom:10px}.symbol-detail-title{font-size:18px;color:#e3f8ff;letter-spacing:.12em}.symbol-detail-action{font-size:11px;font-weight:bold}.detail-close{padding:3px 8px;margin:0;font-size:12px}.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:13px}.detail-cell{border:1px solid #153344;padding:8px}.detail-cell span{display:block;color:#628397;font-size:8px}.detail-cell b{display:block;color:#e9faff;font-size:12px;margin-top:4px;letter-spacing:0}.detail-indicators{margin-top:12px;color:#80a8b8;font-size:9px;line-height:1.8}.breakout-ticket,.track-trade{width:100%;margin-top:14px;color:var(--cyan);font-size:10px}.trade-board{margin-top:24px;border-top:1px solid #163347;padding-top:12px}.trade-row{border-bottom:1px solid #102b3b;padding:9px 0;color:#a9c4cf;font-size:9px;line-height:1.6}.trade-alert{color:#ffcc6b}.trade-safe{color:#67f2b4}
+    @media(max-width:1050px){.console-shell{grid-template-columns:1fr!important;max-width:100%}.move-window{margin:0 12px;grid-row:1}.console{margin:0 12px}.console .signal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:650px){.console .signal-grid{grid-template-columns:1fr;max-height:none}}
+  </style>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <section class="hologram" id="hologram" aria-label="INTRA holographic assistant" aria-live="polite">
+    <canvas class="holo-canvas" id="holo-canvas" aria-hidden="true"></canvas>
+    <div class="holo-orbit orbit-x"></div><div class="holo-orbit orbit-y"></div>
+    <div class="holo-depth depth-back"></div><div class="holo-depth depth-front"></div>
+    <div class="holo-grid"></div>
+    <div class="holo-particles"></div>
+    <div class="holo-contours contour-one"></div>
+    <div class="holo-contours contour-two"></div>
+    <div class="holo-contours contour-three"></div>
+    <div class="holo-body">
+      <div class="holo-head"><span class="holo-eye left"></span><span class="holo-eye right"></span></div>
+      <div class="holo-neck"></div>
+      <div class="holo-core"></div>
+      <div class="holo-torso"><span class="circuit one"></span><span class="circuit two"></span></div>
+      <div class="holo-arm arm-left"></div><div class="holo-arm arm-right"></div>
+    </div>
+    <div class="holo-beam"></div>
+    <div class="holo-label">INTRA <small id="holo-state">ASSEMBLING... 89%</small></div>
+    <div class="holo-system-text" id="holo-system-text">CONTOUR MATRIX // ONLINE</div>
+    <div class="holo-mobility">3D PRESENCE <span>●</span></div>
+    <button class="holo-hide" id="holo-hide" aria-label="Hide hologram">×</button>
+  </section>
+  <header class="topbar">
+    <div class="brand">INTRA <span class="status-dot"></span><span class="online">ONLINE</span></div>
+    <div class="clock" id="clock">--:--:-- UTC</div>
+    <div class="mode"><span id="mode-info">NO CREDENTIALS • NO LIVE ORDERS • PAPER MODE</span> <button class="edit-info" id="edit-info">EDIT</button><a class="settings-launch" href="/learning.html">LEARNING LAB</a><button class="settings-launch" id="settings-launch" type="button">SETTINGS</button></div>
+  </header>
+  <main class="layout">
+    <aside class="rail">
+      <div class="eyebrow">SYSTEM LINK</div><div class="link-state"><span class="pulse"></span> CONNECTED</div>
+      <div class="eyebrow">EXCHANGE</div><div id="exchange">AUTO ROUTE</div>
+      <div class="eyebrow">RISK GATE</div><div class="safe">NO ORDER ROUTE</div>
+      <div class="rail-meter"><span></span></div>
+      <div class="mini-log" id="mini-log">Awaiting market telemetry...</div>
+      <section class="trade-board"><div class="eyebrow">TRACKED PAPER TRADES</div><div id="trade-list" class="mini-log">No tracked trades.</div></section>
+    </aside>
+    <section class="center">
+      <div class="alert">◈ MARKET INTELLIGENCE // LIVE PUBLIC DATA</div>
+      <div class="timeframes" role="group" aria-label="Prediction timeframe">
+        <button class="timeframe active" data-horizon="1">1M</button>
+        <button class="timeframe" data-horizon="5">5M</button>
+        <button class="timeframe" data-horizon="10">10M</button>
+      </div>
+      <section class="opinion-panel" aria-live="polite">
+        <div class="hero" aria-label="INTRA spinning signal core">
+          <div class="ring ring-a"></div><div class="ring ring-b"></div><div class="ring ring-c"></div>
+          <div class="hero-core"><div class="core-label">INTRA</div><div class="core-value" id="hero-value">SCANNING</div><div class="core-line"></div></div>
+        </div>
+        <div class="opinion-kicker">INTRA // MARKET OPINION</div>
+        <div class="opinion-state" id="opinion-state">SCANNING</div>
+        <div class="opinion-text" id="opinion-text">Reviewing momentum, swing levels, and public headlines...</div>
+        <div class="opinion-source" id="news-direction">NEWS SCOUT // WAITING</div>
+      </section>
+      <div class="hero-caption">TEXT-ONLY RESEARCH BRIEF <span>•</span> 1M / 5M / 10M HORIZONS</div>
+      <section class="symbol-detail" id="symbol-detail" aria-live="polite">
+        <div class="symbol-detail-head"><div><div class="symbol-detail-title" id="detail-symbol">SYMBOL</div><div class="symbol-detail-action" id="detail-action">NO SELECTION</div></div><button class="detail-close" id="detail-close" type="button">×</button></div>
+        <div class="detail-grid">
+          <div class="detail-cell"><span>TIMEFRAME</span><b id="detail-horizon">--</b></div>
+          <div class="detail-cell"><span>LIKELIHOOD</span><b id="detail-probability">--</b></div>
+          <div class="detail-cell"><span>TRIGGER</span><b id="detail-trigger">--</b></div>
+          <div class="detail-cell"><span>STOP LOSS</span><b id="detail-stop">--</b></div>
+          <div class="detail-cell"><span>TAKE PROFIT</span><b id="detail-target">--</b></div>
+          <div class="detail-cell"><span>EXPECTED PNL</span><b id="detail-pnl">--</b></div>
+        </div>
+        <div class="detail-indicators" id="detail-indicators">ADX -- • AO -- • PROVIDER --</div>
+        <button class="breakout-ticket" id="breakout-ticket" type="button">PREPARE BREAKOUT TICKET</button>
+        <button class="track-trade" id="track-trade" type="button">TRACK THIS TRADE</button>
+      </section>
+      <div class="actions"><button id="scan-btn">RUN SCAN</button><button id="refresh-btn">REFRESH</button><button id="archive-btn">ARCHIVE + FRESH START</button><button id="backtest-btn">BACKTEST &amp; LEARN</button><button id="hide-symbols-btn">HIDE SYMBOLS</button></div>
+    </section>
+    <aside class="rail right">
+      <div class="eyebrow">SIGNAL COUNTS</div>
+      <div class="count-row"><span>LONG</span><b class="long" id="long-count">0</b></div>
+      <div class="count-row"><span>SHORT</span><b class="short" id="short-count">0</b></div>
+      <div class="count-row"><span>NO TRADE</span><b id="neutral-count">0</b></div>
+      <div class="eyebrow">PREDICTION REVIEW</div>
+      <div class="count-row"><span>RIGHT <i class="right-count" id="right-count">0</i></span><b class="right-count" id="right-total">0</b></div>
+      <div class="count-row"><span>WRONG <i class="wrong-count" id="wrong-count">0</i></span><b class="wrong-count" id="wrong-total">0</b></div>
+      <div class="mini-log" id="review-horizons">1M / 5M / 10M: awaiting outcomes</div>
+      <div class="eyebrow">NEWS SCOUT</div><div class="mini-log" id="news-list">Public headlines awaiting scan...</div>
+      <div class="eyebrow">COST THRESHOLD</div><div id="cost">-- bps round trip</div>
+      <div class="eyebrow">LAST EVENT</div><div id="last-event">No scan yet</div>
+    </aside>
+  </main>
+  <div class="console-shell">
+    <aside class="move-window">
+      <div class="move-head"><span>TOP 5 MOVE WINDOW</span><span id="move-updated">--</span></div>
+      <div class="move-note">ESTIMATED HORIZON, NOT A GUARANTEE. Ranked from current live calls.</div>
+      <div class="move-list" id="move-list"><div class="mini-log">Awaiting live calls...</div></div>
+      <section class="paper-performance">
+        <div class="move-head"><span>PAPER FOLLOW-THROUGH</span><span>NET</span></div>
+        <div class="move-note">HYPOTHETICAL CLOSED CALLS AFTER FEES, SPREAD &amp; SLIPPAGE.</div>
+        <div class="profit-grid" id="profit-grid">
+          <div class="profit-cell"><small>1M</small><b>--</b></div>
+          <div class="profit-cell"><small>5M</small><b>--</b></div>
+          <div class="profit-cell"><small>10M</small><b>--</b></div>
+        </div>
+      </section>
+    </aside>
+    <section class="console">
+      <div class="console-head"><span>TELEMETRY STREAM // AUTO UPDATE</span><span id="updated">WAITING</span></div>
+      <div class="telemetry-controls"><label for="sort-signals">SORT</label><select id="sort-signals"><option value="profit">PROFIT %</option><option value="probability">PROBABILITY</option><option value="symbol">SYMBOL</option></select><button class="telemetry-filter active" data-filter="ALL">ALL</button><button class="telemetry-filter" data-filter="LONG">LONG</button><button class="telemetry-filter" data-filter="SHORT">SHORT</button><button class="telemetry-filter" data-filter="NO_TRADE">HIDE NO TRADE</button></div>
+      <div class="signal-grid" id="signals"></div>
+    </section>
+  </div>
+  <footer><span>CRYPTO SIGNAL CONSOLE v1.0</span><span>NO CREDENTIALS • NO LIVE ORDERS • PAPER MODE</span></footer>
+  <dialog id="info-dialog">
+    <form method="dialog" class="info-form">
+      <div class="eyebrow">OPERATOR SAFETY LABEL</div>
+      <label for="info-input">Dashboard info</label>
+      <input id="info-input" maxlength="120" value="NO CREDENTIALS • NO LIVE ORDERS • PAPER MODE">
+      <div class="dialog-actions"><button value="cancel">CANCEL</button><button id="save-info" value="default">SAVE INFO</button></div>
+    </form>
+  </dialog>
+  <dialog id="symbols-dialog">
+    <form method="dialog" class="info-form">
+      <div class="eyebrow">SYMBOL VISIBILITY FILTER</div>
+      <label for="hidden-symbols-input">Hide symbols (comma-separated)</label>
+      <input id="hidden-symbols-input" maxlength="500" placeholder="BTCUSDT, PEPEUSD, SOL">
+      <div class="mini-log">This only hides cards locally. Scanning, archives, and paper review continue unchanged.</div>
+      <div class="dialog-actions"><button value="cancel">CANCEL</button><button id="save-hidden-symbols" value="default">SAVE FILTER</button></div>
+    </form>
+  </dialog>
+  <dialog id="learning-dialog">
+    <form method="dialog" class="info-form">
+      <div class="eyebrow">STRATEGY REVIEW COMPLETE</div>
+      <div id="learning-note" class="mini-log">Backtest has not run.</div>
+      <div class="dialog-actions"><button value="default">CLOSE</button></div>
+    </form>
+  </dialog>
+  <dialog id="breakout-dialog">
+    <form method="dialog" class="info-form">
+      <div class="eyebrow">BREAKOUT HANDOFF // MANUAL CONFIRMATION</div>
+      <div class="mini-log">INTRA will copy this paper signal and open your Breakout page. It will never submit an order, use credentials, or control the external site.</div>
+      <pre id="breakout-ticket-text" class="mini-log"></pre>
+      <label for="breakout-quantity-input">Quantity (contracts / units)</label>
+      <input id="breakout-quantity-input" type="number" min="0" step="any" value="1">
+      <label for="breakout-url-input">Breakout page URL</label>
+      <input id="breakout-url-input" type="url" maxlength="500" placeholder="https://...">
+      <div class="dialog-actions"><button value="cancel">CANCEL</button><button id="breakout-copy" value="default">COPY FORM VALUES</button><button id="breakout-open" value="default">COPY &amp; OPEN BREAKOUT</button></div>
+    </form>
+  </dialog>
+  <dialog id="trade-dialog">
+    <form method="dialog" class="info-form">
+      <div class="eyebrow">TRACK PAPER TRADE // LOCAL MONITOR</div>
+      <div class="mini-log">This records an order you opened or filled for local monitoring only. INTRA cannot cancel or modify the external order.</div>
+      <label for="trade-status">Status</label>
+      <select id="trade-status"><option value="OPEN ORDER">OPEN ORDER</option><option value="FILLED">FILLED</option></select>
+      <label for="trade-entry">Entry / trigger price</label><input id="trade-entry" type="number" step="any">
+      <label for="trade-stop">Stop loss</label><input id="trade-stop" type="number" step="any">
+      <label for="trade-take">Take profit</label><input id="trade-take" type="number" step="any">
+      <div class="dialog-actions"><button value="cancel">CANCEL</button><button id="save-trade" value="default">TRACK TRADE</button></div>
+    </form>
+  </dialog>
+  <dialog id="settings-dialog" class="settings-dialog">
+    <div class="settings-shell">
+      <nav class="settings-nav" aria-label="INTRA settings categories">
+        <h2>INTRA</h2>
+        <button class="settings-tab active" data-settings-tab="connections">CONNECTIONS</button>
+        <button class="settings-tab" data-settings-tab="signals">SIGNALS &amp; RISK</button>
+        <button class="settings-tab" data-settings-tab="dashboard">DASHBOARD LAYOUT</button>
+        <button class="settings-tab" data-settings-tab="account">ACCOUNT &amp; SAFETY</button>
+      </nav>
+      <section class="settings-content">
+        <div class="settings-head"><div><div class="eyebrow">CONTROL CENTER</div><h3 id="settings-title">Connections &amp; providers</h3></div><button id="settings-close" type="button">CLOSE</button></div>
+        <section class="settings-page" data-settings-page="connections">
+          <div class="settings-grid">
+            <div class="settings-card"><h4>MARKET DATA ROUTE</h4><label for="setting-exchange">Provider</label><select id="setting-exchange"><option value="auto">AUTO FAILOVER</option><option value="binance">BINANCE USDⓈ-M</option><option value="bybit">BYBIT</option><option value="kraken">KRAKEN PUBLIC FALLBACK</option></select><div class="setting-row"><div><label for="setting-timeout">Request timeout (s)</label><input id="setting-timeout" type="number" min="1" max="30"></div><div><label for="setting-workers">Scan workers</label><input id="setting-workers" type="number" min="1" max="16"></div></div><p>Public market data only. Credentials and order routes are not accepted here.</p></div>
+            <div class="settings-card"><h4>NEWS SCOUT</h4><label><input id="setting-news" type="checkbox">Enable public RSS headline context</label><label for="setting-news-limit">Headlines shown</label><input id="setting-news-limit" type="number" min="1" max="20"><p>Headlines are supplemental context, not confirmed events or trade instructions.</p></div>
+            <div class="settings-card full"><h4>MCP / AI CONNECTIONS</h4><div class="setting-row"><div><label for="setting-mcp-name">Connection name</label><input id="setting-mcp-name" placeholder="Local research MCP"></div><div><label for="setting-mcp-url">MCP server URL</label><input id="setting-mcp-url" type="url" placeholder="http://127.0.0.1:3000"></div></div><label><input id="setting-mcp-enabled" type="checkbox">Enable configured MCP connection</label><div class="setting-row"><div><label for="setting-ai-provider">AI provider label</label><input id="setting-ai-provider" placeholder="Local / OpenAI-compatible"></div><div><label for="setting-ai-model">Model name</label><input id="setting-ai-model" placeholder="Model identifier"></div></div><p>INTRA stores endpoint and model preferences locally. API keys, cookies, and secrets are intentionally not stored by this browser settings panel.</p></div>
+          </div>
+        </section>
+        <section class="settings-page" data-settings-page="signals" hidden>
+          <div class="settings-grid">
+            <div class="settings-card"><h4>PREDICTION HORIZONS</h4><label><input id="setting-horizon-1" type="checkbox">1-minute</label><label><input id="setting-horizon-5" type="checkbox">5-minute</label><label><input id="setting-horizon-10" type="checkbox">10-minute</label><label for="setting-probability">Minimum probability</label><input id="setting-probability" type="number" min=".5" max=".99" step=".01"></div>
+            <div class="settings-card"><h4>COST MODEL</h4><div class="setting-row"><div><label for="setting-fee">Fee bps / side</label><input id="setting-fee" type="number" min="0" step=".1"></div><div><label for="setting-spread">Spread bps</label><input id="setting-spread" type="number" min="0" step=".1"></div></div><label for="setting-slippage">Slippage bps</label><input id="setting-slippage" type="number" min="0" step=".1"><p>Thresholds include fees, spread, and slippage before a signal becomes actionable.</p></div>
+            <div class="settings-card full"><h4>WATCHLIST</h4><label for="setting-watchlist">Symbols (comma-separated)</label><input id="setting-watchlist" maxlength="2000"><p>Only requested symbols that the selected public provider exposes are scanned. Leave unchanged to use the current INTRA watchlist.</p></div>
+          </div>
+        </section>
+        <section class="settings-page" data-settings-page="dashboard" hidden>
+          <div class="settings-grid">
+            <div class="settings-card full"><h4>LAYOUT STUDIO // LIVE RESIZE &amp; PLACEMENT</h4><p>Adjust the dashboard window proportions and placement. Changes apply when you press APPLY LAYOUT and are saved in this browser.</p><div class="layout-range"><span>Console width</span><input id="setting-consoleWidth" type="range" min="760" max="1600" step="10"><output id="setting-consoleWidth-value"></output></div><div class="layout-range"><span>TOP 5 width</span><input id="setting-moveWidth" type="range" min="180" max="420" step="10"><output id="setting-moveWidth-value"></output></div><div class="layout-range"><span>Telemetry columns</span><input id="setting-telemetryColumns" type="range" min="1" max="5" step="1"><output id="setting-telemetryColumns-value"></output></div><div class="setting-row"><div><label for="setting-layout">TOP 5 placement</label><select id="setting-layout"><option value="default">Left of telemetry</option><option value="sidebar-right">Right of telemetry</option><option value="wide">Wide workspace</option><option value="compact">Compact cards</option></select></div><div><label for="setting-corePosition">INTRA core placement</label><select id="setting-corePosition"><option value="center">Centered</option><option value="left">Left aligned</option><option value="right">Right aligned</option></select></div></div><div class="layout-preview"><span class="active">TOP 5</span><span>INTRA CORE</span><span>TELEMETRY</span></div><button id="apply-layout" type="button">APPLY LAYOUT</button></div>
+            <div class="settings-card"><h4>VISIBLE MODULES</h4><label><input id="setting-performance" type="checkbox">Paper follow-through</label><label><input id="setting-news-module" type="checkbox">News scout</label><label><input id="setting-trades" type="checkbox">Tracked paper trades</label></div>
+            <div class="settings-card"><h4>CORE POSITION</h4><label for="setting-core-position">Spinning INTRA core</label><select id="setting-core-position"><option value="center">Centered</option><option value="left">Left aligned</option><option value="right">Right aligned</option></select><p>This fixes the visual alignment without changing signal calculations.</p></div>
+            <div class="settings-card"><h4>REFRESH BEHAVIOR</h4><label for="setting-poll">Auto-refresh seconds</label><input id="setting-poll" type="number" min="15" max="600"><label><input id="setting-reduced-motion" type="checkbox">Reduce animation</label></div>
+          </div>
+        </section>
+        <section class="settings-page" data-settings-page="account" hidden>
+          <div class="settings-grid">
+            <div class="settings-card"><h4>GOOGLE ACCOUNT</h4><label for="setting-googleClient">OAuth client ID (public)</label><input id="setting-googleClient" placeholder="client-id.apps.googleusercontent.com"><label for="setting-googleAuth">OAuth start URL</label><input id="setting-googleAuth" type="url" placeholder="https://your-host.example.com/auth/google"><button id="google-login" class="google-button" type="button">CONTINUE WITH GOOGLE</button><div id="google-status" class="settings-status">Not connected</div><p>INTRA opens your configured HTTPS OAuth handoff. It never collects a Google password or stores tokens in this browser UI.</p></div>
+            <div class="settings-card"><h4>SAFETY BOUNDARY</h4><label><input type="checkbox" checked disabled>Signal-only / paper mode</label><label><input type="checkbox" checked disabled>No exchange order placement</label><label><input type="checkbox" checked disabled>Manual Breakout confirmation</label><p class="locked-note">These protections are locked in this build. No credentials or live order settings can be enabled from the browser.</p></div>
+            <div class="settings-card full"><h4>LOCAL DATA</h4><button id="settings-reset" type="button">RESET LOCAL PREFERENCES</button><p>Resets layout, filters, tracked-paper-trade display preferences, and connection labels stored in this browser. It does not delete the server journal.</p></div>
+          </div>
+        </section>
+        <div class="settings-actions"><span id="settings-saved" class="settings-status"></span><button id="settings-reset-all" type="button">RESET FORM</button><button id="settings-save" type="button">SAVE SETTINGS</button></div>
+      </section>
+    </div>
+  </dialog>
+  <script>window.INTRA_SESSION_TOKEN="__INTRA_SESSION_TOKEN__";</script>
+  <script src="/app.js"></script>
+  <script src="/hologram-3d.js"></script>
+</body>
+</html>
