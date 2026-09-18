@@ -1,0 +1,21 @@
+instructions: |
+  The crypto signal bot lives in crypto_bot/. It is signal-only and must never
+  place live orders or require exchange credentials. Prefer the existing Python
+  unittest suite and keep changes isolated from the legacy demo code unless
+  the task explicitly targets them.
+
+scripts:
+  - name: Install crypto bot dependencies
+    command: python -m pip install -r crypto_bot/requirements.txt
+    triggers:
+      - session.create
+  - name: Test crypto bot
+    command: python -m unittest discover -s tests -v
+  - name: Run one signal scan
+    command: python -m crypto_bot --once
+  - name: Run TradingView webhook receiver
+    command: python -m crypto_bot --tradingview-webhook
+
+automation:
+  auto_issue_session: true
+  remote_control: false

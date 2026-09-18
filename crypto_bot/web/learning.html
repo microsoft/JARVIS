@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>INTRA // Learning Lab</title>
+  <link rel="stylesheet" href="/learning.css">
+</head>
+<body>
+  <header class="lab-top"><a href="/" class="back">← SIGNAL CONSOLE</a><div class="brand">INTRA <span>LEARNING LAB</span></div><div class="safety">PAPER RESEARCH ONLY</div></header>
+  <main class="lab-layout">
+    <aside class="lab-nav">
+      <div class="eyebrow">RESEARCH WORKSPACE</div>
+      <button class="lab-tab active" data-tab="knowledge">KNOWLEDGE BASE</button>
+      <button class="lab-tab" data-tab="pine">PINE SCRIPTS</button>
+      <button class="lab-tab" data-tab="agents">AGENT TEAMS</button>
+      <button class="lab-tab" data-tab="chat">OLLAMA CHAT</button>
+      <button class="lab-tab" data-tab="upgrade">UPGRADE CONSOLE</button>
+      <div class="lab-note">Add techniques, observations, market notes, and test ideas. Entries are stored in the local INTRA data directory.</div>
+    </aside>
+    <section class="lab-content">
+      <section class="lab-page active" data-page="knowledge">
+        <div class="page-head"><div><div class="eyebrow">DISCOVERY LIBRARY</div><h1>Knowledge base</h1><p>Teach INTRA trading and market-watching techniques without changing live execution.</p></div><button id="refresh-lab">REFRESH</button></div>
+        <form id="entry-form" class="form-card"><h2>ADD RESEARCH MATERIAL</h2><div class="two"><label>Title<input id="entry-title" required placeholder="Opening range breakout"></label><label>Category<select id="entry-category"><option>TECHNIQUE</option><option>RISK RULE</option><option>MARKET CONTEXT</option><option>INDICATOR</option><option>OBSERVATION</option></select></label></div><label>Notes, rules, examples, or source summary<textarea id="entry-content" required rows="5" placeholder="Describe what to watch, how to test it, and when it should be ignored."></textarea></label><button type="submit">ADD TO KNOWLEDGE BASE</button><span id="entry-status" class="status"></span></form>
+        <div id="entry-list" class="card-list"></div>
+      </section>
+      <section class="lab-page" data-page="pine" hidden>
+        <div class="page-head"><div><div class="eyebrow">SAFE SCRIPT READER</div><h1>Pine Script reader</h1><p>Add TradingView Pine Script as research material. INTRA reads the text and extracts metadata; it never executes Pine, places orders, or imports libraries.</p></div></div>
+        <form id="pine-form" class="form-card"><h2>ADD PINE SCRIPT</h2><div class="two"><label>Script name<input id="pine-name" placeholder="my-indicator.pine"></label><label>Load local .pine file<input id="pine-file" type="file" accept=".pine,.txt,text/plain"></label></div><label>Paste Pine Script<textarea id="pine-source" required rows="14" spellcheck="false" placeholder="//@version=5&#10;indicator('My study', overlay=true)&#10;plot(close)"></textarea></label><button type="submit">READ AND SAVE SCRIPT</button><span id="pine-status" class="status"></span></form>
+        <div id="pine-list" class="card-list"></div>
+      </section>
+      <section class="lab-page" data-page="agents" hidden>
+        <div class="page-head"><div><div class="eyebrow">SUBSECTION BUILDERS</div><h1>Agent teams</h1><p>Each agent researches independently, reports to INTRA, and shares reviewed findings through the local knowledge base. Agents never place orders or execute generated code.</p></div></div>
+        <form id="agent-form" class="form-card"><h2>ADD AGENT</h2><div class="two"><label>Name<input id="agent-name" required placeholder="Trend Scout"></label><label>Scope<select id="agent-scope"><option>RESEARCH</option><option>FEATURES</option><option>RISK</option><option>NEWS</option><option>BACKTEST</option></select></label></div><label>Mission<textarea id="agent-mission" required rows="3" placeholder="Compare trend continuation against swing reversals on the 5M horizon."></textarea></label><button type="submit">ADD AGENT SUBSECTION</button><span id="agent-status" class="status"></span></form>
+        <div id="agent-list" class="card-list"></div>
+      </section>
+      <section class="lab-page" data-page="chat" hidden>
+        <div class="page-head"><div><div class="eyebrow">LOCAL MODEL BRIDGE</div><h1>Ollama chat</h1><p>Optional local research chat. INTRA connects to Ollama at <code>127.0.0.1:11434</code>; your model files remain under your local Ollama installation.</p></div></div>
+        <div class="form-card"><div class="two"><label>Model<select id="ollama-model"><option value="">CHECKING LOCAL MODELS...</option></select></label><button id="ollama-refresh" type="button">REFRESH MODELS</button></div><textarea id="ollama-message" rows="5" placeholder="Ask for a testable technique or critique of the knowledge base."></textarea><button id="ollama-send" type="button">ASK LOCAL MODEL</button><span id="ollama-status" class="status"></span><pre id="ollama-reply" class="reply"></pre></div>
+      </section>
+      <section class="lab-page" data-page="upgrade" hidden>
+        <div class="page-head"><div><div class="eyebrow">CONTROLLED IMPROVEMENT</div><h1>Upgrade console</h1><p>Write proposals for schema, features, tests, or UI improvements. INTRA records proposals but does not execute generated code or self-modify automatically.</p></div></div>
+        <form id="upgrade-form" class="form-card"><h2>PROPOSE AN UPGRADE</h2><textarea id="upgrade-proposal" required rows="6" placeholder="Add a walk-forward test for volatility-regime filtering, including acceptance criteria..."></textarea><button type="submit">RECORD PROPOSAL</button><span id="upgrade-status" class="status"></span></form>
+        <div id="upgrade-list" class="card-list"></div>
+      </section>
+    </section>
+  </main>
+  <script>window.INTRA_SESSION_TOKEN="__INTRA_SESSION_TOKEN__";</script>
+  <script src="/learning.js"></script>
+</body>
+</html>

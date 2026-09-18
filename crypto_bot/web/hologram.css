@@ -1,0 +1,16 @@
+.holo-contours{position:absolute;left:8px;width:140px;height:55px;border:1px solid #5cecff88;border-radius:50%;opacity:.65;filter:drop-shadow(0 0 5px #2ce5ff);animation:contour-drift 3.6s ease-in-out infinite}
+.contour-one{top:28px;transform:rotate(-8deg) scaleX(.86)}
+.contour-two{top:78px;transform:rotate(9deg) scaleX(.72);animation-delay:-1.1s}
+.contour-three{top:145px;transform:rotate(-5deg) scaleX(.92);animation-delay:-2.2s}
+.holo-contours:before,.holo-contours:after{content:"";position:absolute;inset:8px 18px;border:1px solid #57e8ff55;border-radius:50%}
+.holo-contours:after{inset:18px 34px;border-color:#9cf7ff44}
+.holo-particles{position:absolute;inset:8px;background-image:radial-gradient(circle,#d6fbff 0 1px,transparent 2px),radial-gradient(circle,#49d7f2 0 1px,transparent 2px);background-size:31px 37px,47px 53px;background-position:5px 7px,18px 3px;opacity:.52;animation:particle-drift 4s linear infinite}
+.holo-core{position:absolute;top:66px;left:56px;width:28px;height:34px;border-radius:50% 50% 45% 45%;background:#ffbb3e;box-shadow:0 0 8px #fff0a5,0 0 20px #ff9f24,0 0 38px #ff6e1d88;animation:core-pulse 1.4s ease-in-out infinite;z-index:2}
+.holo-core:after{content:"";position:absolute;top:25px;left:11px;width:6px;height:48px;background:linear-gradient(#ffb32e,#ff6a1d55,transparent);filter:blur(2px)}
+.holo-system-text{position:absolute;right:-45px;top:64px;color:#6acde2;font-size:7px;white-space:nowrap;letter-spacing:.12em}
+.hologram[data-state=warning] .holo-core{background:#ff514f;box-shadow:0 0 10px #ffb0a0,0 0 32px #ff2e3f}
+.hologram[data-state=scanning] .holo-contours{animation-duration:1.2s;opacity:.9}
+.hologram[data-state=listening] .holo-particles{opacity:.82}
+@keyframes contour-drift{50%{transform:translateY(-5px) scaleX(1.04);opacity:.9}}
+@keyframes particle-drift{to{background-position:18px -30px,2px 40px}}
+@keyframes core-pulse{50%{transform:scale(1.18);opacity:.9}}
