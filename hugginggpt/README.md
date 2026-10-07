@@ -80,31 +80,38 @@ The configuration `configs/config.lite.yaml` does not require any expert models 
 
 ## Quick Start
 
-First replace `openai.key` and `huggingface.token` in `server/configs/config.default.yaml` with **your personal OpenAI Key** and **your Hugging Face Token**, or put them in the environment variables `OPENAI_API_KEY` and `HUGGINGFACE_ACCESS_TOKEN` respectively. Then run the following commands:
+The Azure configuration uses chat completions and does not require local model downloads. It calls Azure OpenAI for planning and Hugging Face Inference Endpoints for expert models, so provide credentials for both services. From the repository root, set these PowerShell environment variables (keep credentials out of config files and source control):
+
+```powershell
+$env:AZURE_OPENAI_ENDPOINT = "https://<your-resource>.openai.azure.com"
+$env:AZURE_OPENAI_DEPLOYMENT = "<your-chat-completions-deployment>"
+$env:AZURE_OPENAI_API_KEY = "<your-azure-openai-key>"
+$env:AZURE_OPENAI_API_VERSION = "2024-10-21"
+$env:HUGGINGFACE_ACCESS_TOKEN = "hf_<your-token>"
+```
+
+The deployment must support Azure OpenAI chat completions. Create it in your Azure OpenAI resource before running JARVIS. `HUGGINGFACE_ACCESS_TOKEN` is needed for the remote expert-model endpoints; create a token at [Hugging Face settings](https://huggingface.co/settings/tokens).
 
 <span id="Server"></span>
 
 ### For Server:
 
-```bash
-# setup env
-cd server
+```powershell
+Set-Location hugginggpt\server
 conda create -n jarvis python=3.8
 conda activate jarvis
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 pip install -r requirements.txt
 
-# download models. Make sure that `git-lfs` is installed.
-cd models
-bash download.sh # required when `inference_mode` is `local` or `hybrid`. 
-
-# run server
-cd ..
-python models_server.py --config configs/config.default.yaml # required when `inference_mode` is `local` or `hybrid`
-python awesome_chat.py --config configs/config.default.yaml --mode server # for text-davinci-003
+# Launch the CLI (no local model server or model downloads).
+python awesome_chat.py --config configs/config.azure.yaml --mode cli
 ```
 
-Now you can access Jarvis' services by the Web API. 
+To run the HTTP API instead, use `--mode server` in the same command. With this Azure config's `inference_mode: huggingface`, you do not need to start `models_server.py` or download expert models. For `local` or `hybrid` inference, run the model download script in `server/models` and start `models_server.py` with the same config first.
+
+The Python environment still needs the packages in `server/requirements.txt` and a compatible PyTorch installation; those dependencies include heavyweight ML/audio packages even when using Hugging Face-hosted models.
+
+Now you can access Jarvis' services by the Web API.
 
 + `/hugginggpt` --method `POST`, access the full service.
 + `/tasks` --method `POST`, access intermediate results for Stage #1.
@@ -191,7 +198,9 @@ Welcome to Jarvis! A collaborative system that consists of an LLM as the control
 
 The server-side configuration file is `server/configs/config.default.yaml`, and some parameters are presented as follows:
 
-+ `model`: LLM, currently supports `text-davinci-003`. We are working on integrating more open-source LLMs.
++ `model`: tokenizer/context alias. Chat mode supports the aliases listed in `server/get_token_ids.py` (currently `gpt-4` and `gpt-3.5-turbo` families); use `gpt-4` for the Azure example. For Azure, the actual model is selected by the separate deployment name.
++ `use_completion`: use `false` for chat-completions deployments. The Azure sample uses `/chat/completions`; legacy text completions are not recommended.
++ Azure settings can be supplied through `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_DEPLOYMENT`, and `AZURE_OPENAI_API_VERSION`. Environment values override the corresponding `azure` values in the YAML file.
 + `inference_mode`: mode of inference endpoints
   + `local`: only use the local inference endpoints
   + `huggingface`: only use the Hugging Face Inference Endpoints **(free of local inference endpoints)**

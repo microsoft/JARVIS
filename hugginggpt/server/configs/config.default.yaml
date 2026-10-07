@@ -4,14 +4,14 @@ openai:
 #   api_key: REPLACE_WITH_YOUR_AZURE_API_KEY_HERE
 #   base_url: REPLACE_WITH_YOUR_ENDPOINT_HERE
 #   deployment_name: REPLACE_WITH_YOUR_DEPLOYMENT_NAME_HERE
-#   api_version: "2022-12-01"
+#   api_version: "2024-10-21"
 huggingface:
   token: REPLACE_WITH_YOUR_HUGGINGFACE_TOKEN_HERE # required: huggingface token @ https://huggingface.co/settings/tokens
 dev: false
 debug: false
 log_file: logs/debug.log
-model: text-davinci-003 # currently only support text-davinci-003, gpt-4, we will support more open-source LLMs in the future
-use_completion: true
+model: gpt-4 # tokenizer/context alias; the configured provider model or deployment is sent to the API
+use_completion: false
 inference_mode: hybrid # local, huggingface or hybrid, prefer hybrid
 local_deployment: full # minimal, standard or full, prefer full
 device: cuda:0 # cuda:id or cpu
